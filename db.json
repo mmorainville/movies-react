@@ -1,9 +1,27 @@
 {
-  "posts": [
+  "movies": [
     {
       "id": 1,
-      "title": "json-server",
-      "text": "test"
+      "title": "Test1",
+      "year": "2015",
+      "directors": ["George", "TestDirector"],
+      "viewings": [{
+      	"cinema": "Test Cinema",
+      	"date": "2016"
+      }]
+    },
+    {
+      "id": 2,
+      "title": "Test2",
+      "year": "2014",
+      "directors": ["TestDirector"],
+      "viewings": [{
+      	"cinema": "Test Cinema",
+      	"date": "2016"
+      }, {
+      	"cinema": "Test Cinema2",
+      	"date": "2015"
+      }]
     }
   ],
   "comments": [
