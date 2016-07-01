@@ -3,13 +3,11 @@ var $ = require("jquery");
 
 var Movie = React.createClass({
     handleMovieClick: function (e) {
-        console.log(this.props.movie);
         this.props.onMovieClick(this.props.movie);
     },
 
     render: function () {
         var directors = this.props.movie.directors.map(function (director) {
-            console.log(director);
             return (
                 <span key={director}>{director},</span>
             );
@@ -46,7 +44,6 @@ module.exports = React.createClass({
     },
 
     handleMovieClick: function (movie) {
-        console.log(movie);
         this.props.onMovieClick(movie);
     },
 
@@ -54,7 +51,6 @@ module.exports = React.createClass({
         var self = this;
 
         var movieNodes = this.state.data.map(function (movie) {
-            console.log(movie);
             return (
                 <Movie movie={movie} key={movie.id} onMovieClick={self.handleMovieClick}/>
             );

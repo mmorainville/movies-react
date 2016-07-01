@@ -1,4 +1,5 @@
 var React = require('react');
+var createFragment = require('react-addons-create-fragment');
 
 var CustomInputs = React.createClass({
     getInitialState: function () {
@@ -43,6 +44,10 @@ var CustomInputs = React.createClass({
 });
 
 var MultipleStringInputs = React.createClass({
+    onChangeInput: function (elem) {
+        console.log(this.props.stringArray);
+    },
+
     render: function () {
         var inputs = this.props.stringArray.map(function (input) {
             console.log(input);
@@ -51,10 +56,11 @@ var MultipleStringInputs = React.createClass({
                 type="text"
                 placeholder="Search..."
                 value={input}
-                ref="filterTextInput"
+                key={input}
+                onChange={this.onChangeInput(input)}
             />
             );
-        });
+        }, this);
 
         return (
             <div>
@@ -96,6 +102,7 @@ module.exports = React.createClass({
         return (
             <form className="commentForm" onSubmit={this.handleSubmit}>
                 <p>{this.props.movie.title}</p>
+                <pre>{JSON.stringify(this.props, null, 2)}</pre>
                 <input
                     type="text"
                     placeholder="Your name"
