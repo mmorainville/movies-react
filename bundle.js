@@ -62,7 +62,50 @@ module.exports = React.createClass({
         this.setState(nextProps.movie);
     },
 
+    handleDirectorChange: function handleDirectorChange(director) {
+        console.log(director);
+        var index = this.state.directors.indexOf(director);
+        var newDirectors = this.state.directors;
+        if (index > -1) {
+            newDirectors[index] = director;
+        }
+        this.setState({ directors: newDirectors });
+    },
+    addDirector: function addDirector() {
+        // var newDirectors = this.state.directors;
+        // newDirectors.push('');
+        // this.setState({directors: newDirectors});
+        this.state.directors.push('');
+    },
+    removeDirector: function removeDirector(director) {
+        // var newDirectors = this.state.directors;
+        // newDirectors.push('');
+        // this.setState({directors: newDirectors});
+        console.log("What?");
+        var index = this.state.directors.indexOf(director);
+        if (index > -1) {
+            this.state.directors.splice(index, 1);
+        }
+    },
+
     render: function render() {
+        var inputs;
+        if (this.state.directors != undefined) {
+            inputs = this.state.directors.map(function (director, i) {
+                console.log(director + ' ' + i);
+                return React.createElement(
+                    'div',
+                    null,
+                    React.createElement('input', { type: 'text', value: this.state.directors[i], key: director, onChange: this.handleDirectorChange.bind(null, director) }),
+                    React.createElement(
+                        'button',
+                        { onClick: this.removeDirector.bind(null, director) },
+                        'Remove'
+                    )
+                );
+            }, this);
+        }
+
         return React.createElement(
             'form',
             { className: 'commentForm', onSubmit: this.handleSubmit },
@@ -73,6 +116,14 @@ module.exports = React.createClass({
             ),
             React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange }),
             React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleYearChange }),
+            React.createElement('br', null),
+            React.createElement('br', null),
+            inputs,
+            React.createElement(
+                'button',
+                { onClick: this.addDirector },
+                'Add'
+            ),
             React.createElement('br', null),
             React.createElement('input', { type: 'submit', value: 'Post' })
         );
