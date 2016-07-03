@@ -13,7 +13,7 @@ module.exports = React.createClass({
 
     handleCommentSubmit: function (movie) {
         this.setState({selectedMovie: movie});
-        console.log(movie);
+        // console.log(movie);
     },
 
     render: function () {

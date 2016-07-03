@@ -1,4 +1,5 @@
 var React = require('react');
+var ViewingsForm = require('./ViewingsForm');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -44,7 +45,7 @@ module.exports = React.createClass({
         // var newDirectors = this.state.directors;
         // newDirectors.push('');
         // this.setState({directors: newDirectors});
-        console.log("DELETE DIRECTOR");
+        // console.log("DELETE DIRECTOR");
         var index = this.state.directors.indexOf(director);
         if (index > -1) {
             this.state.directors.splice(index, 1);
@@ -55,10 +56,11 @@ module.exports = React.createClass({
         var inputs;
         if (this.state.directors != undefined) {
             inputs = this.state.directors.map(function (director, i) {
-                console.log(director + ' ' + i);
+                // console.log(director + ' ' + i);
                 return (
                     <div>
-                        <input type="text" value={this.state.directors[i]} key={i} onChange={this.handleDirectorChange.bind(null, i)}/>
+                        <input type="text" value={this.state.directors[i]} key={i}
+                               onChange={this.handleDirectorChange.bind(null, i)}/>
                         <button onClick={this.removeDirector.bind(null, director)}>Remove</button>
                     </div>
                 );
@@ -75,6 +77,9 @@ module.exports = React.createClass({
                 <br/><br/>
                 {inputs}
                 <button onClick={this.addDirector}>Add</button>
+
+                <br/><br/>
+                <ViewingsForm viewings={this.state.viewings}/>
 
                 <br/>
                 <input type="submit" value="Post"/>
