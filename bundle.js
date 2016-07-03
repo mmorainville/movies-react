@@ -62,26 +62,26 @@ module.exports = React.createClass({
         this.setState(nextProps.movie);
     },
 
-    handleDirectorChange: function handleDirectorChange(director) {
-        console.log(director);
-        var index = this.state.directors.indexOf(director);
+    handleDirectorChange: function handleDirectorChange(i, e) {
         var newDirectors = this.state.directors;
-        if (index > -1) {
-            newDirectors[index] = director;
-        }
+        newDirectors[i] = e.target.value;
         this.setState({ directors: newDirectors });
     },
     addDirector: function addDirector() {
         // var newDirectors = this.state.directors;
         // newDirectors.push('');
         // this.setState({directors: newDirectors});
-        this.state.directors.push('');
+        if (this.state.directors == undefined) {
+            this.setState({ directors: [''] });
+        } else {
+            this.state.directors.push('');
+        }
     },
     removeDirector: function removeDirector(director) {
         // var newDirectors = this.state.directors;
         // newDirectors.push('');
         // this.setState({directors: newDirectors});
-        console.log("What?");
+        console.log("DELETE DIRECTOR");
         var index = this.state.directors.indexOf(director);
         if (index > -1) {
             this.state.directors.splice(index, 1);
@@ -96,7 +96,7 @@ module.exports = React.createClass({
                 return React.createElement(
                     'div',
                     null,
-                    React.createElement('input', { type: 'text', value: this.state.directors[i], key: director, onChange: this.handleDirectorChange.bind(null, director) }),
+                    React.createElement('input', { type: 'text', value: this.state.directors[i], key: i, onChange: this.handleDirectorChange.bind(null, i) }),
                     React.createElement(
                         'button',
                         { onClick: this.removeDirector.bind(null, director) },
