@@ -11,19 +11,7 @@ module.exports = React.createClass({
         this.setState({viewings: newViewing});
         this.props.onViewingChange(newViewing);
     },
-    // handleYearChange: function (e) {
-    //     this.setState({year: e.target.value});
-    // },
-    // handleSubmit: function (e) {
-    //     e.preventDefault();
-    //     var title = this.state.title.trim();
-    //     var year = this.state.year.trim();
-    //     if (!year || !title) {
-    //         return;
-    //     }
-    //     this.props.onCommentSubmit(this.state);
-    //     this.setState({});
-    // },
+
     componentWillReceiveProps: function (nextProps) {
         this.setState({viewings: nextProps.viewings});
     },
@@ -42,31 +30,6 @@ module.exports = React.createClass({
         this.setState({viewings: newViewing});
         this.props.onViewingChange(newViewing);
     },
-    // handleDirectorChange: function (i, e) {
-    //     var newDirectors = this.state.directors;
-    //     newDirectors[i] = e.target.value;
-    //     this.setState({directors: newDirectors});
-    // },
-    // addDirector: function () {
-    //     // var newDirectors = this.state.directors;
-    //     // newDirectors.push('');
-    //     // this.setState({directors: newDirectors});
-    //     if (this.state.directors == undefined) {
-    //         this.setState({directors: ['']});
-    //     } else {
-    //         this.state.directors.push('');
-    //     }
-    // },
-    // removeDirector: function (director) {
-    //     // var newDirectors = this.state.directors;
-    //     // newDirectors.push('');
-    //     // this.setState({directors: newDirectors});
-    //     console.log("DELETE DIRECTOR");
-    //     var index = this.state.directors.indexOf(director);
-    //     if (index > -1) {
-    //         this.state.directors.splice(index, 1);
-    //     }
-    // },
 
     render: function () {
         var forms;

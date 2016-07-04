@@ -2,7 +2,7 @@
 'use strict';
 
 var React = require('react');
-var MovieForm = require('./MovieForm2');
+var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
 
 module.exports = React.createClass({
@@ -31,11 +31,12 @@ module.exports = React.createClass({
     }
 });
 
-},{"./MovieForm2":2,"./MovieList":3,"react":176}],2:[function(require,module,exports){
+},{"./MovieForm":2,"./MovieList":3,"react":176}],2:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var ViewingsForm = require('./ViewingsForm');
+var MultipleInputs = require('./MultipleInputs');
 
 module.exports = React.createClass({
     displayName: 'exports',
@@ -63,54 +64,25 @@ module.exports = React.createClass({
         this.setState(nextProps.movie);
     },
 
-    handleDirectorChange: function handleDirectorChange(i, e) {
-        var newDirectors = this.state.directors;
-        newDirectors[i] = e.target.value;
-        this.setState({ directors: newDirectors });
-    },
-    addDirector: function addDirector() {
-        // var newDirectors = this.state.directors;
-        // newDirectors.push('');
-        // this.setState({directors: newDirectors});
-        if (this.state.directors == undefined) {
-            this.setState({ directors: [''] });
+    handleMultipleInputChange: function handleMultipleInputChange(field, newValue) {
+        var newState = this.state;
+
+        // If undefined, there is no more item so we delete the field
+        if (newValue == undefined) {
+            delete newState[field];
         } else {
-            this.state.directors.push('');
+            newState[field] = newValue;
         }
+
+        this.setState(newState);
+        this.props.onCommentSubmit(this.state);
     },
-    removeDirector: function removeDirector(director) {
-        // var newDirectors = this.state.directors;
-        // newDirectors.push('');
-        // this.setState({directors: newDirectors});
-        // console.log("DELETE DIRECTOR");
-        var index = this.state.directors.indexOf(director);
-        if (index > -1) {
-            this.state.directors.splice(index, 1);
-        }
-    },
+
     handleViewingChange: function handleViewingChange(viewings) {
         this.setState({ viewings: viewings });
     },
 
     render: function render() {
-        var inputs;
-        if (this.state.directors != undefined) {
-            inputs = this.state.directors.map(function (director, i) {
-                // console.log(director + ' ' + i);
-                return React.createElement(
-                    'div',
-                    null,
-                    React.createElement('input', { type: 'text', value: this.state.directors[i], key: i,
-                        onChange: this.handleDirectorChange.bind(null, i) }),
-                    React.createElement(
-                        'button',
-                        { onClick: this.removeDirector.bind(null, director) },
-                        'Remove'
-                    )
-                );
-            }, this);
-        }
-
         return React.createElement(
             'form',
             { className: 'commentForm', onSubmit: this.handleSubmit },
@@ -123,12 +95,7 @@ module.exports = React.createClass({
             React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleYearChange }),
             React.createElement('br', null),
             React.createElement('br', null),
-            inputs,
-            React.createElement(
-                'button',
-                { onClick: this.addDirector },
-                'Add'
-            ),
+            React.createElement(MultipleInputs, { inputs: this.state.directors, inputsGroup: 'directors', onMultipleInputChange: this.handleMultipleInputChange.bind(null, "directors") }),
             React.createElement('br', null),
             React.createElement('br', null),
             React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
@@ -138,7 +105,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./ViewingsForm":5,"react":176}],3:[function(require,module,exports){
+},{"./MultipleInputs":4,"./ViewingsForm":5,"react":176}],3:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -322,19 +289,7 @@ module.exports = React.createClass({
         this.setState({ viewings: newViewing });
         this.props.onViewingChange(newViewing);
     },
-    // handleYearChange: function (e) {
-    //     this.setState({year: e.target.value});
-    // },
-    // handleSubmit: function (e) {
-    //     e.preventDefault();
-    //     var title = this.state.title.trim();
-    //     var year = this.state.year.trim();
-    //     if (!year || !title) {
-    //         return;
-    //     }
-    //     this.props.onCommentSubmit(this.state);
-    //     this.setState({});
-    // },
+
     componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
         this.setState({ viewings: nextProps.viewings });
     },
@@ -352,31 +307,6 @@ module.exports = React.createClass({
         this.setState({ viewings: newViewing });
         this.props.onViewingChange(newViewing);
     },
-    // handleDirectorChange: function (i, e) {
-    //     var newDirectors = this.state.directors;
-    //     newDirectors[i] = e.target.value;
-    //     this.setState({directors: newDirectors});
-    // },
-    // addDirector: function () {
-    //     // var newDirectors = this.state.directors;
-    //     // newDirectors.push('');
-    //     // this.setState({directors: newDirectors});
-    //     if (this.state.directors == undefined) {
-    //         this.setState({directors: ['']});
-    //     } else {
-    //         this.state.directors.push('');
-    //     }
-    // },
-    // removeDirector: function (director) {
-    //     // var newDirectors = this.state.directors;
-    //     // newDirectors.push('');
-    //     // this.setState({directors: newDirectors});
-    //     console.log("DELETE DIRECTOR");
-    //     var index = this.state.directors.indexOf(director);
-    //     if (index > -1) {
-    //         this.state.directors.splice(index, 1);
-    //     }
-    // },
 
     render: function render() {
         var forms;

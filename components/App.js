@@ -1,5 +1,5 @@
 var React = require('react');
-var MovieForm = require('./MovieForm2');
+var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
 
 module.exports = React.createClass({
