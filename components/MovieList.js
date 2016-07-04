@@ -16,7 +16,8 @@ var Movie = React.createClass({
         return (
             <div className="movie">
                 <h2 className="movieTitle">
-                    <a href="javascript:undefined" onClick={this.handleMovieClick}>{this.props.movie.title} ({this.props.movie.year})</a>
+                    <a href="javascript:undefined" onClick={this.handleMovieClick}>{this.props.movie.title}
+                        ({this.props.movie.year})</a>
                 </h2>
                 {directors}
             </div>

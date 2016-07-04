@@ -30,7 +30,7 @@ module.exports = React.createClass({
         if (index > -1) {
             this.state[field].splice(index, 1);
         }
-        if(this.state[field].length == 0) {
+        if (this.state[field].length == 0) {
             this.props.onMultipleInputChange(undefined);
         }
     },

@@ -79,7 +79,11 @@ module.exports = React.createClass({
     },
 
     handleViewingChange: function handleViewingChange(viewings) {
-        this.setState({ viewings: viewings });
+        if (viewings.length == 0) {
+            delete this.state.viewings;
+        } else {
+            this.setState({ viewings: viewings });
+        }
     },
 
     render: function render() {
@@ -95,7 +99,8 @@ module.exports = React.createClass({
             React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleYearChange }),
             React.createElement('br', null),
             React.createElement('br', null),
-            React.createElement(MultipleInputs, { inputs: this.state.directors, inputsGroup: 'directors', onMultipleInputChange: this.handleMultipleInputChange.bind(null, "directors") }),
+            React.createElement(MultipleInputs, { inputs: this.state.directors, inputsGroup: 'directors',
+                onMultipleInputChange: this.handleMultipleInputChange.bind(null, "directors") }),
             React.createElement('br', null),
             React.createElement('br', null),
             React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
@@ -138,7 +143,7 @@ var Movie = React.createClass({
                     "a",
                     { href: "javascript:undefined", onClick: this.handleMovieClick },
                     this.props.movie.title,
-                    " (",
+                    "(",
                     this.props.movie.year,
                     ")"
                 )
@@ -307,6 +312,21 @@ module.exports = React.createClass({
         this.setState({ viewings: newViewing });
         this.props.onViewingChange(newViewing);
     },
+    addViewing: function addViewing() {
+        var newViewings = this.state.viewings;
+
+        if (newViewings == undefined) {
+            newViewings = [{}];
+        } else {
+            newViewings.push({});
+        }
+        this.props.onViewingChange(newViewings);
+    },
+    removeViewing: function removeViewing(index) {
+        var newViewings = this.state.viewings;
+        newViewings.splice(index, 1);
+        this.props.onViewingChange(newViewings);
+    },
 
     render: function render() {
         var forms;
@@ -322,6 +342,11 @@ module.exports = React.createClass({
                         'Viewing #',
                         i
                     ),
+                    React.createElement(
+                        'button',
+                        { onClick: this.removeViewing.bind(null, i) },
+                        'Remove viewing'
+                    ),
                     React.createElement('input', { type: 'text', value: this.state.viewings[i].cinema, key: 'cinema-' + i,
                         onChange: this.handleSimpleFieldChange.bind(null, "cinema", i) }),
                     React.createElement('input', { type: 'text', value: this.state.viewings[i].date, key: 'date-' + i,
@@ -332,13 +357,15 @@ module.exports = React.createClass({
                         null,
                         'Spectators'
                     ),
-                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].spectators, inputsGroup: 'spectators', onMultipleInputChange: this.handleMultipleInputChange.bind(null, "spectators", i) }),
+                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].spectators, inputsGroup: 'spectators',
+                        onMultipleInputChange: this.handleMultipleInputChange.bind(null, "spectators", i) }),
                     React.createElement(
                         'strong',
                         null,
                         'Cities'
                     ),
-                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].cities, inputsGroup: 'cities', onMultipleInputChange: this.handleMultipleInputChange.bind(null, "cities", i) })
+                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].cities, inputsGroup: 'cities',
+                        onMultipleInputChange: this.handleMultipleInputChange.bind(null, "cities", i) })
                 );
             }, this);
         } else {
@@ -352,7 +379,12 @@ module.exports = React.createClass({
         return React.createElement(
             'div',
             { className: 'viewingsForm' },
-            forms
+            forms,
+            React.createElement(
+                'button',
+                { onClick: this.addViewing },
+                'Add viewing'
+            )
         );
     }
 });

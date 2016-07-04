@@ -31,7 +31,7 @@ module.exports = React.createClass({
         var newState = this.state;
 
         // If undefined, there is no more item so we delete the field
-        if(newValue == undefined) {
+        if (newValue == undefined) {
             delete newState[field];
         } else {
             newState[field] = newValue;
@@ -42,7 +42,11 @@ module.exports = React.createClass({
     },
 
     handleViewingChange: function (viewings) {
-        this.setState({viewings: viewings});
+        if (viewings.length == 0) {
+            delete this.state.viewings;
+        } else {
+            this.setState({viewings: viewings});
+        }
     },
 
     render: function () {
@@ -54,7 +58,8 @@ module.exports = React.createClass({
                 <input type="text" value={this.state.year} onChange={this.handleYearChange}/>
 
                 <br/><br/>
-                <MultipleInputs inputs={this.state.directors} inputsGroup="directors" onMultipleInputChange={this.handleMultipleInputChange.bind(null, "directors")}/>
+                <MultipleInputs inputs={this.state.directors} inputsGroup="directors"
+                                onMultipleInputChange={this.handleMultipleInputChange.bind(null, "directors")}/>
 
                 <br/><br/>
                 <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>
