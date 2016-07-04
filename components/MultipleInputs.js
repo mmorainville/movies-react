@@ -16,6 +16,20 @@ module.exports = React.createClass({
         // this.setState({viewings: nextProps.viewings});
     },
 
+    addField: function (field) {
+        if (this.state[field] == undefined) {
+            this.setState({[field]: ['']});
+        } else {
+            this.state[field].push('');
+        }
+    },
+    removeField: function (newValue, field) {
+        var index = this.state[field].indexOf(newValue);
+        if (index > -1) {
+            this.state[field].splice(index, 1);
+        }
+    },
+
     render: function () {
         var forms;
         if (this.state[this.props.inputsGroup] != undefined) {
@@ -25,6 +39,7 @@ module.exports = React.createClass({
                     <div>
                         <input type="text" value={input} key={this.props.inputsGroup + '-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i)}/>
+                        <button onClick={this.removeField.bind(null, input, this.props.inputsGroup)}>Remove</button>
                     </div>
                 );
             }, this);
@@ -35,6 +50,7 @@ module.exports = React.createClass({
         return (
             <div className="multipleInputs">
                 {forms}
+                <button onClick={this.addField.bind(null, this.props.inputsGroup)}>Add</button>
             </div>
         );
     }

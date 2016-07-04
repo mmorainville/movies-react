@@ -246,6 +246,20 @@ module.exports = React.createClass({
         // this.setState({viewings: nextProps.viewings});
     },
 
+    addField: function addField(field) {
+        if (this.state[field] == undefined) {
+            this.setState(_defineProperty({}, field, ['']));
+        } else {
+            this.state[field].push('');
+        }
+    },
+    removeField: function removeField(newValue, field) {
+        var index = this.state[field].indexOf(newValue);
+        if (index > -1) {
+            this.state[field].splice(index, 1);
+        }
+    },
+
     render: function render() {
         var forms;
         if (this.state[this.props.inputsGroup] != undefined) {
@@ -255,7 +269,12 @@ module.exports = React.createClass({
                     'div',
                     null,
                     React.createElement('input', { type: 'text', value: input, key: this.props.inputsGroup + '-' + i,
-                        onChange: this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i) })
+                        onChange: this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i) }),
+                    React.createElement(
+                        'button',
+                        { onClick: this.removeField.bind(null, input, this.props.inputsGroup) },
+                        'Remove'
+                    )
                 );
             }, this);
         } else {
@@ -270,7 +289,12 @@ module.exports = React.createClass({
         return React.createElement(
             'div',
             { className: 'multipleInputs' },
-            forms
+            forms,
+            React.createElement(
+                'button',
+                { onClick: this.addField.bind(null, this.props.inputsGroup) },
+                'Add'
+            )
         );
     }
 });
