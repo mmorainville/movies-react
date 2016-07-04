@@ -5,10 +5,10 @@ module.exports = React.createClass({
         return {[this.props.inputsGroup]: this.props.inputs};
     },
     handleSimpleFieldChange: function (field, i, e) {
-        // var newViewing = this.state.viewings;
-        // newViewing[i][field] = e.target.value;
-        // this.setState({viewings: newViewing});
-        // this.props.onViewingChange(newViewing);
+        var newValues = this.state[field];
+        newValues[i] = e.target.value;
+        this.setState({[field]: newValues});
+        this.props.onMultipleInputChange(newValues);
     },
     componentWillReceiveProps: function (nextProps) {
         // this.state[nextProps.inputsGroup] = nextProps.inputs;
@@ -23,7 +23,8 @@ module.exports = React.createClass({
                 // console.log(viewing);
                 return (
                     <div>
-                        {input}
+                        <input type="text" value={input} key={this.props.inputsGroup + '-' + i}
+                               onChange={this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i)}/>
                     </div>
                 );
             }, this);

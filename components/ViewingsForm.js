@@ -29,6 +29,12 @@ module.exports = React.createClass({
     },
 
 
+    handleMultipleInputChange: function (field, i, newValue) {
+        var newViewing = this.state.viewings;
+        newViewing[i][field] = newValue;
+        this.setState({viewings: newViewing});
+        this.props.onViewingChange(newViewing);
+    },
     // handleDirectorChange: function (i, e) {
     //     var newDirectors = this.state.directors;
     //     newDirectors[i] = e.target.value;
@@ -62,11 +68,12 @@ module.exports = React.createClass({
                 // console.log(viewing);
                 return (
                     <div>
+                        <h2>Viewing #{i}</h2>
                         <input type="text" value={this.state.viewings[i].cinema} key={'cinema-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)}/>
                         <input type="text" value={this.state.viewings[i].date} key={'date-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, "date", i)}/>
-                        <MultipleInputs inputs={this.state.viewings[i].spectators} inputsGroup="spectators"/>
+                        <MultipleInputs inputs={this.state.viewings[i].spectators} inputsGroup="spectators" onMultipleInputChange={this.handleMultipleInputChange.bind(null, "spectators", i)}/>
                     </div>
                 );
             }, this);

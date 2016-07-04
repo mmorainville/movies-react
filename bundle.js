@@ -222,23 +222,23 @@ module.exports = React.createClass({
 });
 
 },{"jquery":33,"react":176}],4:[function(require,module,exports){
-"use strict";
+'use strict';
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var React = require('react');
 
 module.exports = React.createClass({
-    displayName: "exports",
+    displayName: 'exports',
 
     getInitialState: function getInitialState() {
         return _defineProperty({}, this.props.inputsGroup, this.props.inputs);
     },
     handleSimpleFieldChange: function handleSimpleFieldChange(field, i, e) {
-        // var newViewing = this.state.viewings;
-        // newViewing[i][field] = e.target.value;
-        // this.setState({viewings: newViewing});
-        // this.props.onViewingChange(newViewing);
+        var newValues = this.state[field];
+        newValues[i] = e.target.value;
+        this.setState(_defineProperty({}, field, newValues));
+        this.props.onMultipleInputChange(newValues);
     },
     componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
         // this.state[nextProps.inputsGroup] = nextProps.inputs;
@@ -252,23 +252,24 @@ module.exports = React.createClass({
             forms = this.state[this.props.inputsGroup].map(function (input, i) {
                 // console.log(viewing);
                 return React.createElement(
-                    "div",
+                    'div',
                     null,
-                    input
+                    React.createElement('input', { type: 'text', value: input, key: this.props.inputsGroup + '-' + i,
+                        onChange: this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i) })
                 );
             }, this);
         } else {
             forms = React.createElement(
-                "div",
+                'div',
                 null,
-                "No ",
+                'No ',
                 this.props.inputsGroup
             );
         }
 
         return React.createElement(
-            "div",
-            { className: "multipleInputs" },
+            'div',
+            { className: 'multipleInputs' },
             forms
         );
     }
@@ -309,6 +310,12 @@ module.exports = React.createClass({
         this.setState({ viewings: nextProps.viewings });
     },
 
+    handleMultipleInputChange: function handleMultipleInputChange(field, i, newValue) {
+        var newViewing = this.state.viewings;
+        newViewing[i][field] = newValue;
+        this.setState({ viewings: newViewing });
+        this.props.onViewingChange(newViewing);
+    },
     // handleDirectorChange: function (i, e) {
     //     var newDirectors = this.state.directors;
     //     newDirectors[i] = e.target.value;
@@ -343,11 +350,17 @@ module.exports = React.createClass({
                 return React.createElement(
                     'div',
                     null,
+                    React.createElement(
+                        'h2',
+                        null,
+                        'Viewing #',
+                        i
+                    ),
                     React.createElement('input', { type: 'text', value: this.state.viewings[i].cinema, key: 'cinema-' + i,
                         onChange: this.handleSimpleFieldChange.bind(null, "cinema", i) }),
                     React.createElement('input', { type: 'text', value: this.state.viewings[i].date, key: 'date-' + i,
                         onChange: this.handleSimpleFieldChange.bind(null, "date", i) }),
-                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].spectators, inputsGroup: 'spectators' })
+                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].spectators, inputsGroup: 'spectators', onMultipleInputChange: this.handleMultipleInputChange.bind(null, "spectators", i) })
                 );
             }, this);
         } else {
