@@ -88,6 +88,9 @@ module.exports = React.createClass({
             this.state.directors.splice(index, 1);
         }
     },
+    handleViewingChange: function handleViewingChange(viewings) {
+        this.setState({ viewings: viewings });
+    },
 
     render: function render() {
         var inputs;
@@ -128,7 +131,7 @@ module.exports = React.createClass({
             ),
             React.createElement('br', null),
             React.createElement('br', null),
-            React.createElement(ViewingsForm, { viewings: this.state.viewings }),
+            React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
             React.createElement('br', null),
             React.createElement('input', { type: 'submit', value: 'Post' })
         );
@@ -233,6 +236,7 @@ module.exports = React.createClass({
         var newViewing = this.state.viewings;
         newViewing[i][field] = e.target.value;
         this.setState({ viewings: newViewing });
+        this.props.onViewingChange(newViewing);
     },
     // handleYearChange: function (e) {
     //     this.setState({year: e.target.value});

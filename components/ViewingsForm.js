@@ -8,6 +8,7 @@ module.exports = React.createClass({
         var newViewing = this.state.viewings;
         newViewing[i][field] = e.target.value;
         this.setState({viewings: newViewing});
+        this.props.onViewingChange(newViewing);
     },
     // handleYearChange: function (e) {
     //     this.setState({year: e.target.value});

@@ -51,6 +51,9 @@ module.exports = React.createClass({
             this.state.directors.splice(index, 1);
         }
     },
+    handleViewingChange: function (viewings) {
+        this.setState({viewings: viewings});
+    },
 
     render: function () {
         var inputs;
@@ -79,7 +82,7 @@ module.exports = React.createClass({
                 <button onClick={this.addDirector}>Add</button>
 
                 <br/><br/>
-                <ViewingsForm viewings={this.state.viewings}/>
+                <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>
 
                 <br/>
                 <input type="submit" value="Post"/>
