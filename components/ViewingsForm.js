@@ -1,4 +1,5 @@
 var React = require('react');
+var MultipleInputs = require('./MultipleInputs');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -65,6 +66,7 @@ module.exports = React.createClass({
                                onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)}/>
                         <input type="text" value={this.state.viewings[i].date} key={'date-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, "date", i)}/>
+                        <MultipleInputs inputs={this.state.viewings[i].spectators} inputsGroup="spectators"/>
                     </div>
                 );
             }, this);
