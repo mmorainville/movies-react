@@ -232,6 +232,7 @@ module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
+        // return {[this.props.inputsGroup]: this.props.inputs || ['']};
         return _defineProperty({}, this.props.inputsGroup, this.props.inputs);
     },
     handleSimpleFieldChange: function handleSimpleFieldChange(field, i, e) {
@@ -249,6 +250,7 @@ module.exports = React.createClass({
     addField: function addField(field) {
         if (this.state[field] == undefined) {
             this.setState(_defineProperty({}, field, ['']));
+            this.props.onMultipleInputChange(['']);
         } else {
             this.state[field].push('');
         }
@@ -257,6 +259,9 @@ module.exports = React.createClass({
         var index = this.state[field].indexOf(newValue);
         if (index > -1) {
             this.state[field].splice(index, 1);
+        }
+        if (this.state[field].length == 0) {
+            this.props.onMultipleInputChange(undefined);
         }
     },
 
@@ -336,7 +341,14 @@ module.exports = React.createClass({
 
     handleMultipleInputChange: function handleMultipleInputChange(field, i, newValue) {
         var newViewing = this.state.viewings;
-        newViewing[i][field] = newValue;
+
+        // If undefined, there is no more item so we delete the field
+        if (newValue == undefined) {
+            delete newViewing[i][field];
+        } else {
+            newViewing[i][field] = newValue;
+        }
+
         this.setState({ viewings: newViewing });
         this.props.onViewingChange(newViewing);
     },
@@ -384,7 +396,19 @@ module.exports = React.createClass({
                         onChange: this.handleSimpleFieldChange.bind(null, "cinema", i) }),
                     React.createElement('input', { type: 'text', value: this.state.viewings[i].date, key: 'date-' + i,
                         onChange: this.handleSimpleFieldChange.bind(null, "date", i) }),
-                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].spectators, inputsGroup: 'spectators', onMultipleInputChange: this.handleMultipleInputChange.bind(null, "spectators", i) })
+                    React.createElement('br', null),
+                    React.createElement(
+                        'strong',
+                        null,
+                        'Spectators'
+                    ),
+                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].spectators, inputsGroup: 'spectators', onMultipleInputChange: this.handleMultipleInputChange.bind(null, "spectators", i) }),
+                    React.createElement(
+                        'strong',
+                        null,
+                        'Cities'
+                    ),
+                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].cities, inputsGroup: 'cities', onMultipleInputChange: this.handleMultipleInputChange.bind(null, "cities", i) })
                 );
             }, this);
         } else {

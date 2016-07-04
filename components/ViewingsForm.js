@@ -31,7 +31,14 @@ module.exports = React.createClass({
 
     handleMultipleInputChange: function (field, i, newValue) {
         var newViewing = this.state.viewings;
-        newViewing[i][field] = newValue;
+
+        // If undefined, there is no more item so we delete the field
+        if(newValue == undefined) {
+            delete newViewing[i][field];
+        } else {
+            newViewing[i][field] = newValue;
+        }
+
         this.setState({viewings: newViewing});
         this.props.onViewingChange(newViewing);
     },
@@ -73,7 +80,11 @@ module.exports = React.createClass({
                                onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)}/>
                         <input type="text" value={this.state.viewings[i].date} key={'date-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, "date", i)}/>
+                        <br/>
+                        <strong>Spectators</strong>
                         <MultipleInputs inputs={this.state.viewings[i].spectators} inputsGroup="spectators" onMultipleInputChange={this.handleMultipleInputChange.bind(null, "spectators", i)}/>
+                        <strong>Cities</strong>
+                        <MultipleInputs inputs={this.state.viewings[i].cities} inputsGroup="cities" onMultipleInputChange={this.handleMultipleInputChange.bind(null, "cities", i)}/>
                     </div>
                 );
             }, this);

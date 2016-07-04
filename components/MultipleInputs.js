@@ -2,6 +2,7 @@ var React = require('react');
 
 module.exports = React.createClass({
     getInitialState: function () {
+        // return {[this.props.inputsGroup]: this.props.inputs || ['']};
         return {[this.props.inputsGroup]: this.props.inputs};
     },
     handleSimpleFieldChange: function (field, i, e) {
@@ -19,6 +20,7 @@ module.exports = React.createClass({
     addField: function (field) {
         if (this.state[field] == undefined) {
             this.setState({[field]: ['']});
+            this.props.onMultipleInputChange(['']);
         } else {
             this.state[field].push('');
         }
@@ -27,6 +29,9 @@ module.exports = React.createClass({
         var index = this.state[field].indexOf(newValue);
         if (index > -1) {
             this.state[field].splice(index, 1);
+        }
+        if(this.state[field].length == 0) {
+            this.props.onMultipleInputChange(undefined);
         }
     },
 
