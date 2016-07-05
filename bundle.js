@@ -10,7 +10,7 @@ module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
-        return { selectedMovie: {} };
+        return { selectedMovie: { title: "Init" } };
     },
 
     handleMovieClick: function handleMovieClick(movie) {
@@ -41,6 +41,8 @@ module.exports = React.createClass({
 },{"./MovieForm":2,"./MovieList":3,"./SemanticDropdown":5,"react":177}],2:[function(require,module,exports){
 'use strict';
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var React = require('react');
 var ViewingsForm = require('./ViewingsForm');
 var MultipleInputs = require('./MultipleInputs');
@@ -49,13 +51,12 @@ module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
-        return {};
+        return this.props.movie;
     },
-    handleTitleChange: function handleTitleChange(e) {
-        this.setState({ title: e.target.value });
-    },
-    handleYearChange: function handleYearChange(e) {
-        this.setState({ year: e.target.value });
+    handleChange: function handleChange(field, e) {
+        this.setState(_defineProperty({}, field, e.target.value), function () {
+            this.props.onCommentSubmit(this.state);
+        });
     },
     handleSubmit: function handleSubmit(e) {
         e.preventDefault();
@@ -69,21 +70,21 @@ module.exports = React.createClass({
         delete this.state.id;
         console.log("POST");
 
-        $.ajax({
-            url: 'http://localhost:3000/movies',
-            dataType: 'json',
-            cache: false,
-            type: 'post',
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                console.log("success");
-                // this.setState({data: data});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this),
-            data: JSON.stringify(this.state)
-        });
+        // $.ajax({
+        //     url: 'http://localhost:3000/movies',
+        //     dataType: 'json',
+        //     cache: false,
+        //     type: 'post',
+        //     contentType:"application/json; charset=utf-8",
+        //     success: function (data) {
+        //         console.log("success");
+        //         // this.setState({data: data});
+        //     }.bind(this),
+        //     error: function (xhr, status, err) {
+        //         console.error(this.props.url, status, err.toString());
+        //     }.bind(this),
+        //     data: JSON.stringify(this.state)
+        // });
 
         this.setState({});
     },
@@ -101,8 +102,9 @@ module.exports = React.createClass({
             newState[field] = newValue;
         }
 
-        this.setState(newState);
-        this.props.onCommentSubmit(this.state);
+        this.setState(newState, function () {
+            this.props.onCommentSubmit(this.state);
+        });
     },
 
     handleViewingChange: function handleViewingChange(viewings) {
@@ -122,12 +124,12 @@ module.exports = React.createClass({
                 { style: { position: 'absolute', right: 250 + 'px' } },
                 JSON.stringify(this.props, null, 2)
             ),
-            React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleTitleChange }),
-            React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleYearChange }),
+            React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleChange.bind(this, "title") }),
+            React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleChange.bind(this, "year") }),
             React.createElement('br', null),
             React.createElement('br', null),
             React.createElement(MultipleInputs, { inputs: this.state.directors, inputsGroup: 'directors',
-                onMultipleInputChange: this.handleMultipleInputChange.bind(null, "directors") }),
+                onMultipleInputChange: this.handleMultipleInputChange.bind(this, "directors") }),
             React.createElement('br', null),
             React.createElement('br', null),
             React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
@@ -251,17 +253,23 @@ module.exports = React.createClass({
             this.setState(_defineProperty({}, field, ['']));
             this.props.onMultipleInputChange(['']);
         } else {
-            this.state[field].push('');
+            var nextState = this.state;
+            nextState[field].push('');
+            this.setState(nextState);
         }
     },
     removeField: function removeField(newValue, field) {
+        var nextState = this.state;
+
         var index = this.state[field].indexOf(newValue);
         if (index > -1) {
-            this.state[field].splice(index, 1);
+            nextState[field].splice(index, 1);
         }
-        if (this.state[field].length == 0) {
+        if (nextState[field].length == 0) {
             this.props.onMultipleInputChange(undefined);
         }
+
+        this.setState(nextState);
     },
 
     render: function render() {
@@ -276,7 +284,7 @@ module.exports = React.createClass({
                         onChange: this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i) }),
                     React.createElement(
                         'button',
-                        { onClick: this.removeField.bind(null, input, this.props.inputsGroup) },
+                        { type: 'button', onClick: this.removeField.bind(this, input, this.props.inputsGroup) },
                         'Remove'
                     )
                 );
@@ -296,7 +304,7 @@ module.exports = React.createClass({
             forms,
             React.createElement(
                 'button',
-                { onClick: this.addField.bind(null, this.props.inputsGroup) },
+                { type: 'button', onClick: this.addField.bind(this, this.props.inputsGroup) },
                 'Add'
             )
         );
@@ -485,7 +493,7 @@ module.exports = React.createClass({
             forms,
             React.createElement(
                 'button',
-                { onClick: this.addViewing },
+                { type: 'button', onClick: this.addViewing },
                 'Add viewing'
             )
         );

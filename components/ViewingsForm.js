@@ -76,7 +76,7 @@ module.exports = React.createClass({
         return (
             <div className="viewingsForm">
                 {forms}
-                <button onClick={this.addViewing}>Add viewing</button>
+                <button type="button" onClick={this.addViewing}>Add viewing</button>
             </div>
         );
     }

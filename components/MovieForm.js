@@ -4,13 +4,12 @@ var MultipleInputs = require('./MultipleInputs');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {};
+        return this.props.movie;
     },
-    handleTitleChange: function (e) {
-        this.setState({title: e.target.value});
-    },
-    handleYearChange: function (e) {
-        this.setState({year: e.target.value});
+    handleChange: function (field, e) {
+        this.setState({[field]: e.target.value}, function () {
+            this.props.onCommentSubmit(this.state);
+        });
     },
     handleSubmit: function (e) {
         e.preventDefault();
@@ -24,21 +23,21 @@ module.exports = React.createClass({
         delete this.state.id;
         console.log("POST");
 
-        $.ajax({
-            url: 'http://localhost:3000/movies',
-            dataType: 'json',
-            cache: false,
-            type: 'post',
-            contentType:"application/json; charset=utf-8",
-            success: function (data) {
-                console.log("success");
-                // this.setState({data: data});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this),
-            data: JSON.stringify(this.state)
-        });
+        // $.ajax({
+        //     url: 'http://localhost:3000/movies',
+        //     dataType: 'json',
+        //     cache: false,
+        //     type: 'post',
+        //     contentType:"application/json; charset=utf-8",
+        //     success: function (data) {
+        //         console.log("success");
+        //         // this.setState({data: data});
+        //     }.bind(this),
+        //     error: function (xhr, status, err) {
+        //         console.error(this.props.url, status, err.toString());
+        //     }.bind(this),
+        //     data: JSON.stringify(this.state)
+        // });
 
         this.setState({});
     },
@@ -57,8 +56,9 @@ module.exports = React.createClass({
             newState[field] = newValue;
         }
 
-        this.setState(newState);
-        this.props.onCommentSubmit(this.state);
+        this.setState(newState, function () {
+            this.props.onCommentSubmit(this.state);
+        });
     },
 
     handleViewingChange: function (viewings) {
@@ -74,12 +74,12 @@ module.exports = React.createClass({
             <form className="commentForm" onSubmit={this.handleSubmit}>
                 <pre style={{position:'absolute',right:250 + 'px'}}>{JSON.stringify(this.props, null, 2)}</pre>
 
-                <input type="text" value={this.state.title} onChange={this.handleTitleChange}/>
-                <input type="text" value={this.state.year} onChange={this.handleYearChange}/>
+                <input type="text" value={this.state.title} onChange={this.handleChange.bind(this, "title")}/>
+                <input type="text" value={this.state.year} onChange={this.handleChange.bind(this, "year")}/>
 
                 <br/><br/>
                 <MultipleInputs inputs={this.state.directors} inputsGroup="directors"
-                                onMultipleInputChange={this.handleMultipleInputChange.bind(null, "directors")}/>
+                                onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>
 
                 <br/><br/>
                 <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>

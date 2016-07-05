@@ -22,17 +22,23 @@ module.exports = React.createClass({
             this.setState({[field]: ['']});
             this.props.onMultipleInputChange(['']);
         } else {
-            this.state[field].push('');
+            var nextState = this.state;
+            nextState[field].push('');
+            this.setState(nextState);
         }
     },
     removeField: function (newValue, field) {
+        var nextState = this.state;
+
         var index = this.state[field].indexOf(newValue);
         if (index > -1) {
-            this.state[field].splice(index, 1);
+            nextState[field].splice(index, 1);
         }
-        if (this.state[field].length == 0) {
+        if (nextState[field].length == 0) {
             this.props.onMultipleInputChange(undefined);
         }
+
+        this.setState(nextState);
     },
 
     render: function () {
@@ -44,7 +50,7 @@ module.exports = React.createClass({
                     <div>
                         <input type="text" value={input} key={this.props.inputsGroup + '-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i)}/>
-                        <button onClick={this.removeField.bind(null, input, this.props.inputsGroup)}>Remove</button>
+                        <button type="button" onClick={this.removeField.bind(this, input, this.props.inputsGroup)}>Remove</button>
                     </div>
                 );
             }, this);
@@ -55,7 +61,7 @@ module.exports = React.createClass({
         return (
             <div className="multipleInputs">
                 {forms}
-                <button onClick={this.addField.bind(null, this.props.inputsGroup)}>Add</button>
+                <button type="button" onClick={this.addField.bind(this, this.props.inputsGroup)}>Add</button>
             </div>
         );
     }
