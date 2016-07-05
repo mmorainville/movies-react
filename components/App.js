@@ -1,6 +1,7 @@
 var React = require('react');
 var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
+var SemanticDropbdown = require('./SemanticDropdown');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -19,6 +20,7 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
+                <SemanticDropbdown/>
                 <MovieForm movie={this.state.selectedMovie} onCommentSubmit={this.handleCommentSubmit}/>
                 <MovieList url="http://localhost:3000/movies" onMovieClick={this.handleMovieClick}/>
             </div>
