@@ -62,31 +62,45 @@ module.exports = React.createClass({
     },
 
     handleViewingChange: function (viewings) {
-        if (viewings.length == 0) {
-            delete this.state.viewings;
+        if (viewings == undefined) {
+            var newState = this.state;
+            delete newState.viewings;
+            this.setState(newState, function () {
+                this.props.onCommentSubmit(this.state);
+            });
         } else {
-            this.setState({viewings: viewings});
+            this.setState({viewings: viewings}, function () {
+                this.props.onCommentSubmit(this.state);
+            });
         }
     },
 
     render: function () {
         return (
-            <form className="commentForm" onSubmit={this.handleSubmit}>
+            <div>
                 <pre style={{position:'absolute',right:250 + 'px'}}>{JSON.stringify(this.props, null, 2)}</pre>
+                <form className="movieForm ui form" onSubmit={this.handleSubmit}>
 
-                <input type="text" value={this.state.title} onChange={this.handleChange.bind(this, "title")}/>
-                <input type="text" value={this.state.year} onChange={this.handleChange.bind(this, "year")}/>
+                    <div className="inline fields">
+                        <div className="field">
+                            <label>Title</label>
+                            <input type="text" value={this.state.title}
+                                   onChange={this.handleChange.bind(this, "title")}/>
+                        </div>
+                        <input type="text" value={this.state.year} onChange={this.handleChange.bind(this, "year")}/>
+                    </div>
 
-                <br/><br/>
-                <MultipleInputs inputs={this.state.directors} inputsGroup="directors"
-                                onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>
+                    <br/><br/>
+                    <MultipleInputs inputs={this.state.directors} inputsGroup="directors"
+                                    onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>
 
-                <br/><br/>
-                <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>
+                    <br/><br/>
+                    <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>
 
-                <br/>
-                <input type="submit" value="Post"/>
-            </form>
+                    <br/>
+                    <input type="submit" value="Post"/>
+                </form>
+            </div>
         );
     }
 });

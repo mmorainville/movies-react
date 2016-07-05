@@ -4,7 +4,7 @@
 var React = require('react');
 var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
-var SemanticDropbdown = require('./SemanticDropdown');
+var SemanticDropdown = require('./SemanticDropdown');
 
 module.exports = React.createClass({
     displayName: 'exports',
@@ -31,9 +31,36 @@ module.exports = React.createClass({
         return React.createElement(
             'div',
             null,
-            React.createElement(SemanticDropbdown, { onResultSelect: this.handleResultSelect }),
-            React.createElement(MovieForm, { movie: this.state.selectedMovie, onCommentSubmit: this.handleCommentSubmit }),
-            React.createElement(MovieList, { url: 'http://localhost:3000/movies', onMovieClick: this.handleMovieClick })
+            React.createElement(
+                'div',
+                { className: 'ui borderless inverted main menu' },
+                React.createElement(
+                    'div',
+                    { className: 'ui container' },
+                    React.createElement(
+                        'a',
+                        { href: '#', className: 'header item' },
+                        React.createElement('img', { className: 'logo', src: 'public/images/logo.png' }),
+                        'Movies'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'right menu' },
+                        React.createElement(
+                            'a',
+                            { href: '#', className: 'item' },
+                            'Login'
+                        )
+                    )
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: 'ui grid' },
+                React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect }),
+                React.createElement(MovieForm, { movie: this.state.selectedMovie, onCommentSubmit: this.handleCommentSubmit }),
+                React.createElement(MovieList, { url: 'http://localhost:3000/movies', onMovieClick: this.handleMovieClick })
+            )
         );
     }
 });
@@ -108,33 +135,58 @@ module.exports = React.createClass({
     },
 
     handleViewingChange: function handleViewingChange(viewings) {
-        if (viewings.length == 0) {
+        if (viewings == undefined) {
+            var newState = this.state;
+            delete newState.viewings;
+            this.setState(newState, function () {
+                this.props.onCommentSubmit(this.state);
+            });
             delete this.state.viewings;
         } else {
-            this.setState({ viewings: viewings });
+            this.setState({ viewings: viewings }, function () {
+                this.props.onCommentSubmit(this.state);
+            });
         }
     },
 
     render: function render() {
         return React.createElement(
-            'form',
-            { className: 'commentForm', onSubmit: this.handleSubmit },
+            'div',
+            null,
             React.createElement(
                 'pre',
                 { style: { position: 'absolute', right: 250 + 'px' } },
                 JSON.stringify(this.props, null, 2)
             ),
-            React.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleChange.bind(this, "title") }),
-            React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleChange.bind(this, "year") }),
-            React.createElement('br', null),
-            React.createElement('br', null),
-            React.createElement(MultipleInputs, { inputs: this.state.directors, inputsGroup: 'directors',
-                onMultipleInputChange: this.handleMultipleInputChange.bind(this, "directors") }),
-            React.createElement('br', null),
-            React.createElement('br', null),
-            React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
-            React.createElement('br', null),
-            React.createElement('input', { type: 'submit', value: 'Post' })
+            React.createElement(
+                'form',
+                { className: 'movieForm ui form', onSubmit: this.handleSubmit },
+                React.createElement(
+                    'div',
+                    { className: 'inline fields' },
+                    React.createElement(
+                        'div',
+                        { className: 'field' },
+                        React.createElement(
+                            'label',
+                            null,
+                            'Title'
+                        ),
+                        React.createElement('input', { type: 'text', value: this.state.title,
+                            onChange: this.handleChange.bind(this, "title") })
+                    ),
+                    React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleChange.bind(this, "year") })
+                ),
+                React.createElement('br', null),
+                React.createElement('br', null),
+                React.createElement(MultipleInputs, { inputs: this.state.directors, inputsGroup: 'directors',
+                    onMultipleInputChange: this.handleMultipleInputChange.bind(this, "directors") }),
+                React.createElement('br', null),
+                React.createElement('br', null),
+                React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
+                React.createElement('br', null),
+                React.createElement('input', { type: 'submit', value: 'Post' })
+            )
         );
     }
 });
@@ -431,12 +483,22 @@ module.exports = React.createClass({
         } else {
             newViewings.push({});
         }
-        this.props.onViewingChange(newViewings);
+        this.setState({ viewings: newViewings }, function () {
+            this.props.onViewingChange(this.state.viewings);
+        });
     },
     removeViewing: function removeViewing(index) {
         var newViewings = this.state.viewings;
         newViewings.splice(index, 1);
-        this.props.onViewingChange(newViewings);
+        if (newViewings.length == 0) {
+            this.setState({ viewings: undefined }, function () {
+                this.props.onViewingChange(undefined);
+            });
+        } else {
+            this.setState({ viewings: newViewings }, function () {
+                this.props.onViewingChange(newViewings);
+            });
+        }
     },
 
     render: function render() {
@@ -455,7 +517,7 @@ module.exports = React.createClass({
                     ),
                     React.createElement(
                         'button',
-                        { onClick: this.removeViewing.bind(null, i) },
+                        { type: 'button', onClick: this.removeViewing.bind(null, i) },
                         'Remove viewing'
                     ),
                     React.createElement('input', { type: 'text', value: this.state.viewings[i].cinema, key: 'cinema-' + i,

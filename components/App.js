@@ -1,7 +1,7 @@
 var React = require('react');
 var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
-var SemanticDropbdown = require('./SemanticDropdown');
+var SemanticDropdown = require('./SemanticDropdown');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -25,9 +25,24 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <SemanticDropbdown onResultSelect={this.handleResultSelect}/>
-                <MovieForm movie={this.state.selectedMovie} onCommentSubmit={this.handleCommentSubmit}/>
-                <MovieList url="http://localhost:3000/movies" onMovieClick={this.handleMovieClick}/>
+                <div className="ui borderless inverted main menu">
+                    <div className="ui container">
+                        <a href="#" className="header item">
+                            <img className="logo" src="public/images/logo.png"/>
+                            Movies
+                        </a>
+
+                        <div className="right menu">
+                            <a href="#" className="item">Login</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="ui grid">
+                    <SemanticDropdown onResultSelect={this.handleResultSelect}/>
+                    <MovieForm movie={this.state.selectedMovie} onCommentSubmit={this.handleCommentSubmit}/>
+                    <MovieList url="http://localhost:3000/movies" onMovieClick={this.handleMovieClick}/>
+                </div>
             </div>
         );
     }

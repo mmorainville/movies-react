@@ -1,0 +1,25 @@
+.main.menu {
+    border-radius: 0;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2) !important;
+    margin-bottom: 1rem;
+}
+
+.main.menu .item img.logo {
+    margin-right: 1.5em;
+}
+
+/* ----------
+   movie-list
+   ---------- */
+
+.el-filter {
+    padding-top: 2rem !important;
+}
+
+/* ----------
+   login
+   ---------- */
+
+.el-login.column {
+    max-width: 450px;
+}

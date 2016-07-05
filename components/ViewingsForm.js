@@ -38,12 +38,22 @@ module.exports = React.createClass({
         } else {
             newViewings.push({});
         }
-        this.props.onViewingChange(newViewings);
+        this.setState({viewings: newViewings}, function () {
+            this.props.onViewingChange(this.state.viewings);
+        });
     },
     removeViewing: function (index) {
         var newViewings = this.state.viewings;
         newViewings.splice(index, 1);
-        this.props.onViewingChange(newViewings);
+        if (newViewings.length == 0) {
+            this.setState({viewings: undefined}, function () {
+                this.props.onViewingChange(undefined);
+            });
+        } else {
+            this.setState({viewings: newViewings}, function () {
+                this.props.onViewingChange(newViewings);
+            });
+        }
     },
 
     render: function () {
@@ -54,7 +64,7 @@ module.exports = React.createClass({
                 return (
                     <div>
                         <h2>Viewing #{i}</h2>
-                        <button onClick={this.removeViewing.bind(null, i)}>Remove viewing</button>
+                        <button type="button" onClick={this.removeViewing.bind(null, i)}>Remove viewing</button>
                         <input type="text" value={this.state.viewings[i].cinema} key={'cinema-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)}/>
                         <input type="text" value={this.state.viewings[i].date} key={'date-' + i}
