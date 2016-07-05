@@ -22,11 +22,17 @@ module.exports = React.createClass({
         // console.log(movie);
     },
 
+    handleResultSelect: function handleResultSelect(movie) {
+        // Maybe use React.addons here to merge the new state with the current state
+        this.setState({ selectedMovie: movie });
+        // console.log(movie);
+    },
+
     render: function render() {
         return React.createElement(
             'div',
             null,
-            React.createElement(SemanticDropbdown, null),
+            React.createElement(SemanticDropbdown, { onResultSelect: this.handleResultSelect }),
             React.createElement(MovieForm, { movie: this.state.selectedMovie, onCommentSubmit: this.handleCommentSubmit }),
             React.createElement(MovieList, { url: 'http://localhost:3000/movies', onMovieClick: this.handleMovieClick })
         );
@@ -304,6 +310,7 @@ module.exports = React.createClass({
                         response.results.push({
                             title: item.title,
                             description: item.year,
+                            directors: item.directors,
                             id: item.id
                         });
                     });
@@ -312,10 +319,11 @@ module.exports = React.createClass({
                 url: 'http://localhost:3000/movies?q={query}'
             },
             onSelect: function onSelect(result, response) {
-                console.log(result);
+                // console.log(result);
                 _this.setState(result);
-                console.log("---");
-                console.log(_this.state);
+                _this.props.onResultSelect(result);
+                // console.log("---");
+                // console.log(this.state);
             }
         });
     },

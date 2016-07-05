@@ -23,6 +23,7 @@ module.exports = React.createClass({
                             response.results.push({
                                 title: item.title,
                                 description: item.year,
+                                directors: item.directors,
                                 id: item.id
                             });
                         });
@@ -31,10 +32,11 @@ module.exports = React.createClass({
                     url: 'http://localhost:3000/movies?q={query}'
                 },
                 onSelect: (result, response) => {
-                    console.log(result);
+                    // console.log(result);
                     this.setState(result);
-                    console.log("---");
-                    console.log(this.state);
+                    this.props.onResultSelect(result);
+                    // console.log("---");
+                    // console.log(this.state);
                 }
             })
         ;
