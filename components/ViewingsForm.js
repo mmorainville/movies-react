@@ -62,12 +62,12 @@ module.exports = React.createClass({
             forms = this.state.viewings.map(function (viewing, i) {
                 // console.log(viewing);
                 return (
-                    <div>
+                    <div key={i}>
                         <h2>Viewing #{i}</h2>
                         <button type="button" onClick={this.removeViewing.bind(null, i)}>Remove viewing</button>
-                        <input type="text" value={this.state.viewings[i].cinema} key={'cinema-' + i}
+                        <input type="text" key={'cinema-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)}/>
-                        <input type="text" value={this.state.viewings[i].date} key={'date-' + i}
+                        <input type="text" key={'date-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, "date", i)}/>
                         <br/>
                         <strong>Spectators</strong>

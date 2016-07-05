@@ -10,7 +10,7 @@ module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
-        return { selectedMovie: { title: "Init" } };
+        return { selectedMovie: {} };
     },
 
     handleMovieClick: function handleMovieClick(movie) {
@@ -78,7 +78,7 @@ module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
-        return this.props.movie;
+        return { title: "Init", year: "2015" };
     },
     handleChange: function handleChange(field, e) {
         this.setState(_defineProperty({}, field, e.target.value), function () {
@@ -141,7 +141,6 @@ module.exports = React.createClass({
             this.setState(newState, function () {
                 this.props.onCommentSubmit(this.state);
             });
-            delete this.state.viewings;
         } else {
             this.setState({ viewings: viewings }, function () {
                 this.props.onCommentSubmit(this.state);
@@ -331,7 +330,7 @@ module.exports = React.createClass({
                 // console.log(viewing);
                 return React.createElement(
                     'div',
-                    null,
+                    { key: i },
                     React.createElement('input', { type: 'text', value: input, key: this.props.inputsGroup + '-' + i,
                         onChange: this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i) }),
                     React.createElement(
@@ -508,7 +507,7 @@ module.exports = React.createClass({
                 // console.log(viewing);
                 return React.createElement(
                     'div',
-                    null,
+                    { key: i },
                     React.createElement(
                         'h2',
                         null,
@@ -520,9 +519,9 @@ module.exports = React.createClass({
                         { type: 'button', onClick: this.removeViewing.bind(null, i) },
                         'Remove viewing'
                     ),
-                    React.createElement('input', { type: 'text', value: this.state.viewings[i].cinema, key: 'cinema-' + i,
+                    React.createElement('input', { type: 'text', key: 'cinema-' + i,
                         onChange: this.handleSimpleFieldChange.bind(null, "cinema", i) }),
-                    React.createElement('input', { type: 'text', value: this.state.viewings[i].date, key: 'date-' + i,
+                    React.createElement('input', { type: 'text', key: 'date-' + i,
                         onChange: this.handleSimpleFieldChange.bind(null, "date", i) }),
                     React.createElement('br', null),
                     React.createElement(

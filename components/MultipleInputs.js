@@ -47,7 +47,7 @@ module.exports = React.createClass({
             forms = this.state[this.props.inputsGroup].map(function (input, i) {
                 // console.log(viewing);
                 return (
-                    <div>
+                    <div key={i}>
                         <input type="text" value={input} key={this.props.inputsGroup + '-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i)}/>
                         <button type="button" onClick={this.removeField.bind(this, input, this.props.inputsGroup)}>Remove</button>

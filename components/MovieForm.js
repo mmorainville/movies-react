@@ -4,7 +4,7 @@ var MultipleInputs = require('./MultipleInputs');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return this.props.movie;
+        return {title: "Init", year: "2015"};
     },
     handleChange: function (field, e) {
         this.setState({[field]: e.target.value}, function () {

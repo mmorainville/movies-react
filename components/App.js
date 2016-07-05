@@ -5,7 +5,7 @@ var SemanticDropdown = require('./SemanticDropdown');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {selectedMovie: {title:"Init"}};
+        return {selectedMovie: {}};
     },
 
     handleMovieClick: function (movie) {
