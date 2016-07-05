@@ -19,13 +19,12 @@ module.exports = React.createClass({
 
     handleCommentSubmit: function handleCommentSubmit(movie) {
         this.setState({ selectedMovie: movie });
-        // console.log(movie);
     },
 
     handleResultSelect: function handleResultSelect(movie) {
         // Maybe use React.addons here to merge the new state with the current state
+        // and delete the "description" field
         this.setState({ selectedMovie: movie });
-        // console.log(movie);
     },
 
     render: function render() {
@@ -66,6 +65,26 @@ module.exports = React.createClass({
             return;
         }
         this.props.onCommentSubmit(this.state);
+
+        delete this.state.id;
+        console.log("POST");
+
+        $.ajax({
+            url: 'http://localhost:3000/movies',
+            dataType: 'json',
+            cache: false,
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log("success");
+                // this.setState({data: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this),
+            data: JSON.stringify(this.state)
+        });
+
         this.setState({});
     },
     componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
