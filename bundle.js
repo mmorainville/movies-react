@@ -377,24 +377,27 @@ module.exports = React.createClass({
         var _this = this;
 
         $(ReactDOM.findDOMNode(this.refs.uiSearch)).search({
+            dataType: 'jsonp',
             apiSettings: {
                 onResponse: function onResponse(res) {
-                    console.log(res);
+                    // console.log(res);
                     var response = {
                         results: []
                     };
                     // translate github api response to work with dropdown
-                    $.each(res, function (index, item) {
+                    $.each(res.results, function (index, item) {
+                        // console.log(item);
                         response.results.push({
                             title: item.title,
-                            description: item.year,
-                            directors: item.directors,
+                            description: item.release_date.split('-')[0],
+                            year: item.release_date.split('-')[0],
+                            poster: item.poster_path,
                             id: item.id
                         });
                     });
                     return response;
                 },
-                url: 'http://localhost:3000/movies?q={query}'
+                url: 'http://api.themoviedb.org/3/search/movie?query={query}&api_key=abe00801c2dc570aee01aeaf512a2e77&language=fr'
             },
             onSelect: function onSelect(result, response) {
                 // console.log(result);
@@ -411,6 +414,9 @@ module.exports = React.createClass({
 
 
     render: function render() {
+        var posterUrl = "https://image.tmdb.org/t/p/w500" + this.state.poster;
+        var poster = this.state.poster ? React.createElement('img', { src: posterUrl }) : "No image";
+
         return React.createElement(
             'div',
             null,
@@ -432,6 +438,11 @@ module.exports = React.createClass({
                     'pre',
                     null,
                     JSON.stringify(this.state, null, 2)
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'ui tiny image' },
+                    poster
                 )
             )
         );
