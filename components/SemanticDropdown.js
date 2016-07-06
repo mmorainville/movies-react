@@ -23,7 +23,6 @@ module.exports = React.createClass({
                             response.results.push({
                                 title: item.title,
                                 description: item.release_date.split('-')[0],
-                                year: item.release_date.split('-')[0],
                                 poster: item.poster_path,
                                 id: item.id
                             });
@@ -34,8 +33,14 @@ module.exports = React.createClass({
                 },
                 onSelect: (result, response) => {
                     // console.log(result);
-                    this.setState(result);
-                    this.props.onResultSelect(result);
+                    var selectedMovie = {
+                        title: result.title,
+                        year: result.description,
+                        poster: result.poster
+                    };
+
+                    this.setState(selectedMovie);
+                    this.props.onResultSelect(selectedMovie);
                     // console.log("---");
                     // console.log(this.state);
                 }

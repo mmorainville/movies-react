@@ -390,7 +390,6 @@ module.exports = React.createClass({
                         response.results.push({
                             title: item.title,
                             description: item.release_date.split('-')[0],
-                            year: item.release_date.split('-')[0],
                             poster: item.poster_path,
                             id: item.id
                         });
@@ -401,8 +400,14 @@ module.exports = React.createClass({
             },
             onSelect: function onSelect(result, response) {
                 // console.log(result);
-                _this.setState(result);
-                _this.props.onResultSelect(result);
+                var selectedMovie = {
+                    title: result.title,
+                    year: result.description,
+                    poster: result.poster
+                };
+
+                _this.setState(selectedMovie);
+                _this.props.onResultSelect(selectedMovie);
                 // console.log("---");
                 // console.log(this.state);
             }
@@ -530,9 +535,10 @@ module.exports = React.createClass({
                         { type: 'button', onClick: this.removeViewing.bind(null, i) },
                         'Remove viewing'
                     ),
-                    React.createElement('input', { type: 'text', key: 'cinema-' + i,
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', key: 'cinema-' + i, value: this.state.viewings[i].cinema,
                         onChange: this.handleSimpleFieldChange.bind(null, "cinema", i) }),
-                    React.createElement('input', { type: 'text', key: 'date-' + i,
+                    React.createElement('input', { type: 'text', key: 'date-' + i, value: this.state.viewings[i].date,
                         onChange: this.handleSimpleFieldChange.bind(null, "date", i) }),
                     React.createElement('br', null),
                     React.createElement(
