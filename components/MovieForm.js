@@ -34,7 +34,7 @@ module.exports = React.createClass({
             dataType: 'json',
             cache: false,
             type: 'post',
-            contentType:"application/json; charset=utf-8",
+            contentType: "application/json; charset=utf-8",
             success: function (data) {
                 console.log("success");
                 // this.setState({data: data});
@@ -83,8 +83,7 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div>
-                <pre style={{position:'absolute',right:250 + 'px'}}>{JSON.stringify(this.props, null, 2)}</pre>
+            <div className="ui grid">
                 <form className="movieForm ui form" onSubmit={this.handleSubmit}>
 
                     <div className="field">
@@ -115,6 +114,8 @@ module.exports = React.createClass({
                     <br/>
                     <input type="submit" value="Post"/>
                 </form>
+
+                <pre>{JSON.stringify(this.props, null, 2)}</pre>
             </div>
         );
     }

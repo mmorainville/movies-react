@@ -155,12 +155,7 @@ module.exports = React.createClass({
     render: function render() {
         return React.createElement(
             'div',
-            null,
-            React.createElement(
-                'pre',
-                { style: { position: 'absolute', right: 250 + 'px' } },
-                JSON.stringify(this.props, null, 2)
-            ),
+            { className: 'ui grid' },
             React.createElement(
                 'form',
                 { className: 'movieForm ui form', onSubmit: this.handleSubmit },
@@ -208,6 +203,11 @@ module.exports = React.createClass({
                 React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
                 React.createElement('br', null),
                 React.createElement('input', { type: 'submit', value: 'Post' })
+            ),
+            React.createElement(
+                'pre',
+                null,
+                JSON.stringify(this.props, null, 2)
             )
         );
     }
@@ -248,35 +248,70 @@ var Movie = React.createClass({
     },
 
     render: function render() {
-        var directors = this.props.movie.directors.map(function (director) {
-            return React.createElement(
-                "span",
-                { key: director },
-                director,
-                ","
-            );
-        });
+        var directorsList = this.props.movie.directors.map(function (director) {
+            return director;
+        }).join(", ");
+
+        var directors = React.createElement(
+            "span",
+            null,
+            directorsList
+        );
+
+        var posterUrl = "https://image.tmdb.org/t/p/w500" + this.props.movie.poster;
+        var poster = this.props.movie.poster ? React.createElement(
+            "div",
+            { className: "ui tiny image" },
+            React.createElement("img", { className: "ui tiny image", src: posterUrl })
+        ) : undefined;
 
         return React.createElement(
             "div",
-            { className: "movie" },
+            { className: "movie ui card" },
+            poster,
             React.createElement(
-                "h2",
-                { className: "movieTitle" },
+                "div",
+                { className: "content" },
                 React.createElement(
-                    "a",
-                    { href: "javascript:undefined", onClick: this.handleMovieClick },
-                    this.props.movie.title,
-                    "(",
-                    this.props.movie.year,
-                    ")"
+                    "div",
+                    { className: "header" },
+                    React.createElement(
+                        "a",
+                        { href: "javascript:undefined", onClick: this.handleMovieClick },
+                        this.props.movie.title,
+                        "(",
+                        this.props.movie.year,
+                        ")"
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "meta" },
+                    directors
                 )
             ),
-            directors,
             React.createElement(
-                "button",
-                { type: "button", onClick: this.handleRemoveMovie.bind(null, this.props.movie.id) },
-                "Remove movie"
+                "div",
+                { className: "description" },
+                React.createElement(
+                    "a",
+                    { className: "ui basic button" },
+                    "See details"
+                )
+            ),
+            React.createElement(
+                "div",
+                { className: "extra content" },
+                React.createElement(
+                    "div",
+                    { className: "ui two buttons" },
+                    React.createElement(
+                        "div",
+                        { className: "ui basic red button",
+                            onClick: this.handleRemoveMovie.bind(null, this.props.movie.id) },
+                        "Remove"
+                    )
+                )
             )
         );
     }
@@ -322,13 +357,22 @@ module.exports = React.createClass({
         var self = this;
 
         var movieNodes = this.state.data.map(function (movie) {
-            return React.createElement(Movie, { movie: movie, key: movie.id, onMovieClick: self.handleMovieClick, onRemoveMovie: self.handleRemoveMovie });
+            return React.createElement(Movie, { movie: movie, key: movie.id, onMovieClick: self.handleMovieClick,
+                onRemoveMovie: self.handleRemoveMovie });
         });
 
         return React.createElement(
             "div",
-            { className: "movieList" },
-            movieNodes
+            null,
+            React.createElement(
+                "div",
+                { className: "movieList row centered" },
+                React.createElement(
+                    "div",
+                    { className: "ui stackable centered cards" },
+                    movieNodes
+                )
+            )
         );
     }
 });
