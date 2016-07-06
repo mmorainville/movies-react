@@ -14,7 +14,7 @@ module.exports = React.createClass({
             newState[field] = e.target.value;
         }
         this.setState(newState, function () {
-            this.props.onCommentSubmit(this.state);
+            this.props.onMovieSubmit(this.state);
         });
     },
     handleSubmit: function (e) {
@@ -24,7 +24,8 @@ module.exports = React.createClass({
         if (!year || !title) {
             return;
         }
-        this.props.onCommentSubmit(this.state);
+
+        this.props.onMovieSubmit(this.state);
 
         // delete this.state.id;
         console.log("POST");
@@ -37,6 +38,8 @@ module.exports = React.createClass({
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 console.log("success");
+                // In case of success, we reset the form
+                this.props.onMovieSubmit({title: "Init2", year: "2015"});
                 // this.setState({data: data});
             }.bind(this),
             error: function (xhr, status, err) {
@@ -48,7 +51,8 @@ module.exports = React.createClass({
         this.setState({});
     },
     componentWillReceiveProps: function (nextProps) {
-        this.setState(nextProps.movie);
+        console.log(nextProps);
+        this.replaceState(nextProps.movie);
     },
 
 
@@ -63,7 +67,7 @@ module.exports = React.createClass({
         }
 
         this.setState(newState, function () {
-            this.props.onCommentSubmit(this.state);
+            this.props.onMovieSubmit(this.state);
         });
     },
 
@@ -72,11 +76,11 @@ module.exports = React.createClass({
             var newState = this.state;
             delete newState.viewings;
             this.setState(newState, function () {
-                this.props.onCommentSubmit(this.state);
+                this.props.onMovieSubmit(this.state);
             });
         } else {
             this.setState({viewings: viewings}, function () {
-                this.props.onCommentSubmit(this.state);
+                this.props.onMovieSubmit(this.state);
             });
         }
     },

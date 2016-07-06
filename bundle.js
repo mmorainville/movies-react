@@ -14,11 +14,11 @@ module.exports = React.createClass({
     },
 
     handleMovieClick: function handleMovieClick(movie) {
-        this.setState({ selectedMovie: movie });
+        this.replaceState({ selectedMovie: movie });
     },
 
-    handleCommentSubmit: function handleCommentSubmit(movie) {
-        this.setState({ selectedMovie: movie });
+    handleMovieSubmit: function handleMovieSubmit(movie) {
+        this.replaceState({ selectedMovie: movie });
     },
 
     handleResultSelect: function handleResultSelect(movie) {
@@ -58,7 +58,7 @@ module.exports = React.createClass({
                 'div',
                 { className: 'ui grid' },
                 React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect }),
-                React.createElement(MovieForm, { movie: this.state.selectedMovie, onCommentSubmit: this.handleCommentSubmit }),
+                React.createElement(MovieForm, { movie: this.state.selectedMovie, onMovieSubmit: this.handleMovieSubmit }),
                 React.createElement(MovieList, { url: 'http://localhost:3000/movies', onMovieClick: this.handleMovieClick })
             )
         );
@@ -86,7 +86,7 @@ module.exports = React.createClass({
             newState[field] = e.target.value;
         }
         this.setState(newState, function () {
-            this.props.onCommentSubmit(this.state);
+            this.props.onMovieSubmit(this.state);
         });
     },
     handleSubmit: function handleSubmit(e) {
@@ -96,7 +96,8 @@ module.exports = React.createClass({
         if (!year || !title) {
             return;
         }
-        this.props.onCommentSubmit(this.state);
+
+        this.props.onMovieSubmit(this.state);
 
         // delete this.state.id;
         console.log("POST");
@@ -109,6 +110,8 @@ module.exports = React.createClass({
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 console.log("success");
+                // In case of success, we reset the form
+                this.props.onMovieSubmit({ title: "Init2", year: "2015" });
                 // this.setState({data: data});
             }.bind(this),
             error: function (xhr, status, err) {
@@ -120,7 +123,8 @@ module.exports = React.createClass({
         this.setState({});
     },
     componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-        this.setState(nextProps.movie);
+        console.log(nextProps);
+        this.replaceState(nextProps.movie);
     },
 
     handleMultipleInputChange: function handleMultipleInputChange(field, newValue) {
@@ -134,7 +138,7 @@ module.exports = React.createClass({
         }
 
         this.setState(newState, function () {
-            this.props.onCommentSubmit(this.state);
+            this.props.onMovieSubmit(this.state);
         });
     },
 
@@ -143,11 +147,11 @@ module.exports = React.createClass({
             var newState = this.state;
             delete newState.viewings;
             this.setState(newState, function () {
-                this.props.onCommentSubmit(this.state);
+                this.props.onMovieSubmit(this.state);
             });
         } else {
             this.setState({ viewings: viewings }, function () {
-                this.props.onCommentSubmit(this.state);
+                this.props.onMovieSubmit(this.state);
             });
         }
     },
@@ -363,7 +367,7 @@ module.exports = React.createClass({
 
         return React.createElement(
             "div",
-            null,
+            { style: { 'margin-top': 25 + 'px' } },
             React.createElement(
                 "div",
                 { className: "movieList row centered" },

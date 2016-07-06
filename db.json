@@ -3,7 +3,7 @@
     {
       "id": 1,
       "title": "Test1",
-      "year": "2015",
+      "year": 2015,
       "directors": [
         "George",
         "TestDirector"
@@ -14,7 +14,8 @@
           "date": "2016",
           "spectators": [
             "spec1",
-            "spec2"
+            "spec2",
+            "spec3"
           ]
         }
       ]
@@ -36,6 +37,23 @@
           "date": "2015"
         }
       ]
+    },
+    {
+      "title": "Matrix",
+      "poster": "/LCcZvB2Ynxg7JOQgviGwZ3l66L.jpg",
+      "directors": [
+        "The Wachowskis"
+      ],
+      "id": 3,
+      "viewings": [
+        {
+          "cinema": "Metz",
+          "cities": [
+            "Metz!!"
+          ]
+        }
+      ],
+      "year": 1999
     }
   ],
   "comments": [

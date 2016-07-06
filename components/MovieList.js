@@ -113,7 +113,7 @@ module.exports = React.createClass({
         });
 
         return (
-            <div>
+            <div style={{'margin-top':25 + 'px'}}>
                 <div className="movieList row centered">
                     <div className="ui stackable centered cards">
                         {movieNodes}

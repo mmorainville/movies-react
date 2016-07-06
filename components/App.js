@@ -9,11 +9,11 @@ module.exports = React.createClass({
     },
 
     handleMovieClick: function (movie) {
-        this.setState({selectedMovie: movie});
+        this.replaceState({selectedMovie: movie});
     },
 
-    handleCommentSubmit: function (movie) {
-        this.setState({selectedMovie: movie});
+    handleMovieSubmit: function (movie) {
+        this.replaceState({selectedMovie: movie});
     },
 
     handleResultSelect: function (movie) {
@@ -40,7 +40,7 @@ module.exports = React.createClass({
 
                 <div className="ui grid">
                     <SemanticDropdown onResultSelect={this.handleResultSelect}/>
-                    <MovieForm movie={this.state.selectedMovie} onCommentSubmit={this.handleCommentSubmit}/>
+                    <MovieForm movie={this.state.selectedMovie} onMovieSubmit={this.handleMovieSubmit}/>
                     <MovieList url="http://localhost:3000/movies" onMovieClick={this.handleMovieClick}/>
                 </div>
             </div>
