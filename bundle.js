@@ -203,6 +203,27 @@ var Movie = React.createClass({
         this.props.onMovieClick(this.props.movie);
     },
 
+    handleRemoveMovie: function handleRemoveMovie(movieToDeleteId) {
+        console.log("DELETE " + movieToDeleteId);
+
+        // this.props.onRemoveMovie();
+
+        $.ajax({
+            url: 'http://localhost:3000/movies/' + movieToDeleteId,
+            dataType: 'json',
+            cache: false,
+            type: 'delete',
+            success: function (data) {
+                console.log("success");
+                this.props.onRemoveMovie();
+                // this.setState({data: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
+
     render: function render() {
         var directors = this.props.movie.directors.map(function (director) {
             return React.createElement(
@@ -228,7 +249,12 @@ var Movie = React.createClass({
                     ")"
                 )
             ),
-            directors
+            directors,
+            React.createElement(
+                "button",
+                { type: "button", onClick: this.handleRemoveMovie.bind(null, this.props.movie.id) },
+                "Remove movie"
+            )
         );
     }
 });
@@ -241,6 +267,21 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function componentDidMount() {
+        console.log("Fetch movie list");
+        this.getMovieList();
+    },
+
+    handleMovieClick: function handleMovieClick(movie) {
+        this.props.onMovieClick(movie);
+    },
+
+    handleRemoveMovie: function handleRemoveMovie() {
+        // Same call as in componentDidMount
+        console.log("Update after remove");
+        this.getMovieList();
+    },
+
+    getMovieList: function getMovieList() {
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -254,15 +295,11 @@ module.exports = React.createClass({
         });
     },
 
-    handleMovieClick: function handleMovieClick(movie) {
-        this.props.onMovieClick(movie);
-    },
-
     render: function render() {
         var self = this;
 
         var movieNodes = this.state.data.map(function (movie) {
-            return React.createElement(Movie, { movie: movie, key: movie.id, onMovieClick: self.handleMovieClick });
+            return React.createElement(Movie, { movie: movie, key: movie.id, onMovieClick: self.handleMovieClick, onRemoveMovie: self.handleRemoveMovie });
         });
 
         return React.createElement(
