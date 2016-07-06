@@ -352,6 +352,7 @@ module.exports = React.createClass({
         var index = this.state[field].indexOf(newValue);
         if (index > -1) {
             nextState[field].splice(index, 1);
+            this.props.onMultipleInputChange(nextState[field]);
         }
         if (nextState[field].length == 0) {
             this.props.onMultipleInputChange(undefined);
