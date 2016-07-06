@@ -123,7 +123,6 @@ module.exports = React.createClass({
         this.setState({});
     },
     componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
         this.replaceState(nextProps.movie);
     },
 
@@ -367,7 +366,7 @@ module.exports = React.createClass({
 
         return React.createElement(
             "div",
-            { style: { 'margin-top': 25 + 'px' } },
+            { style: { marginTop: 25 + 'px' } },
             React.createElement(
                 "div",
                 { className: "movieList row centered" },
@@ -515,6 +514,8 @@ module.exports = React.createClass({
                     poster: result.poster
                 };
 
+                _this.getDirectorsFromMovie(result.id);
+
                 _this.setState(selectedMovie);
                 _this.props.onResultSelect(selectedMovie);
                 // console.log("---");
@@ -524,6 +525,37 @@ module.exports = React.createClass({
     },
     componentDidUpdate: function componentDidUpdate() {
         $(ReactDOM.findDOMNode(this.refs.uiSearch)).search('refresh');
+    },
+    getDirectorsFromMovie: function getDirectorsFromMovie(movieId) {
+        $.ajax({
+            url: 'http://api.themoviedb.org/3/movie/' + movieId + '/credits?api_key=abe00801c2dc570aee01aeaf512a2e77',
+            dataType: 'jsonp',
+            cache: false,
+            type: 'get',
+            success: function (data) {
+                console.log("success");
+                // In case of success, we reset the form
+                this.getDirectorsFromCrew(data.crew);
+                // this.setState({data: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
+    getDirectorsFromCrew: function getDirectorsFromCrew(crew) {
+        var movieDirectors = [];
+        crew.forEach(function (person) {
+            if (person.job === "Director") {
+                movieDirectors.push(person.name);
+            }
+        }, this);
+
+        if (movieDirectors.length > 0) {
+            this.setState({ directors: movieDirectors }, function () {
+                this.props.onResultSelect(this.state);
+            });
+        }
     },
 
 

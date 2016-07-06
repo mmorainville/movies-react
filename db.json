@@ -40,20 +40,13 @@
     },
     {
       "title": "Matrix",
+      "year": 1999,
       "poster": "/LCcZvB2Ynxg7JOQgviGwZ3l66L.jpg",
       "directors": [
-        "The Wachowskis"
+        "Andy Wachowski",
+        "Larry Wachowski"
       ],
-      "id": 3,
-      "viewings": [
-        {
-          "cinema": "Metz",
-          "cities": [
-            "Metz!!"
-          ]
-        }
-      ],
-      "year": 1999
+      "id": 3
     }
   ],
   "comments": [

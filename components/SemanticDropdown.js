@@ -39,6 +39,8 @@ module.exports = React.createClass({
                         poster: result.poster
                     };
 
+                    this.getDirectorsFromMovie(result.id);
+
                     this.setState(selectedMovie);
                     this.props.onResultSelect(selectedMovie);
                     // console.log("---");
@@ -50,6 +52,39 @@ module.exports = React.createClass({
 
     componentDidUpdate() {
         $(ReactDOM.findDOMNode(this.refs.uiSearch)).search('refresh');
+    },
+
+    getDirectorsFromMovie(movieId) {
+        $.ajax({
+            url: 'http://api.themoviedb.org/3/movie/' + movieId + '/credits?api_key=abe00801c2dc570aee01aeaf512a2e77',
+            dataType: 'jsonp',
+            cache: false,
+            type: 'get',
+            success: function (data) {
+                console.log("success");
+                // In case of success, we reset the form
+                this.getDirectorsFromCrew(data.crew);
+                // this.setState({data: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    getDirectorsFromCrew(crew) {
+        var movieDirectors = [];
+        crew.forEach(function (person) {
+            if (person.job === "Director") {
+                movieDirectors.push(person.name);
+            }
+        }, this);
+
+        if (movieDirectors.length > 0) {
+            this.setState({directors: movieDirectors}, function () {
+                this.props.onResultSelect(this.state);
+            });
+        }
     },
 
     render: function () {

@@ -51,7 +51,6 @@ module.exports = React.createClass({
         this.setState({});
     },
     componentWillReceiveProps: function (nextProps) {
-        console.log(nextProps);
         this.replaceState(nextProps.movie);
     },
 
