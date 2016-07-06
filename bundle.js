@@ -68,8 +68,6 @@ module.exports = React.createClass({
 },{"./MovieForm":2,"./MovieList":3,"./SemanticDropdown":5,"react":177}],2:[function(require,module,exports){
 'use strict';
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var React = require('react');
 var ViewingsForm = require('./ViewingsForm');
 var MultipleInputs = require('./MultipleInputs');
@@ -81,7 +79,13 @@ module.exports = React.createClass({
         return { title: "Init", year: "2015" };
     },
     handleChange: function handleChange(field, e) {
-        this.setState(_defineProperty({}, field, e.target.value), function () {
+        var newState = this.state;
+        if (e.target.value == "") {
+            delete newState[field];
+        } else {
+            newState[field] = e.target.value;
+        }
+        this.setState(newState, function () {
             this.props.onCommentSubmit(this.state);
         });
     },
@@ -94,24 +98,24 @@ module.exports = React.createClass({
         }
         this.props.onCommentSubmit(this.state);
 
-        delete this.state.id;
+        // delete this.state.id;
         console.log("POST");
 
-        // $.ajax({
-        //     url: 'http://localhost:3000/movies',
-        //     dataType: 'json',
-        //     cache: false,
-        //     type: 'post',
-        //     contentType:"application/json; charset=utf-8",
-        //     success: function (data) {
-        //         console.log("success");
-        //         // this.setState({data: data});
-        //     }.bind(this),
-        //     error: function (xhr, status, err) {
-        //         console.error(this.props.url, status, err.toString());
-        //     }.bind(this),
-        //     data: JSON.stringify(this.state)
-        // });
+        $.ajax({
+            url: 'http://localhost:3000/movies',
+            dataType: 'json',
+            cache: false,
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log("success");
+                // this.setState({data: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this),
+            data: JSON.stringify(this.state)
+        });
 
         this.setState({});
     },
@@ -162,6 +166,16 @@ module.exports = React.createClass({
                 { className: 'movieForm ui form', onSubmit: this.handleSubmit },
                 React.createElement(
                     'div',
+                    { className: 'field' },
+                    React.createElement(
+                        'label',
+                        null,
+                        'ID'
+                    ),
+                    React.createElement('input', { type: 'text', value: this.state.id, onChange: this.handleChange.bind(this, "id") })
+                ),
+                React.createElement(
+                    'div',
                     { className: 'inline fields' },
                     React.createElement(
                         'div',
@@ -174,7 +188,16 @@ module.exports = React.createClass({
                         React.createElement('input', { type: 'text', value: this.state.title,
                             onChange: this.handleChange.bind(this, "title") })
                     ),
-                    React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleChange.bind(this, "year") })
+                    React.createElement(
+                        'div',
+                        { className: 'field' },
+                        React.createElement(
+                            'label',
+                            null,
+                            'Year'
+                        ),
+                        React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleChange.bind(this, "year") })
+                    )
                 ),
                 React.createElement('br', null),
                 React.createElement('br', null),

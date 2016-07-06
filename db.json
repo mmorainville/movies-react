@@ -4,25 +4,38 @@
       "id": 1,
       "title": "Test1",
       "year": "2015",
-      "directors": ["George", "TestDirector"],
-      "viewings": [{
-      	"cinema": "Test Cinema",
-      	"date": "2016",
-      	"spectators": ["spec1", "spec2"]
-      }]
+      "directors": [
+        "George",
+        "TestDirector"
+      ],
+      "viewings": [
+        {
+          "cinema": "Test Cinema",
+          "date": "2016",
+          "spectators": [
+            "spec1",
+            "spec2"
+          ]
+        }
+      ]
     },
     {
       "id": 2,
       "title": "Test2",
       "year": "2014",
-      "directors": ["TestDirector"],
-      "viewings": [{
-      	"cinema": "Test Cinema",
-      	"date": "2016"
-      }, {
-      	"cinema": "Test Cinema2",
-      	"date": "2015"
-      }]
+      "directors": [
+        "TestDirector"
+      ],
+      "viewings": [
+        {
+          "cinema": "Test Cinema",
+          "date": "2016"
+        },
+        {
+          "cinema": "Test Cinema2",
+          "date": "2015"
+        }
+      ]
     }
   ],
   "comments": [

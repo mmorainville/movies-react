@@ -7,7 +7,13 @@ module.exports = React.createClass({
         return {title: "Init", year: "2015"};
     },
     handleChange: function (field, e) {
-        this.setState({[field]: e.target.value}, function () {
+        var newState = this.state;
+        if (e.target.value == "") {
+            delete newState[field];
+        } else {
+            newState[field] = e.target.value;
+        }
+        this.setState(newState, function () {
             this.props.onCommentSubmit(this.state);
         });
     },
@@ -20,24 +26,24 @@ module.exports = React.createClass({
         }
         this.props.onCommentSubmit(this.state);
 
-        delete this.state.id;
+        // delete this.state.id;
         console.log("POST");
 
-        // $.ajax({
-        //     url: 'http://localhost:3000/movies',
-        //     dataType: 'json',
-        //     cache: false,
-        //     type: 'post',
-        //     contentType:"application/json; charset=utf-8",
-        //     success: function (data) {
-        //         console.log("success");
-        //         // this.setState({data: data});
-        //     }.bind(this),
-        //     error: function (xhr, status, err) {
-        //         console.error(this.props.url, status, err.toString());
-        //     }.bind(this),
-        //     data: JSON.stringify(this.state)
-        // });
+        $.ajax({
+            url: 'http://localhost:3000/movies',
+            dataType: 'json',
+            cache: false,
+            type: 'post',
+            contentType:"application/json; charset=utf-8",
+            success: function (data) {
+                console.log("success");
+                // this.setState({data: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this),
+            data: JSON.stringify(this.state)
+        });
 
         this.setState({});
     },
@@ -81,13 +87,22 @@ module.exports = React.createClass({
                 <pre style={{position:'absolute',right:250 + 'px'}}>{JSON.stringify(this.props, null, 2)}</pre>
                 <form className="movieForm ui form" onSubmit={this.handleSubmit}>
 
+                    <div className="field">
+                        <label>ID</label>
+                        <input type="text" value={this.state.id} onChange={this.handleChange.bind(this, "id")}/>
+                    </div>
+
                     <div className="inline fields">
                         <div className="field">
                             <label>Title</label>
                             <input type="text" value={this.state.title}
                                    onChange={this.handleChange.bind(this, "title")}/>
                         </div>
-                        <input type="text" value={this.state.year} onChange={this.handleChange.bind(this, "year")}/>
+
+                        <div className="field">
+                            <label>Year</label>
+                            <input type="text" value={this.state.year} onChange={this.handleChange.bind(this, "year")}/>
+                        </div>
                     </div>
 
                     <br/><br/>
