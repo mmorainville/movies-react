@@ -7,9 +7,14 @@ module.exports = React.createClass({
     },
     handleSimpleFieldChange: function (field, i, e) {
         var newViewing = this.state.viewings;
-        newViewing[i][field] = e.target.value;
-        this.setState({viewings: newViewing});
-        this.props.onViewingChange(newViewing);
+        if (e.target.value == "") {
+            delete newViewing[i][field];
+        } else {
+            newViewing[i][field] = e.target.value;
+        }
+        this.setState({viewings: newViewing}, function () {
+            this.props.onViewingChange(newViewing);
+        });
     },
 
     componentWillReceiveProps: function (nextProps) {
