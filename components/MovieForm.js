@@ -1,4 +1,5 @@
 var React = require('react');
+var update = require('react-addons-update');
 var ViewingsForm = require('./ViewingsForm');
 var MultipleInputs = require('./MultipleInputs');
 
@@ -73,9 +74,13 @@ module.exports = React.createClass({
 
     handleViewingChange: function (viewings) {
         if (viewings == undefined) {
-            var newState = this.state;
+            // var newState = this.state;
+            // delete newState.viewings;
+            var newState = update(this.state, {
+                viewings: {$set: undefined}
+            });
             delete newState.viewings;
-            this.setState(newState, function () {
+            this.replaceState(newState, function () {
                 this.props.onMovieSubmit(this.state);
             });
         } else {
@@ -104,7 +109,8 @@ module.exports = React.createClass({
 
                         <div className="field">
                             <label>Year</label>
-                            <input type="number" value={this.state.year} onChange={this.handleChange.bind(this, "year")}/>
+                            <input type="number" value={this.state.year}
+                                   onChange={this.handleChange.bind(this, "year")}/>
                         </div>
                     </div>
 

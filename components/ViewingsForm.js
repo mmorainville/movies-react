@@ -1,4 +1,5 @@
 var React = require('react');
+var update = require('react-addons-update');
 var MultipleInputs = require('./MultipleInputs');
 
 module.exports = React.createClass({
@@ -48,8 +49,9 @@ module.exports = React.createClass({
         });
     },
     removeViewing: function (index) {
-        var newViewings = this.state.viewings;
-        newViewings.splice(index, 1);
+        var newViewings = update(this.state.viewings, {
+            $splice: [[index, 1]]
+        });
         if (newViewings.length == 0) {
             this.setState({viewings: undefined}, function () {
                 this.props.onViewingChange(undefined);
@@ -102,7 +104,8 @@ module.exports = React.createClass({
 
                         <div className="field">
                             <div className="ui checkbox">
-                                <input type="checkbox" key={'dateValidity-' + i} value={this.state.viewings[i].dateValidity}
+                                <input type="checkbox" key={'dateValidity-' + i}
+                                       value={this.state.viewings[i].dateValidity}
                                        onClick={this.handleSimpleFieldChange.bind(null, "dateValidity", i)}/>
                                 <label>Correct date</label>
                             </div>
