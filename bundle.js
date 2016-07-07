@@ -711,7 +711,7 @@ module.exports = React.createClass({
         if (e.target.value == "") {
             delete newViewing[i][field];
         } else {
-            newViewing[i][field] = e.target.value;
+            newViewing[i][field] = e.target.type == "checkbox" ? e.target.checked : e.target.value;
         }
         this.setState({ viewings: newViewing }, function () {
             this.props.onViewingChange(newViewing);
@@ -783,9 +783,23 @@ module.exports = React.createClass({
                     React.createElement('br', null),
                     React.createElement('input', { type: 'text', key: 'cinema-' + i, value: this.state.viewings[i].cinema,
                         onChange: this.handleSimpleFieldChange.bind(null, "cinema", i) }),
-                    React.createElement('input', { type: 'text', key: 'date-' + i, value: this.state.viewings[i].date,
-                        onChange: this.handleSimpleFieldChange.bind(null, "date", i) }),
+                    React.createElement('input', { type: 'text', key: 'filename-' + i, value: this.state.viewings[i].filename,
+                        onChange: this.handleSimpleFieldChange.bind(null, "filename", i) }),
                     React.createElement('br', null),
+                    React.createElement(
+                        'strong',
+                        null,
+                        'Cities'
+                    ),
+                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].cities, inputsGroup: 'cities',
+                        onMultipleInputChange: this.handleMultipleInputChange.bind(null, "cities", i) }),
+                    React.createElement(
+                        'strong',
+                        null,
+                        'Dates'
+                    ),
+                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].dates, inputsGroup: 'dates',
+                        onMultipleInputChange: this.handleMultipleInputChange.bind(null, "dates", i) }),
                     React.createElement(
                         'strong',
                         null,
@@ -794,12 +808,35 @@ module.exports = React.createClass({
                     React.createElement(MultipleInputs, { inputs: this.state.viewings[i].spectators, inputsGroup: 'spectators',
                         onMultipleInputChange: this.handleMultipleInputChange.bind(null, "spectators", i) }),
                     React.createElement(
-                        'strong',
-                        null,
-                        'Cities'
+                        'div',
+                        { className: 'field' },
+                        React.createElement(
+                            'div',
+                            { className: 'ui checkbox' },
+                            React.createElement('input', { type: 'checkbox', key: 'firstTime-' + i, value: this.state.viewings[i].firstTime,
+                                onClick: this.handleSimpleFieldChange.bind(null, "firstTime", i) }),
+                            React.createElement(
+                                'label',
+                                null,
+                                'First time'
+                            )
+                        )
                     ),
-                    React.createElement(MultipleInputs, { inputs: this.state.viewings[i].cities, inputsGroup: 'cities',
-                        onMultipleInputChange: this.handleMultipleInputChange.bind(null, "cities", i) })
+                    React.createElement(
+                        'div',
+                        { className: 'field' },
+                        React.createElement(
+                            'div',
+                            { className: 'ui checkbox' },
+                            React.createElement('input', { type: 'checkbox', key: 'dateValidity-' + i, value: this.state.viewings[i].dateValidity,
+                                onClick: this.handleSimpleFieldChange.bind(null, "dateValidity", i) }),
+                            React.createElement(
+                                'label',
+                                null,
+                                'Correct date'
+                            )
+                        )
+                    )
                 );
             }, this);
         } else {
