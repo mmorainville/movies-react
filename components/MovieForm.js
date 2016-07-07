@@ -2,6 +2,7 @@ var React = require('react');
 var update = require('react-addons-update');
 var ViewingsForm = require('./ViewingsForm');
 var MultipleInputs = require('./MultipleInputs');
+var Highlight = require('./Highlight');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -125,7 +126,8 @@ module.exports = React.createClass({
                     <input type="submit" value="Post"/>
                 </form>
 
-                <pre>{JSON.stringify(this.props, null, 2)}</pre>
+                <Highlight json={this.props.movie}/>
+                {/*<pre>{JSON.stringify(this.props, null, 2)}</pre>*/}
             </div>
         );
     }

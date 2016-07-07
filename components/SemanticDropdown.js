@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Highlight = require('./Highlight');
 
 module.exports = React.createClass({
 
@@ -101,7 +102,8 @@ module.exports = React.createClass({
                 </div>
                 <div>
                     <div className="ui divider"></div>
-                    <pre>{JSON.stringify(this.state, null, 2)}</pre>
+                    <Highlight json={this.state}/>
+                    {/*<pre>{JSON.stringify(this.state, null, 2)}</pre>*/}
                     <div className="ui tiny image">
                         {poster}
                     </div>
