@@ -166,7 +166,7 @@ module.exports = React.createClass({
         if (e.target.value == "") {
             delete newState[field];
         } else {
-            newState[field] = e.target.value;
+            newState[field] = e.target.type == "number" ? parseInt(e.target.value) : e.target.value;
         }
         this.setState(newState, function () {
             this.props.onMovieSubmit(this.state);
@@ -175,7 +175,7 @@ module.exports = React.createClass({
     handleSubmit: function handleSubmit(e) {
         e.preventDefault();
         var title = this.state.title.trim();
-        var year = this.state.year.trim();
+        var year = this.state.year;
         if (!year || !title) {
             return;
         }
@@ -278,7 +278,7 @@ module.exports = React.createClass({
                             null,
                             'Year'
                         ),
-                        React.createElement('input', { type: 'text', value: this.state.year, onChange: this.handleChange.bind(this, "year") })
+                        React.createElement('input', { type: 'number', value: this.state.year, onChange: this.handleChange.bind(this, "year") })
                     )
                 ),
                 React.createElement('br', null),
@@ -609,7 +609,7 @@ module.exports = React.createClass({
                 // console.log(result);
                 var selectedMovie = {
                     title: result.title,
-                    year: result.description,
+                    year: parseInt(result.description),
                     poster: result.poster
                 };
 

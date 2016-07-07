@@ -11,7 +11,7 @@ module.exports = React.createClass({
         if (e.target.value == "") {
             delete newState[field];
         } else {
-            newState[field] = e.target.value;
+            newState[field] = e.target.type == "number" ? parseInt(e.target.value) : e.target.value;
         }
         this.setState(newState, function () {
             this.props.onMovieSubmit(this.state);
@@ -20,7 +20,7 @@ module.exports = React.createClass({
     handleSubmit: function (e) {
         e.preventDefault();
         var title = this.state.title.trim();
-        var year = this.state.year.trim();
+        var year = this.state.year;
         if (!year || !title) {
             return;
         }
@@ -104,7 +104,7 @@ module.exports = React.createClass({
 
                         <div className="field">
                             <label>Year</label>
-                            <input type="text" value={this.state.year} onChange={this.handleChange.bind(this, "year")}/>
+                            <input type="number" value={this.state.year} onChange={this.handleChange.bind(this, "year")}/>
                         </div>
                     </div>
 

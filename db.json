@@ -23,7 +23,7 @@
     {
       "id": 2,
       "title": "Test2",
-      "year": "2014",
+      "year": 2014,
       "directors": [
         "TestDirector"
       ],

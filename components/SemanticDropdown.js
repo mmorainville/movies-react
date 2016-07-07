@@ -35,7 +35,7 @@ module.exports = React.createClass({
                     // console.log(result);
                     var selectedMovie = {
                         title: result.title,
-                        year: result.description,
+                        year: parseInt(result.description),
                         poster: result.poster
                     };
 
