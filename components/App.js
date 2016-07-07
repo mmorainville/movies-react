@@ -5,21 +5,26 @@ var SemanticDropdown = require('./SemanticDropdown');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {selectedMovie: {}};
+        return {selectedMovie: {}, shouldUpdateList: false};
     },
 
     handleMovieClick: function (movie) {
-        this.replaceState({selectedMovie: movie});
+        this.replaceState({selectedMovie: movie, shouldUpdateList: false});
     },
 
     handleMovieSubmit: function (movie) {
-        this.replaceState({selectedMovie: movie});
+        this.replaceState({selectedMovie: movie, shouldUpdateList: false});
     },
 
     handleResultSelect: function (movie) {
         // Maybe use React.addons here to merge the new state with the current state
         // and delete the "description" field
-        this.setState({selectedMovie: movie});
+        this.setState({selectedMovie: movie, shouldUpdateList: false});
+    },
+
+    handleMovieAdd: function () {
+        // console.log("App: handleMovieAdd");
+        this.setState({shouldUpdateList: true})
     },
 
     render: function () {
@@ -40,8 +45,8 @@ module.exports = React.createClass({
 
                 <div className="ui grid">
                     <SemanticDropdown onResultSelect={this.handleResultSelect}/>
-                    <MovieForm movie={this.state.selectedMovie} onMovieSubmit={this.handleMovieSubmit}/>
-                    <MovieList url="http://localhost:3000/movies" onMovieClick={this.handleMovieClick}/>
+                    <MovieForm movie={this.state.selectedMovie} onMovieSubmit={this.handleMovieSubmit} onMovieAdd={this.handleMovieAdd}/>
+                    <MovieList url="http://localhost:3000/movies" shouldUpdateList={this.state.shouldUpdateList} onMovieClick={this.handleMovieClick}/>
                 </div>
             </div>
         );

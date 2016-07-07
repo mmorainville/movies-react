@@ -40,6 +40,7 @@ module.exports = React.createClass({
                 console.log("success");
                 // In case of success, we reset the form
                 this.props.onMovieSubmit({title: "Init2", year: "2015"});
+                this.props.onMovieAdd();
                 // this.setState({data: data});
             }.bind(this),
             error: function (xhr, status, err) {

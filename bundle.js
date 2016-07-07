@@ -10,21 +10,26 @@ module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
-        return { selectedMovie: {} };
+        return { selectedMovie: {}, shouldUpdateList: false };
     },
 
     handleMovieClick: function handleMovieClick(movie) {
-        this.replaceState({ selectedMovie: movie });
+        this.replaceState({ selectedMovie: movie, shouldUpdateList: false });
     },
 
     handleMovieSubmit: function handleMovieSubmit(movie) {
-        this.replaceState({ selectedMovie: movie });
+        this.replaceState({ selectedMovie: movie, shouldUpdateList: false });
     },
 
     handleResultSelect: function handleResultSelect(movie) {
         // Maybe use React.addons here to merge the new state with the current state
         // and delete the "description" field
-        this.setState({ selectedMovie: movie });
+        this.setState({ selectedMovie: movie, shouldUpdateList: false });
+    },
+
+    handleMovieAdd: function handleMovieAdd() {
+        // console.log("App: handleMovieAdd");
+        this.setState({ shouldUpdateList: true });
     },
 
     render: function render() {
@@ -58,8 +63,8 @@ module.exports = React.createClass({
                 'div',
                 { className: 'ui grid' },
                 React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect }),
-                React.createElement(MovieForm, { movie: this.state.selectedMovie, onMovieSubmit: this.handleMovieSubmit }),
-                React.createElement(MovieList, { url: 'http://localhost:3000/movies', onMovieClick: this.handleMovieClick })
+                React.createElement(MovieForm, { movie: this.state.selectedMovie, onMovieSubmit: this.handleMovieSubmit, onMovieAdd: this.handleMovieAdd }),
+                React.createElement(MovieList, { url: 'http://localhost:3000/movies', shouldUpdateList: this.state.shouldUpdateList, onMovieClick: this.handleMovieClick })
             )
         );
     }
@@ -112,6 +117,7 @@ module.exports = React.createClass({
                 console.log("success");
                 // In case of success, we reset the form
                 this.props.onMovieSubmit({ title: "Init2", year: "2015" });
+                this.props.onMovieAdd();
                 // this.setState({data: data});
             }.bind(this),
             error: function (xhr, status, err) {
@@ -340,6 +346,14 @@ module.exports = React.createClass({
         // Same call as in componentDidMount
         console.log("Update after remove");
         this.getMovieList();
+    },
+
+    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        if (nextProps.shouldUpdateList) {
+            console.log("UPDATE MovieList after add");
+            this.getMovieList();
+        }
     },
 
     getMovieList: function getMovieList() {

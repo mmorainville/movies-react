@@ -88,6 +88,14 @@ module.exports = React.createClass({
         this.getMovieList();
     },
 
+    componentWillReceiveProps: function (nextProps) {
+        // console.log(nextProps);
+        if (nextProps.shouldUpdateList) {
+            console.log("UPDATE MovieList after add");
+            this.getMovieList();
+        }
+    },
+
     getMovieList: function () {
         $.ajax({
             url: this.props.url,
