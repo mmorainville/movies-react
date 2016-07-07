@@ -1,5 +1,6 @@
 var React = require('react');
 var $ = require("jquery");
+var FilterMovies = require('./FilterMovies');
 
 var Movie = React.createClass({
     handleMovieClick: function (e) {
@@ -96,6 +97,11 @@ module.exports = React.createClass({
         }
     },
 
+    handleFilterChange: function (filter) {
+        console.log("FILTER!");
+        console.log(filter);
+    },
+
     getMovieList: function () {
         $.ajax({
             url: this.props.url,
@@ -122,6 +128,8 @@ module.exports = React.createClass({
 
         return (
             <div style={{marginTop:25 + 'px'}}>
+                <FilterMovies onFilterChange={this.handleFilterChange}/>
+
                 <div className="movieList row centered">
                     <div className="ui stackable centered cards">
                         {movieNodes}
