@@ -97,14 +97,29 @@ module.exports = React.createClass({
         }
     },
 
-    handleFilterChange: function (filter) {
+    handleFilterChange: function (filters) {
         console.log("FILTER!");
-        console.log(filter);
+        console.log(filters);
+
+        var preparedFilters = [];
+        for (var filter in filters) {
+            // console.log(filter + '_like=' + filters[filter]);
+            preparedFilters.push(filter + '_like=' + filters[filter]);
+        }
+
+        // Build the query params
+        preparedFilters = preparedFilters.map(function (filter) {
+            return filter;
+        }).join("&");
+
+        preparedFilters = preparedFilters == "" ? preparedFilters : "?" + preparedFilters;
+        // console.log(preparedFilters);
+        this.getMovieList(preparedFilters);
     },
 
-    getMovieList: function () {
+    getMovieList: function (filters) {
         $.ajax({
-            url: this.props.url,
+            url: this.props.url + (filters || ""),
             dataType: 'json',
             cache: false,
             success: function (data) {

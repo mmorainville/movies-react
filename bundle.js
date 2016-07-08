@@ -98,7 +98,7 @@ module.exports = React.createClass({
 
     handleSubmit: function handleSubmit(e) {
         e.preventDefault();
-        console.log("SUBMIT FILTER");
+        // console.log("SUBMIT FILTER");
         this.props.onFilterChange(this.state);
     },
 
@@ -469,14 +469,29 @@ module.exports = React.createClass({
         }
     },
 
-    handleFilterChange: function handleFilterChange(filter) {
+    handleFilterChange: function handleFilterChange(filters) {
         console.log("FILTER!");
-        console.log(filter);
+        console.log(filters);
+
+        var preparedFilters = [];
+        for (var filter in filters) {
+            // console.log(filter + '_like=' + filters[filter]);
+            preparedFilters.push(filter + '_like=' + filters[filter]);
+        }
+
+        // Build the query params
+        preparedFilters = preparedFilters.map(function (filter) {
+            return filter;
+        }).join("&");
+
+        preparedFilters = preparedFilters == "" ? preparedFilters : "?" + preparedFilters;
+        // console.log(preparedFilters);
+        this.getMovieList(preparedFilters);
     },
 
-    getMovieList: function getMovieList() {
+    getMovieList: function getMovieList(filters) {
         $.ajax({
-            url: this.props.url,
+            url: this.props.url + (filters || ""),
             dataType: 'json',
             cache: false,
             success: function (data) {

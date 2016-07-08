@@ -21,7 +21,7 @@ module.exports = React.createClass({
 
     handleSubmit: function (e) {
         e.preventDefault();
-        console.log("SUBMIT FILTER");
+        // console.log("SUBMIT FILTER");
         this.props.onFilterChange(this.state);
     },
 
