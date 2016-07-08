@@ -6,7 +6,7 @@ var Highlight = require('./Highlight');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {title: "Init", year: "2015"};
+        return {title: "Init", year: 2015};
     },
     handleChange: function (field, e) {
         var newState = this.state;
@@ -41,7 +41,7 @@ module.exports = React.createClass({
             success: function (data) {
                 console.log("success");
                 // In case of success, we reset the form
-                this.props.onMovieSubmit({title: "Init2", year: "2015"});
+                this.props.onMovieSubmit({title: "Init2", year: 2015});
                 this.props.onMovieAdd();
                 // this.setState({data: data});
             }.bind(this),
@@ -93,7 +93,7 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div className="ui grid">
+            <div>
                 <form className="movieForm ui form" onSubmit={this.handleSubmit}>
 
                     <div className="field">

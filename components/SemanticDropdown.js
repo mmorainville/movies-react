@@ -94,19 +94,15 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <div>
-                    <div className="ui search" ref="uiSearch">
-                        <input className="prompt" placeholder="Common passwords..." type="text"/>
-                        <div className="results"></div>
-                    </div>
+                <div className="ui search" ref="uiSearch">
+                    <input className="prompt" placeholder="Common passwords..." type="text"/>
+                    <div className="results"></div>
                 </div>
                 <div>
-                    <div className="ui divider"></div>
                     <Highlight json={this.state}/>
-                    {/*<pre>{JSON.stringify(this.state, null, 2)}</pre>*/}
-                    <div className="ui tiny image">
-                        {poster}
-                    </div>
+                </div>
+                <div className="ui tiny image">
+                    {poster}
                 </div>
             </div>
         );

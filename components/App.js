@@ -29,8 +29,8 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div>
-                <div className="ui borderless inverted main menu">
+            <div className="el-flex-main-parent">
+                <div className="ui inverted main menu">
                     <div className="ui container">
                         <a href="#" className="header item">
                             <img className="logo" src="public/images/logo.png"/>
@@ -43,10 +43,30 @@ module.exports = React.createClass({
                     </div>
                 </div>
 
-                <div className="ui grid">
-                    <SemanticDropdown onResultSelect={this.handleResultSelect}/>
-                    <MovieForm movie={this.state.selectedMovie} onMovieSubmit={this.handleMovieSubmit} onMovieAdd={this.handleMovieAdd}/>
-                    <MovieList url="http://localhost:3000/movies" shouldUpdateList={this.state.shouldUpdateList} onMovieClick={this.handleMovieClick}/>
+                <div className="main container">
+                    <div className="ui stackable three column grid" style={{flex: 1, margin: 0}}>
+                        <div className="four wide column" style={{backgroundColor:'grey'}}>
+
+                            <SemanticDropdown onResultSelect={this.handleResultSelect}/>
+
+                        </div>
+
+                        <div className="six wide column" style={{backgroundColor:'darkgrey'}}>
+
+                            <MovieForm movie={this.state.selectedMovie}
+                                       onMovieSubmit={this.handleMovieSubmit}
+                                       onMovieAdd={this.handleMovieAdd}/>
+
+                        </div>
+
+                        <div className="six wide column">
+
+                            <MovieList url="http://localhost:3000/movies"
+                                       shouldUpdateList={this.state.shouldUpdateList}
+                                       onMovieClick={this.handleMovieClick}/>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         );

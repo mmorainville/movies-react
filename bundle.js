@@ -35,10 +35,10 @@ module.exports = React.createClass({
     render: function render() {
         return React.createElement(
             'div',
-            null,
+            { className: 'el-flex-main-parent' },
             React.createElement(
                 'div',
-                { className: 'ui borderless inverted main menu' },
+                { className: 'ui inverted main menu' },
                 React.createElement(
                     'div',
                     { className: 'ui container' },
@@ -61,10 +61,30 @@ module.exports = React.createClass({
             ),
             React.createElement(
                 'div',
-                { className: 'ui grid' },
-                React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect }),
-                React.createElement(MovieForm, { movie: this.state.selectedMovie, onMovieSubmit: this.handleMovieSubmit, onMovieAdd: this.handleMovieAdd }),
-                React.createElement(MovieList, { url: 'http://localhost:3000/movies', shouldUpdateList: this.state.shouldUpdateList, onMovieClick: this.handleMovieClick })
+                { className: 'main container' },
+                React.createElement(
+                    'div',
+                    { className: 'ui stackable three column grid', style: { flex: 1, margin: 0 } },
+                    React.createElement(
+                        'div',
+                        { className: 'four wide column', style: { backgroundColor: 'grey' } },
+                        React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'six wide column', style: { backgroundColor: 'darkgrey' } },
+                        React.createElement(MovieForm, { movie: this.state.selectedMovie,
+                            onMovieSubmit: this.handleMovieSubmit,
+                            onMovieAdd: this.handleMovieAdd })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'six wide column' },
+                        React.createElement(MovieList, { url: 'http://localhost:3000/movies',
+                            shouldUpdateList: this.state.shouldUpdateList,
+                            onMovieClick: this.handleMovieClick })
+                    )
+                )
             )
         );
     }
@@ -279,7 +299,7 @@ module.exports = React.createClass({
     render: function render() {
         return React.createElement(
             'div',
-            { className: 'ui grid' },
+            null,
             React.createElement(
                 'form',
                 { className: 'movieForm ui form', onSubmit: this.handleSubmit },
@@ -513,7 +533,7 @@ module.exports = React.createClass({
 
         return React.createElement(
             'div',
-            { style: { marginTop: 25 + 'px' } },
+            null,
             React.createElement(FilterMovies, { onFilterChange: this.handleFilterChange }),
             React.createElement(
                 'div',
@@ -717,24 +737,19 @@ module.exports = React.createClass({
             null,
             React.createElement(
                 'div',
-                null,
-                React.createElement(
-                    'div',
-                    { className: 'ui search', ref: 'uiSearch' },
-                    React.createElement('input', { className: 'prompt', placeholder: 'Common passwords...', type: 'text' }),
-                    React.createElement('div', { className: 'results' })
-                )
+                { className: 'ui search', ref: 'uiSearch' },
+                React.createElement('input', { className: 'prompt', placeholder: 'Common passwords...', type: 'text' }),
+                React.createElement('div', { className: 'results' })
             ),
             React.createElement(
                 'div',
                 null,
-                React.createElement('div', { className: 'ui divider' }),
-                React.createElement(Highlight, { json: this.state }),
-                React.createElement(
-                    'div',
-                    { className: 'ui tiny image' },
-                    poster
-                )
+                React.createElement(Highlight, { json: this.state })
+            ),
+            React.createElement(
+                'div',
+                { className: 'ui tiny image' },
+                poster
             )
         );
     }

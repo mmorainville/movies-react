@@ -142,7 +142,7 @@ module.exports = React.createClass({
         });
 
         return (
-            <div style={{marginTop:25 + 'px'}}>
+            <div>
                 <FilterMovies onFilterChange={this.handleFilterChange}/>
 
                 <div className="movieList row centered">
