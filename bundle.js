@@ -212,7 +212,7 @@ module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
-        return { title: "Init", year: "2015" };
+        return { title: "Init", year: 2015 };
     },
     handleChange: function handleChange(field, e) {
         var newState = this.state;
@@ -247,7 +247,7 @@ module.exports = React.createClass({
             success: function (data) {
                 console.log("success");
                 // In case of success, we reset the form
-                this.props.onMovieSubmit({ title: "Init2", year: "2015" });
+                this.props.onMovieSubmit({ title: "Init2", year: 2015 });
                 this.props.onMovieAdd();
                 // this.setState({data: data});
             }.bind(this),
@@ -305,17 +305,17 @@ module.exports = React.createClass({
                 { className: 'movieForm ui form', onSubmit: this.handleSubmit },
                 React.createElement(
                     'div',
-                    { className: 'field' },
-                    React.createElement(
-                        'label',
-                        null,
-                        'ID'
-                    ),
-                    React.createElement('input', { type: 'text', value: this.state.id, onChange: this.handleChange.bind(this, "id") })
-                ),
-                React.createElement(
-                    'div',
                     { className: 'inline fields' },
+                    React.createElement(
+                        'div',
+                        { className: 'field' },
+                        React.createElement(
+                            'label',
+                            null,
+                            'ID'
+                        ),
+                        React.createElement('input', { type: 'text', value: this.state.id, onChange: this.handleChange.bind(this, "id") })
+                    ),
                     React.createElement(
                         'div',
                         { className: 'field' },
@@ -347,7 +347,7 @@ module.exports = React.createClass({
                 React.createElement('br', null),
                 React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
                 React.createElement('br', null),
-                React.createElement('input', { type: 'submit', value: 'Post' })
+                React.createElement('input', { className: 'ui button', type: 'submit', value: 'Post' })
             ),
             React.createElement(Highlight, { json: this.props.movie })
         );
@@ -401,16 +401,16 @@ var Movie = React.createClass({
         );
 
         var posterUrl = "https://image.tmdb.org/t/p/w500" + this.props.movie.poster;
-        var poster = this.props.movie.poster ? React.createElement(
-            'div',
-            { className: 'ui tiny image' },
-            React.createElement('img', { className: 'ui tiny image', src: posterUrl })
-        ) : undefined;
+        var poster = this.props.movie.poster ? React.createElement('img', { src: posterUrl }) : React.createElement('img', { src: 'public/images/image.png' });
 
         return React.createElement(
             'div',
             { className: 'movie ui card' },
-            poster,
+            React.createElement(
+                'div',
+                { className: 'image' },
+                poster
+            ),
             React.createElement(
                 'div',
                 { className: 'content' },
@@ -421,7 +421,7 @@ var Movie = React.createClass({
                         'a',
                         { href: 'javascript:undefined', onClick: this.handleMovieClick },
                         this.props.movie.title,
-                        '(',
+                        ' (',
                         this.props.movie.year,
                         ')'
                     )
@@ -430,15 +430,6 @@ var Movie = React.createClass({
                     'div',
                     { className: 'meta' },
                     directors
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'description' },
-                React.createElement(
-                    'a',
-                    { className: 'ui basic button' },
-                    'See details'
                 )
             ),
             React.createElement(
@@ -540,7 +531,7 @@ module.exports = React.createClass({
                 { className: 'movieList row centered' },
                 React.createElement(
                     'div',
-                    { className: 'ui stackable centered cards' },
+                    { className: 'ui stackable centered four doubling cards' },
                     movieNodes
                 )
             )
@@ -606,13 +597,14 @@ module.exports = React.createClass({
                 // console.log(viewing);
                 return React.createElement(
                     'div',
-                    { key: i },
+                    { key: i, className: 'ui action input' },
                     React.createElement('input', { type: 'text', value: input, key: this.props.inputsGroup + '-' + i,
                         onChange: this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i) }),
                     React.createElement(
                         'button',
-                        { type: 'button', onClick: this.removeField.bind(this, input, this.props.inputsGroup) },
-                        'Remove'
+                        { type: 'button', className: 'ui icon button',
+                            onClick: this.removeField.bind(this, input, this.props.inputsGroup) },
+                        React.createElement('i', { className: 'remove icon' })
                     )
                 );
             }, this);
@@ -628,10 +620,14 @@ module.exports = React.createClass({
         return React.createElement(
             'div',
             { className: 'multipleInputs' },
-            forms,
+            React.createElement(
+                'div',
+                { className: 'inline fields' },
+                forms
+            ),
             React.createElement(
                 'button',
-                { type: 'button', onClick: this.addField.bind(this, this.props.inputsGroup) },
+                { type: 'button', className: 'ui button', onClick: this.addField.bind(this, this.props.inputsGroup) },
                 'Add'
             )
         );
@@ -840,7 +836,7 @@ module.exports = React.createClass({
                     ),
                     React.createElement(
                         'button',
-                        { type: 'button', onClick: this.removeViewing.bind(null, i) },
+                        { type: 'button', className: 'ui button', onClick: this.removeViewing.bind(null, i) },
                         'Remove viewing'
                     ),
                     React.createElement('br', null),
@@ -917,7 +913,7 @@ module.exports = React.createClass({
             forms,
             React.createElement(
                 'button',
-                { type: 'button', onClick: this.addViewing },
+                { type: 'button', className: 'ui button', onClick: this.addViewing },
                 'Add viewing'
             )
         );

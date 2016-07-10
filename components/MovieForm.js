@@ -96,12 +96,12 @@ module.exports = React.createClass({
             <div>
                 <form className="movieForm ui form" onSubmit={this.handleSubmit}>
 
-                    <div className="field">
-                        <label>ID</label>
-                        <input type="text" value={this.state.id} onChange={this.handleChange.bind(this, "id")}/>
-                    </div>
-
                     <div className="inline fields">
+                        <div className="field">
+                            <label>ID</label>
+                            <input type="text" value={this.state.id} onChange={this.handleChange.bind(this, "id")}/>
+                        </div>
+
                         <div className="field">
                             <label>Title</label>
                             <input type="text" value={this.state.title}
@@ -123,7 +123,7 @@ module.exports = React.createClass({
                     <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>
 
                     <br/>
-                    <input type="submit" value="Post"/>
+                    <input className="ui button" type="submit" value="Post"/>
                 </form>
 
                 <Highlight json={this.props.movie}/>

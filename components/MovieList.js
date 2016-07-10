@@ -37,24 +37,24 @@ var Movie = React.createClass({
 
         var posterUrl = "https://image.tmdb.org/t/p/w500" + this.props.movie.poster;
         var poster = this.props.movie.poster ?
-            <div className="ui tiny image"><img className="ui tiny image" src={posterUrl}/></div> : undefined;
+            <img src={posterUrl}/> :
+            <img src="public/images/image.png"/>;
 
         return (
             <div className="movie ui card">
-                {poster}
+                <div className="image">
+                    {poster}
+                </div>
 
                 <div className="content">
                     <div className="header">
-                        <a href="javascript:undefined" onClick={this.handleMovieClick}>{this.props.movie.title}
-                            ({this.props.movie.year})</a>
+                        <a href="javascript:undefined" onClick={this.handleMovieClick}>
+                            {this.props.movie.title} ({this.props.movie.year})
+                        </a>
                     </div>
                     <div className="meta">
                         {directors}
                     </div>
-                </div>
-
-                <div className="description">
-                    <a className="ui basic button">See details</a>
                 </div>
 
                 <div className="extra content">
@@ -146,7 +146,7 @@ module.exports = React.createClass({
                 <FilterMovies onFilterChange={this.handleFilterChange}/>
 
                 <div className="movieList row centered">
-                    <div className="ui stackable centered cards">
+                    <div className="ui stackable centered four doubling cards">
                         {movieNodes}
                     </div>
                 </div>

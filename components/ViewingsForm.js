@@ -71,7 +71,7 @@ module.exports = React.createClass({
                 return (
                     <div key={i}>
                         <h2>Viewing #{i}</h2>
-                        <button type="button" onClick={this.removeViewing.bind(null, i)}>Remove viewing</button>
+                        <button type="button" className="ui button" onClick={this.removeViewing.bind(null, i)}>Remove viewing</button>
 
                         <br/>
 
@@ -120,7 +120,7 @@ module.exports = React.createClass({
         return (
             <div className="viewingsForm">
                 {forms}
-                <button type="button" onClick={this.addViewing}>Add viewing</button>
+                <button type="button" className="ui button" onClick={this.addViewing}>Add viewing</button>
             </div>
         );
     }

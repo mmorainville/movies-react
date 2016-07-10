@@ -48,10 +48,13 @@ module.exports = React.createClass({
             forms = this.state[this.props.inputsGroup].map(function (input, i) {
                 // console.log(viewing);
                 return (
-                    <div key={i}>
+                    <div key={i} className="ui action input">
                         <input type="text" value={input} key={this.props.inputsGroup + '-' + i}
                                onChange={this.handleSimpleFieldChange.bind(null, this.props.inputsGroup, i)}/>
-                        <button type="button" onClick={this.removeField.bind(this, input, this.props.inputsGroup)}>Remove</button>
+                        <button type="button" className="ui icon button"
+                                onClick={this.removeField.bind(this, input, this.props.inputsGroup)}>
+                            <i className="remove icon"></i>
+                        </button>
                     </div>
                 );
             }, this);
@@ -61,8 +64,10 @@ module.exports = React.createClass({
 
         return (
             <div className="multipleInputs">
+                <div className="inline fields">
                 {forms}
-                <button type="button" onClick={this.addField.bind(this, this.props.inputsGroup)}>Add</button>
+                    </div>
+                <button type="button" className="ui button" onClick={this.addField.bind(this, this.props.inputsGroup)}>Add</button>
             </div>
         );
     }
