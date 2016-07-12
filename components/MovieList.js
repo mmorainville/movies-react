@@ -1,5 +1,7 @@
 var React = require('react');
-var $ = require("jquery");
+var update = require('react-addons-update');
+var ReactDOM = require('react-dom');
+
 var FilterMovies = require('./FilterMovies');
 
 var Movie = React.createClass({
@@ -75,12 +77,34 @@ var Movie = React.createClass({
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {data: []};
+        return {data: [], filters: {limit: 8, skip: 0, order: "title"}};
     },
 
     componentDidMount: function () {
         console.log("Fetch movie list");
         this.getMovieList();
+
+
+
+        var self = this;
+
+        $(ReactDOM.findDOMNode(this.refs.uiInfiniteScroll))
+            .visibility({
+                once: false,
+                // update size when new content loads
+                observeChanges: true,
+                // load content on bottom edge visible
+                onBottomVisible: function() {
+                    // loads a max of 5 times
+                    console.log("SCROLL!!");
+                    var newState = update(self.state, {filters: {skip: {$set: self.state.filters.skip + 8}}});
+                    self.setState(newState, function () {
+                        // console.log(self.state);
+                        self.getMovieList(true);
+                    });
+                }
+            })
+        ;
     },
 
     handleMovieClick: function (movie) {
@@ -105,7 +129,6 @@ module.exports = React.createClass({
         console.log("FILTER!");
         console.log(filters);
 
-        var emptyObject = {"where": {}};
         var preparedFilters = {"where": {}};
         for (var filter in filters) {
             // console.log(filter + '_like=' + filters[filter]);
@@ -116,23 +139,36 @@ module.exports = React.createClass({
             }
         }
 
-        if (JSON.stringify(preparedFilters) == JSON.stringify(emptyObject)) {
-            preparedFilters = "";
-        } else {
-            preparedFilters = "?filter=" + JSON.stringify(preparedFilters);
-        }
+        var newState = update(this.state, {filters: {$merge: preparedFilters, skip: {$set: 0}}});
+
+        this.setState(newState, function () {
+            this.getMovieList();
+        });
 
         // console.log(preparedFilters);
-        this.getMovieList(preparedFilters);
     },
 
-    getMovieList: function (filters) {
+    getMovieList: function (infiniteScroll) {
+        console.log(this.state.filters);
+
+        // if (infiniteScroll) {
+        //     // Do nothing
+        // } else {
+        //     // Reset the skip filter
+        //     var newState = update(this.state, {filters: {skip: {$set: 0}}});
+        // }
+
         $.ajax({
-            url: this.props.url + (filters || ""),
+            url: this.props.url + "?filter=" + JSON.stringify(this.state.filters),
             dataType: 'json',
             cache: false,
             success: function (data) {
-                this.setState({data: data});
+                if(infiniteScroll) {
+                    var newState = update(this.state, {data: {$push: data}});
+                    this.setState(newState);
+                } else {
+                    this.setState({data: data});
+                }
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -143,9 +179,9 @@ module.exports = React.createClass({
     render: function () {
         var self = this;
 
-        var movieNodes = this.state.data.map(function (movie) {
+        var movieNodes = this.state.data.map(function (movie, i) {
             return (
-                <Movie movie={movie} key={movie.id} onMovieClick={self.handleMovieClick}
+                <Movie movie={movie} key={i} onMovieClick={self.handleMovieClick}
                        onRemoveMovie={self.handleRemoveMovie}/>
             );
         });
@@ -155,10 +191,12 @@ module.exports = React.createClass({
                 <FilterMovies onFilterChange={this.handleFilterChange}/>
 
                 <div className="movieList row centered">
-                    <div className="ui stackable centered four doubling cards">
+                    <div className="ui stackable centered four doubling cards" ref="uiInfiniteScroll">
                         {movieNodes}
                     </div>
                 </div>
+
+                <div className="ui active centered inline loader"></div>
             </div>
         );
     }
