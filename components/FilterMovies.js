@@ -11,7 +11,7 @@ module.exports = React.createClass({
         if (e.target.value == "") {
             delete newState[field];
         } else {
-            newState[field] = e.target.value;
+            newState[field] = e.target.type == "number" ? parseInt(e.target.value) : e.target.value;
         }
 
         this.setState(newState, function () {
@@ -39,7 +39,7 @@ module.exports = React.createClass({
 
                         <div className="field">
                             <label>Year</label>
-                            <input type="text" onChange={this.handleChange.bind(this, "year")}/>
+                            <input type="number" onChange={this.handleChange.bind(this, "year")}/>
                         </div>
 
                         <button className="ui button" type="submit">Submit</button>

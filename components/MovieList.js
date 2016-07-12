@@ -13,12 +13,12 @@ var Movie = React.createClass({
         // this.props.onRemoveMovie();
 
         $.ajax({
-            url: 'http://localhost:3000/movies/' + movieToDeleteId,
+            url: 'http://localhost:3000/api/movies/' + movieToDeleteId,
             dataType: 'json',
             cache: false,
             type: 'delete',
             success: function (data) {
-                console.log("success");
+                console.log("success DELETE");
                 this.props.onRemoveMovie();
                 // this.setState({data: data});
             }.bind(this),
@@ -29,9 +29,13 @@ var Movie = React.createClass({
     },
 
     render: function () {
-        var directorsList = this.props.movie.directors.map(function (director) {
-            return director;
-        }).join(", ");
+        var directorsList = [];
+
+        if (this.props.movie.directors != undefined) {
+            directorsList = this.props.movie.directors.map(function (director) {
+                return director;
+            }).join(", ");
+        }
 
         var directors = <span>{directorsList}</span>;
 
@@ -101,18 +105,23 @@ module.exports = React.createClass({
         console.log("FILTER!");
         console.log(filters);
 
-        var preparedFilters = [];
+        var emptyObject = {"where": {}};
+        var preparedFilters = {"where": {}};
         for (var filter in filters) {
             // console.log(filter + '_like=' + filters[filter]);
-            preparedFilters.push(filter + '_like=' + filters[filter]);
+            if (filter == "title") {
+                preparedFilters.where[filter] = {"like": filters[filter], "options": "i"};
+            } else {
+                preparedFilters.where[filter] = filters[filter];
+            }
         }
 
-        // Build the query params
-        preparedFilters = preparedFilters.map(function (filter) {
-            return filter;
-        }).join("&");
+        if (JSON.stringify(preparedFilters) == JSON.stringify(emptyObject)) {
+            preparedFilters = "";
+        } else {
+            preparedFilters = "?filter=" + JSON.stringify(preparedFilters);
+        }
 
-        preparedFilters = preparedFilters == "" ? preparedFilters : "?" + preparedFilters;
         // console.log(preparedFilters);
         this.getMovieList(preparedFilters);
     },

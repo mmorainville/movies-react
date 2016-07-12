@@ -61,7 +61,7 @@ module.exports = React.createClass({
 
                         <div className="six wide column">
 
-                            <MovieList url="http://localhost:3000/movies"
+                            <MovieList url="http://localhost:3000/api/movies"
                                        shouldUpdateList={this.state.shouldUpdateList}
                                        onMovieClick={this.handleMovieClick}/>
 

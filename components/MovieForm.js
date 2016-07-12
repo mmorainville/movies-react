@@ -27,16 +27,17 @@ module.exports = React.createClass({
             return;
         }
 
-        this.props.onMovieSubmit(this.state);
+        // this.props.onMovieSubmit(this.state);
 
         // delete this.state.id;
+
         console.log("POST");
 
         $.ajax({
-            url: 'http://localhost:3000/movies',
+            url: 'http://localhost:3000/api/movies',
             dataType: 'json',
             cache: false,
-            type: 'post',
+            type: 'put',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 console.log("success");
