@@ -114,14 +114,20 @@ module.exports = React.createClass({
     handleRemoveMovie: function () {
         // Same call as in componentDidMount
         console.log("Update after remove");
-        this.getMovieList();
+        var newState = update(this.state, {filters: {skip: {$set: 0}}});
+        this.setState(newState, function () {
+            this.getMovieList();
+        });
     },
 
     componentWillReceiveProps: function (nextProps) {
         // console.log(nextProps);
         if (nextProps.shouldUpdateList) {
             console.log("UPDATE MovieList after add");
-            this.getMovieList();
+            var newState = update(this.state, {filters: {skip: {$set: 0}}});
+            this.setState(newState, function () {
+                this.getMovieList();
+            });
         }
     },
 
@@ -140,7 +146,6 @@ module.exports = React.createClass({
         }
 
         var newState = update(this.state, {filters: {$merge: preparedFilters, skip: {$set: 0}}});
-
         this.setState(newState, function () {
             this.getMovieList();
         });
