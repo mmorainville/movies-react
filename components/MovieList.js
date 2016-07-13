@@ -138,7 +138,7 @@ module.exports = React.createClass({
         var preparedFilters = {"where": {}};
         for (var filter in filters) {
             // console.log(filter + '_like=' + filters[filter]);
-            if (filter == "title") {
+            if (filter == "title" || filter == "viewings.spectators") {
                 preparedFilters.where[filter] = {"like": filters[filter], "options": "i"};
             } else {
                 preparedFilters.where[filter] = filters[filter];

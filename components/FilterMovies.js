@@ -42,6 +42,11 @@ module.exports = React.createClass({
                             <input type="number" onChange={this.handleChange.bind(this, "year")}/>
                         </div>
 
+                        <div className="field">
+                            <label>Seen with</label>
+                            <input type="text" onChange={this.handleChange.bind(this, "viewings.spectators")}/>
+                        </div>
+
                         <button className="ui button" type="submit">Submit</button>
                     </div>
                 </form>

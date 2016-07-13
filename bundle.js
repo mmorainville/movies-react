@@ -158,6 +158,16 @@ module.exports = React.createClass({
                         React.createElement("input", { type: "number", onChange: this.handleChange.bind(this, "year") })
                     ),
                     React.createElement(
+                        "div",
+                        { className: "field" },
+                        React.createElement(
+                            "label",
+                            null,
+                            "Seen with"
+                        ),
+                        React.createElement("input", { type: "text", onChange: this.handleChange.bind(this, "viewings.spectators") })
+                    ),
+                    React.createElement(
                         "button",
                         { className: "ui button", type: "submit" },
                         "Submit"
@@ -518,7 +528,7 @@ module.exports = React.createClass({
         var preparedFilters = { "where": {} };
         for (var filter in filters) {
             // console.log(filter + '_like=' + filters[filter]);
-            if (filter == "title") {
+            if (filter == "title" || filter == "viewings.spectators") {
                 preparedFilters.where[filter] = { "like": filters[filter], "options": "i" };
             } else {
                 preparedFilters.where[filter] = filters[filter];
@@ -526,7 +536,6 @@ module.exports = React.createClass({
         }
 
         var newState = update(this.state, { filters: { $merge: preparedFilters, skip: { $set: 0 } } });
-
         this.setState(newState, function () {
             this.getMovieList();
         });
