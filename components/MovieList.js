@@ -85,7 +85,6 @@ module.exports = React.createClass({
         this.getMovieList();
 
 
-
         var self = this;
 
         $(ReactDOM.findDOMNode(this.refs.uiInfiniteScroll))
@@ -94,7 +93,7 @@ module.exports = React.createClass({
                 // update size when new content loads
                 observeChanges: true,
                 // load content on bottom edge visible
-                onBottomVisible: function() {
+                onBottomVisible: function () {
                     // loads a max of 5 times
                     console.log("SCROLL!!");
                     var newState = update(self.state, {filters: {skip: {$set: self.state.filters.skip + 8}}});
@@ -129,6 +128,16 @@ module.exports = React.createClass({
                 this.getMovieList();
             });
         }
+    },
+
+    handleSortOrderChange: function (order) {
+        console.log("ORDER!");
+        console.log(order);
+
+        var newState = update(this.state, {filters: {skip: {$set: 0}, order: {$set: order}}});
+        this.setState(newState, function () {
+            this.getMovieList();
+        });
     },
 
     handleFilterChange: function (filters) {
@@ -168,7 +177,7 @@ module.exports = React.createClass({
             dataType: 'json',
             cache: false,
             success: function (data) {
-                if(infiniteScroll) {
+                if (infiniteScroll) {
                     var newState = update(this.state, {data: {$push: data}});
                     this.setState(newState);
                 } else {
@@ -193,7 +202,7 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <FilterMovies onFilterChange={this.handleFilterChange}/>
+                <FilterMovies onFilterChange={this.handleFilterChange} onSortOrderChange={this.handleSortOrderChange}/>
 
                 <div className="movieList row centered">
                     <div className="ui stackable centered four doubling cards" ref="uiInfiniteScroll">

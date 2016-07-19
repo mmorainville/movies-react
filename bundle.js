@@ -122,6 +122,11 @@ module.exports = React.createClass({
         this.props.onFilterChange(this.state);
     },
 
+    handleSortOrderChange: function handleSortOrderChange(e) {
+        // console.log(e.target.value);
+        this.props.onSortOrderChange(e.target.value);
+    },
+
     render: function render() {
         return React.createElement(
             "div",
@@ -171,6 +176,33 @@ module.exports = React.createClass({
                         "button",
                         { className: "ui button", type: "submit" },
                         "Submit"
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "inline fields" },
+                    React.createElement(
+                        "div",
+                        { className: "field" },
+                        React.createElement(
+                            "label",
+                            null,
+                            "Sort order"
+                        ),
+                        React.createElement(
+                            "select",
+                            { className: "ui fluid dropdown", onChange: this.handleSortOrderChange },
+                            React.createElement(
+                                "option",
+                                { value: "title" },
+                                "Title (default)"
+                            ),
+                            React.createElement(
+                                "option",
+                                { value: "year" },
+                                "Release date ASC"
+                            )
+                        )
                     )
                 )
             )
@@ -521,6 +553,16 @@ module.exports = React.createClass({
         }
     },
 
+    handleSortOrderChange: function handleSortOrderChange(order) {
+        console.log("ORDER!");
+        console.log(order);
+
+        var newState = update(this.state, { filters: { skip: { $set: 0 }, order: { $set: order } } });
+        this.setState(newState, function () {
+            this.getMovieList();
+        });
+    },
+
     handleFilterChange: function handleFilterChange(filters) {
         console.log("FILTER!");
         console.log(filters);
@@ -582,7 +624,7 @@ module.exports = React.createClass({
         return React.createElement(
             'div',
             null,
-            React.createElement(FilterMovies, { onFilterChange: this.handleFilterChange }),
+            React.createElement(FilterMovies, { onFilterChange: this.handleFilterChange, onSortOrderChange: this.handleSortOrderChange }),
             React.createElement(
                 'div',
                 { className: 'movieList row centered' },

@@ -25,6 +25,11 @@ module.exports = React.createClass({
         this.props.onFilterChange(this.state);
     },
 
+    handleSortOrderChange: function (e) {
+        // console.log(e.target.value);
+        this.props.onSortOrderChange(e.target.value);
+    },
+
 
     render: function () {
         return (
@@ -48,6 +53,16 @@ module.exports = React.createClass({
                         </div>
 
                         <button className="ui button" type="submit">Submit</button>
+                    </div>
+
+                    <div className="inline fields">
+                        <div className="field">
+                            <label>Sort order</label>
+                            <select className="ui fluid dropdown" onChange={this.handleSortOrderChange}>
+                                <option value="title">Title (default)</option>
+                                <option value="year">Release date ASC</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
