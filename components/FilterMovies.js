@@ -61,6 +61,7 @@ module.exports = React.createClass({
                             <select className="ui fluid dropdown" onChange={this.handleSortOrderChange}>
                                 <option value="title">Title (default)</option>
                                 <option value="year">Release date ASC</option>
+                                <option value="viewings.dates DESC">First viewing's dates DESC</option>
                             </select>
                         </div>
                     </div>

@@ -201,6 +201,11 @@ module.exports = React.createClass({
                                 "option",
                                 { value: "year" },
                                 "Release date ASC"
+                            ),
+                            React.createElement(
+                                "option",
+                                { value: "viewings.dates DESC" },
+                                "First viewing's dates DESC"
                             )
                         )
                     )
@@ -380,6 +385,21 @@ module.exports = React.createClass({
                         ),
                         React.createElement('input', { type: 'number', value: this.state.year,
                             onChange: this.handleChange.bind(this, "year") })
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'inline fields' },
+                    React.createElement(
+                        'div',
+                        { className: 'field' },
+                        React.createElement(
+                            'label',
+                            null,
+                            'Poster'
+                        ),
+                        React.createElement('input', { type: 'text', value: this.state.poster,
+                            onChange: this.handleChange.bind(this, "poster") })
                     )
                 ),
                 React.createElement('br', null),

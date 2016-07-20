@@ -116,6 +116,14 @@ module.exports = React.createClass({
                         </div>
                     </div>
 
+                    <div className="inline fields">
+                        <div className="field">
+                            <label>Poster</label>
+                            <input type="text" value={this.state.poster}
+                                   onChange={this.handleChange.bind(this, "poster")}/>
+                        </div>
+                    </div>
+
                     <br/><br/>
                     <MultipleInputs inputs={this.state.directors} inputsGroup="directors"
                                     onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>
