@@ -89,13 +89,14 @@ module.exports = React.createClass({
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var React = require('react');
+var update = require('react-addons-update');
 var ReactDOM = require('react-dom');
 
 module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
-        return { email: "", password: "" };
+        return { authenticationForm: { email: "", password: "" }, error: "" };
     },
 
     componentDidMount: function componentDidMount() {
@@ -104,7 +105,9 @@ module.exports = React.createClass({
 
 
     handleChange: function handleChange(field, e) {
-        this.setState(_defineProperty({}, field, e.target.value));
+        var newState = update(this.state, { authenticationForm: _defineProperty({}, field, { $set: e.target.value }), error: { $set: "" } });
+        console.log(newState);
+        this.setState(newState);
     },
 
     handleSubmit: function handleSubmit(e) {
@@ -127,8 +130,11 @@ module.exports = React.createClass({
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error("login", status, err.toString());
+                this.setState({
+                    error: err.toString()
+                });
             }.bind(this),
-            data: JSON.stringify(this.state)
+            data: JSON.stringify(this.state.authenticationForm)
         });
     },
 
@@ -146,7 +152,7 @@ module.exports = React.createClass({
                 { className: 'ui right dropdown item', ref: 'dropdown' },
                 'Login',
                 React.createElement('i', { className: 'dropdown icon' }),
-                React.createElement(
+                localStorage.getItem('access_token') == undefined ? React.createElement(
                     'div',
                     { className: 'menu' },
                     React.createElement('div', { className: 'item' }),
@@ -177,10 +183,31 @@ module.exports = React.createClass({
                         ),
                         React.createElement(
                             'div',
+                            { className: 'ui negative message' },
+                            React.createElement(
+                                'p',
+                                null,
+                                this.state.error
+                            )
+                        ),
+                        React.createElement(
+                            'div',
                             { className: 'ui fluid large teal submit button', onClick: this.handleSubmit },
                             'Login'
-                        ),
-                        React.createElement('div', { className: 'ui error message' })
+                        )
+                    )
+                ) : React.createElement(
+                    'div',
+                    { className: 'menu' },
+                    React.createElement(
+                        'div',
+                        { className: 'item' },
+                        React.createElement(
+                            'p',
+                            null,
+                            'Logged in! ',
+                            localStorage.getItem('access_token')
+                        )
                     )
                 )
             )
@@ -188,7 +215,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react":345,"react-dom":204}],3:[function(require,module,exports){
+},{"react":345,"react-addons-update":203,"react-dom":204}],3:[function(require,module,exports){
 "use strict";
 
 var React = require('react');

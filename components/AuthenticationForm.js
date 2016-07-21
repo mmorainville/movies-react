@@ -1,9 +1,10 @@
 var React = require('react');
+var update = require('react-addons-update');
 var ReactDOM = require('react-dom');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {email: "", password: ""};
+        return {authenticationForm: {email: "", password: ""}, error: ""};
     },
 
     componentDidMount() {
@@ -13,9 +14,9 @@ module.exports = React.createClass({
     },
 
     handleChange: function (field, e) {
-        this.setState({
-            [field]: e.target.value
-        });
+        var newState = update(this.state, {authenticationForm: {[field]: {$set: e.target.value}}, error: {$set: ""}});
+        console.log(newState);
+        this.setState(newState);
     },
 
     handleSubmit: function (e) {
@@ -38,8 +39,11 @@ module.exports = React.createClass({
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error("login", status, err.toString());
+                this.setState({
+                    error: err.toString()
+                })
             }.bind(this),
-            data: JSON.stringify(this.state)
+            data: JSON.stringify(this.state.authenticationForm)
         });
     },
 
@@ -53,28 +57,41 @@ module.exports = React.createClass({
                 <div className="ui right dropdown item" ref="dropdown">
                     Login
                     <i className="dropdown icon"></i>
-                    <div className="menu">
-                        <div className="item"></div>
-                        <form className="ui large form" style={{width: 500 + 'px'}}>
-                            <div className="field">
-                                <div className="ui left icon input">
-                                    <i className="user icon"></i>
-                                    <input type="text" name="email" placeholder="E-mail address"
-                                           onChange={this.handleChange.bind(this, "email")}/>
-                                </div>
-                            </div>
-                            <div className="field">
-                                <div className="ui left icon input">
-                                    <i className="lock icon"></i>
-                                    <input type="password" name="password" placeholder="Password"
-                                           onChange={this.handleChange.bind(this, "password")}/>
-                                </div>
-                            </div>
-                            <div className="ui fluid large teal submit button" onClick={this.handleSubmit}>Login</div>
 
-                            <div className="ui error message"></div>
-                        </form>
-                    </div>
+                    {localStorage.getItem('access_token') == undefined ?
+                        <div className="menu">
+                            <div className="item"></div>
+                            <form className="ui large form" style={{width: 500 + 'px'}}>
+                                <div className="field">
+                                    <div className="ui left icon input">
+                                        <i className="user icon"></i>
+                                        <input type="text" name="email" placeholder="E-mail address"
+                                               onChange={this.handleChange.bind(this, "email")}/>
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <div className="ui left icon input">
+                                        <i className="lock icon"></i>
+                                        <input type="password" name="password" placeholder="Password"
+                                               onChange={this.handleChange.bind(this, "password")}/>
+                                    </div>
+                                </div>
+
+                                <div className="ui negative message">
+                                    <p>{this.state.error}</p>
+                                </div>
+
+                                <div className="ui fluid large teal submit button" onClick={this.handleSubmit}>Login
+                                </div>
+                            </form>
+                        </div>
+                        :
+                        <div className="menu">
+                            <div className="item">
+                                <p>Logged in! {localStorage.getItem('access_token')}</p>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         );
