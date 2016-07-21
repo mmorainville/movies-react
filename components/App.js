@@ -2,6 +2,7 @@ var React = require('react');
 var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
 var SemanticDropdown = require('./SemanticDropdown');
+var AuthenticationForm = require('./AuthenticationForm');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -37,9 +38,7 @@ module.exports = React.createClass({
                             Movies
                         </a>
 
-                        <div className="right menu">
-                            <a href="#" className="item">Login</a>
-                        </div>
+                        <AuthenticationForm/>
                     </div>
                 </div>
 
