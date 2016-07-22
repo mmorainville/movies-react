@@ -33,8 +33,14 @@ module.exports = React.createClass({
 
         console.log("POST");
 
+        // Set token if user is logged in
+        var access_token = "";
+        if (localStorage.getItem('access_token')) {
+            access_token = "?access_token=" + localStorage.getItem('access_token');
+        }
+
         $.ajax({
-            url: 'http://localhost:3000/api/movies',
+            url: 'http://localhost:3000/api/movies' + access_token,
             dataType: 'json',
             cache: false,
             type: 'put',

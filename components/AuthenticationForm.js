@@ -81,7 +81,8 @@ module.exports = React.createClass({
                                     <p>{this.state.error}</p>
                                 </div>
 
-                                <div className="ui fluid large teal submit button" onClick={this.handleSubmit}>Login
+                                <div className="ui fluid large teal submit button" onClick={this.handleSubmit}>
+                                    Login
                                 </div>
                             </form>
                         </div>
@@ -89,6 +90,10 @@ module.exports = React.createClass({
                         <div className="menu">
                             <div className="item">
                                 <p>Logged in! {localStorage.getItem('access_token')}</p>
+                                <div className="ui fluid large teal submit button"
+                                     onClick={localStorage.removeItem('access_token')}>
+                                    Logout
+                                </div>
                             </div>
                         </div>
                     }

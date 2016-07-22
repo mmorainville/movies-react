@@ -207,6 +207,12 @@ module.exports = React.createClass({
                             null,
                             'Logged in! ',
                             localStorage.getItem('access_token')
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'ui fluid large teal submit button',
+                                onClick: localStorage.removeItem('access_token') },
+                            'Logout'
                         )
                     )
                 )
@@ -411,8 +417,14 @@ module.exports = React.createClass({
 
         console.log("POST");
 
+        // Set token if user is logged in
+        var access_token = "";
+        if (localStorage.getItem('access_token')) {
+            access_token = "?access_token=" + localStorage.getItem('access_token');
+        }
+
         $.ajax({
-            url: 'http://localhost:3000/api/movies',
+            url: 'http://localhost:3000/api/movies' + access_token,
             dataType: 'json',
             cache: false,
             type: 'put',
@@ -563,8 +575,14 @@ var Movie = React.createClass({
 
         // this.props.onRemoveMovie();
 
+        // Set token if user is logged in
+        var access_token = "";
+        if (localStorage.getItem('access_token')) {
+            access_token = "?access_token=" + localStorage.getItem('access_token');
+        }
+
         $.ajax({
-            url: 'http://localhost:3000/api/movies/' + movieToDeleteId,
+            url: 'http://localhost:3000/api/movies/' + movieToDeleteId + access_token,
             dataType: 'json',
             cache: false,
             type: 'delete',

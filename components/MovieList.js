@@ -14,8 +14,14 @@ var Movie = React.createClass({
 
         // this.props.onRemoveMovie();
 
+        // Set token if user is logged in
+        var access_token = "";
+        if (localStorage.getItem('access_token')) {
+            access_token = "?access_token=" + localStorage.getItem('access_token');
+        }
+
         $.ajax({
-            url: 'http://localhost:3000/api/movies/' + movieToDeleteId,
+            url: 'http://localhost:3000/api/movies/' + movieToDeleteId + access_token,
             dataType: 'json',
             cache: false,
             type: 'delete',
