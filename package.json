@@ -17,6 +17,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-form": "^5.3.1",
+    "semantic-ui": "^2.2.2",
     "watchify": "^3.7.0"
   },
   "scripts": {
