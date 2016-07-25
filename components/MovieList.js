@@ -83,7 +83,7 @@ var Movie = React.createClass({
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {data: [], filters: {limit: 8, skip: 0, order: "title"}};
+        return {data: [], filters: {limit: 10, skip: 0, order: "title"}};
     },
 
     componentDidMount: function () {
@@ -102,7 +102,7 @@ module.exports = React.createClass({
                 onBottomVisible: function () {
                     // loads a max of 5 times
                     console.log("SCROLL!!");
-                    var newState = update(self.state, {filters: {skip: {$set: self.state.filters.skip + 8}}});
+                    var newState = update(self.state, {filters: {skip: {$set: self.state.filters.skip + 10}}});
                     self.setState(newState, function () {
                         // console.log(self.state);
                         self.getMovieList(true);
@@ -211,7 +211,7 @@ module.exports = React.createClass({
                 <FilterMovies onFilterChange={this.handleFilterChange} onSortOrderChange={this.handleSortOrderChange}/>
 
                 <div className="movieList row centered">
-                    <div className="ui stackable centered four doubling cards" ref="uiInfiniteScroll">
+                    <div className="ui stackable centered five doubling cards" ref="uiInfiniteScroll">
                         {movieNodes}
                     </div>
                 </div>

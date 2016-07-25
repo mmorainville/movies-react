@@ -43,14 +43,12 @@ module.exports = React.createClass({
                 </div>
 
                 <div className="main container">
-                    <div className="ui stackable three column grid" style={{flex: 1, margin: 0}}>
-                        <div className="four wide column" style={{backgroundColor:'grey'}}>
+                    <div className="ui stackable two column grid" style={{flex: 1, margin: 0}}>
+                        <div className="six wide column" style={{backgroundColor:'darkgrey'}}>
 
                             <SemanticDropdown onResultSelect={this.handleResultSelect}/>
 
-                        </div>
-
-                        <div className="six wide column" style={{backgroundColor:'darkgrey'}}>
+                            <div className="ui divider"></div>
 
                             <MovieForm movie={this.state.selectedMovie}
                                        onMovieSubmit={this.handleMovieSubmit}
@@ -58,7 +56,7 @@ module.exports = React.createClass({
 
                         </div>
 
-                        <div className="six wide column">
+                        <div className="ten wide column">
 
                             <MovieList url="http://localhost:3000/api/movies"
                                        shouldUpdateList={this.state.shouldUpdateList}

@@ -57,22 +57,19 @@ module.exports = React.createClass({
                 { className: 'main container' },
                 React.createElement(
                     'div',
-                    { className: 'ui stackable three column grid', style: { flex: 1, margin: 0 } },
-                    React.createElement(
-                        'div',
-                        { className: 'four wide column', style: { backgroundColor: 'grey' } },
-                        React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect })
-                    ),
+                    { className: 'ui stackable two column grid', style: { flex: 1, margin: 0 } },
                     React.createElement(
                         'div',
                         { className: 'six wide column', style: { backgroundColor: 'darkgrey' } },
+                        React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect }),
+                        React.createElement('div', { className: 'ui divider' }),
                         React.createElement(MovieForm, { movie: this.state.selectedMovie,
                             onMovieSubmit: this.handleMovieSubmit,
                             onMovieAdd: this.handleMovieAdd })
                     ),
                     React.createElement(
                         'div',
-                        { className: 'six wide column' },
+                        { className: 'ten wide column' },
                         React.createElement(MovieList, { url: 'http://localhost:3000/api/movies',
                             shouldUpdateList: this.state.shouldUpdateList,
                             onMovieClick: this.handleMovieClick })
@@ -666,7 +663,7 @@ module.exports = React.createClass({
     displayName: 'exports',
 
     getInitialState: function getInitialState() {
-        return { data: [], filters: { limit: 8, skip: 0, order: "title" } };
+        return { data: [], filters: { limit: 10, skip: 0, order: "title" } };
     },
 
     componentDidMount: function componentDidMount() {
@@ -683,7 +680,7 @@ module.exports = React.createClass({
             onBottomVisible: function onBottomVisible() {
                 // loads a max of 5 times
                 console.log("SCROLL!!");
-                var newState = update(self.state, { filters: { skip: { $set: self.state.filters.skip + 8 } } });
+                var newState = update(self.state, { filters: { skip: { $set: self.state.filters.skip + 10 } } });
                 self.setState(newState, function () {
                     // console.log(self.state);
                     self.getMovieList(true);
@@ -793,7 +790,7 @@ module.exports = React.createClass({
                 { className: 'movieList row centered' },
                 React.createElement(
                     'div',
-                    { className: 'ui stackable centered four doubling cards', ref: 'uiInfiniteScroll' },
+                    { className: 'ui stackable centered five doubling cards', ref: 'uiInfiniteScroll' },
                     movieNodes
                 )
             ),
