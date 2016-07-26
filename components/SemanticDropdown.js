@@ -30,7 +30,7 @@ module.exports = React.createClass({
                         });
                         return response;
                     },
-                    url: 'http://api.themoviedb.org/3/search/movie?query={query}&api_key=abe00801c2dc570aee01aeaf512a2e77&language=fr'
+                    url: 'https://api.themoviedb.org/3/search/movie?query={query}&api_key=abe00801c2dc570aee01aeaf512a2e77&language=fr'
                 },
                 onSelect: (result, response) => {
                     // console.log(result);
@@ -57,7 +57,7 @@ module.exports = React.createClass({
 
     getDirectorsFromMovie(movieId) {
         $.ajax({
-            url: 'http://api.themoviedb.org/3/movie/' + movieId + '/credits?api_key=abe00801c2dc570aee01aeaf512a2e77',
+            url: 'https://api.themoviedb.org/3/movie/' + movieId + '/credits?api_key=abe00801c2dc570aee01aeaf512a2e77',
             dataType: 'jsonp',
             cache: false,
             type: 'get',
