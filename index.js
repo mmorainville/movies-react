@@ -4,6 +4,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var App = require('./components/App');
 
+// jQuery and semantic-ui
+var $ = require('jquery');
+window.$ = $;
+window.jQuery = $;
+require('./libs/semantic/dist/semantic');
+
 ReactDOM.render(
     <App/>,
     document.getElementById('container')
