@@ -47,7 +47,7 @@ module.exports = React.createClass({
                 { className: 'ui inverted main menu' },
                 React.createElement(
                     'div',
-                    { className: 'ui container' },
+                    { className: 'ui fluid container' },
                     React.createElement(
                         'a',
                         { href: '#', className: 'header item' },
@@ -65,11 +65,23 @@ module.exports = React.createClass({
             React.createElement(
                 'div',
                 { className: 'ui fullscreen modal segment', ref: 'movieFormModal' },
-                React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect }),
-                React.createElement('div', { className: 'ui divider' }),
-                React.createElement(MovieForm, { movie: this.state.selectedMovie,
-                    onMovieSubmit: this.handleMovieSubmit,
-                    onMovieAdd: this.handleMovieAdd })
+                React.createElement(
+                    'div',
+                    { className: 'ui two column very relaxed grid' },
+                    React.createElement(
+                        'div',
+                        { className: 'four wide column' },
+                        React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect })
+                    ),
+                    React.createElement('div', { className: 'ui vertical divider' }),
+                    React.createElement(
+                        'div',
+                        { className: 'twelve wide column' },
+                        React.createElement(MovieForm, { movie: this.state.selectedMovie,
+                            onMovieSubmit: this.handleMovieSubmit,
+                            onMovieAdd: this.handleMovieAdd })
+                    )
+                )
             ),
             React.createElement(
                 'div',
@@ -141,11 +153,6 @@ module.exports = React.createClass({
         return React.createElement(
             'div',
             { className: 'authenticationForm right menu' },
-            React.createElement(
-                'div',
-                { className: 'ui right item' },
-                localStorage.getItem('access_token')
-            ),
             React.createElement(
                 'div',
                 { className: 'ui right dropdown item', ref: 'dropdown' },
@@ -475,72 +482,81 @@ module.exports = React.createClass({
     render: function render() {
         return React.createElement(
             'div',
-            null,
+            { className: 'ui two column very relaxed grid' },
             React.createElement(
-                'form',
-                { className: 'movieForm ui form', onSubmit: this.handleSubmit },
+                'div',
+                { className: 'ten wide column' },
                 React.createElement(
-                    'div',
-                    { className: 'inline fields' },
+                    'form',
+                    { className: 'movieForm ui form', onSubmit: this.handleSubmit },
                     React.createElement(
                         'div',
-                        { className: 'field' },
+                        { className: 'inline fields' },
                         React.createElement(
-                            'label',
-                            null,
-                            'ID'
+                            'div',
+                            { className: 'field' },
+                            React.createElement(
+                                'label',
+                                null,
+                                'ID'
+                            ),
+                            React.createElement('input', { type: 'text', value: this.state.id, onChange: this.handleChange.bind(this, "id") })
                         ),
-                        React.createElement('input', { type: 'text', value: this.state.id, onChange: this.handleChange.bind(this, "id") })
+                        React.createElement(
+                            'div',
+                            { className: 'field' },
+                            React.createElement(
+                                'label',
+                                null,
+                                'Title'
+                            ),
+                            React.createElement('input', { type: 'text', value: this.state.title,
+                                onChange: this.handleChange.bind(this, "title") })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'field' },
+                            React.createElement(
+                                'label',
+                                null,
+                                'Year'
+                            ),
+                            React.createElement('input', { type: 'number', value: this.state.year,
+                                onChange: this.handleChange.bind(this, "year") })
+                        )
                     ),
                     React.createElement(
                         'div',
-                        { className: 'field' },
+                        { className: 'inline fields' },
                         React.createElement(
-                            'label',
-                            null,
-                            'Title'
-                        ),
-                        React.createElement('input', { type: 'text', value: this.state.title,
-                            onChange: this.handleChange.bind(this, "title") })
+                            'div',
+                            { className: 'field' },
+                            React.createElement(
+                                'label',
+                                null,
+                                'Poster'
+                            ),
+                            React.createElement('input', { type: 'text', value: this.state.poster,
+                                onChange: this.handleChange.bind(this, "poster") })
+                        )
                     ),
-                    React.createElement(
-                        'div',
-                        { className: 'field' },
-                        React.createElement(
-                            'label',
-                            null,
-                            'Year'
-                        ),
-                        React.createElement('input', { type: 'number', value: this.state.year,
-                            onChange: this.handleChange.bind(this, "year") })
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'inline fields' },
-                    React.createElement(
-                        'div',
-                        { className: 'field' },
-                        React.createElement(
-                            'label',
-                            null,
-                            'Poster'
-                        ),
-                        React.createElement('input', { type: 'text', value: this.state.poster,
-                            onChange: this.handleChange.bind(this, "poster") })
-                    )
-                ),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement(MultipleInputs, { inputs: this.state.directors, inputsGroup: 'directors',
-                    onMultipleInputChange: this.handleMultipleInputChange.bind(this, "directors") }),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
-                React.createElement('br', null),
-                React.createElement('input', { className: 'ui button', type: 'submit', value: 'Post' })
+                    React.createElement('br', null),
+                    React.createElement('br', null),
+                    React.createElement(MultipleInputs, { inputs: this.state.directors, inputsGroup: 'directors',
+                        onMultipleInputChange: this.handleMultipleInputChange.bind(this, "directors") }),
+                    React.createElement('br', null),
+                    React.createElement('br', null),
+                    React.createElement(ViewingsForm, { viewings: this.state.viewings, onViewingChange: this.handleViewingChange }),
+                    React.createElement('br', null),
+                    React.createElement('input', { className: 'ui button', type: 'submit', value: 'Post' })
+                )
             ),
-            React.createElement(Highlight, { json: this.props.movie })
+            React.createElement('div', { className: 'ui vertical divider' }),
+            React.createElement(
+                'div',
+                { className: 'six wide column' },
+                React.createElement(Highlight, { json: this.props.movie })
+            )
         );
     }
 });

@@ -39,7 +39,7 @@ module.exports = React.createClass({
         return (
             <div className="el-flex-main-parent">
                 <div className="ui inverted main menu">
-                    <div className="ui container">
+                    <div className="ui fluid container">
                         <a href="#" className="header item">
                             <img className="logo" src="public/images/logo.png"/>
                             Movies
@@ -54,21 +54,25 @@ module.exports = React.createClass({
                 </div>
 
                 <div className="ui fullscreen modal segment" ref="movieFormModal">
-                    <SemanticDropdown onResultSelect={this.handleResultSelect}/>
+                    <div className="ui two column very relaxed grid">
+                        <div className="four wide column">
+                            <SemanticDropdown onResultSelect={this.handleResultSelect}/>
+                        </div>
 
-                    <div className="ui divider"></div>
+                        <div className="ui vertical divider"></div>
 
-                    <MovieForm movie={this.state.selectedMovie}
-                               onMovieSubmit={this.handleMovieSubmit}
-                               onMovieAdd={this.handleMovieAdd}/>
-
+                        <div className="twelve wide column">
+                        <MovieForm movie={this.state.selectedMovie}
+                                   onMovieSubmit={this.handleMovieSubmit}
+                                   onMovieAdd={this.handleMovieAdd}/>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="main container">
                     <MovieList url="http://localhost:3000/api/movies"
                                shouldUpdateList={this.state.shouldUpdateList}
                                onMovieClick={this.handleMovieClick}/>
-
                 </div>
             </div>
         );

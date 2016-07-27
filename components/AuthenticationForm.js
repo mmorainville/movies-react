@@ -51,9 +51,6 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div className="authenticationForm right menu">
-                <div className="ui right item">
-                    {localStorage.getItem('access_token')}
-                </div>
                 <div className="ui right dropdown item" ref="dropdown">
                     Login
                     <i className="dropdown icon"></i>

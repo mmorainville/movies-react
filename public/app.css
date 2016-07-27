@@ -8,6 +8,10 @@
     margin-right: 1.5em;
 }
 
+.main.menu .header.item {
+    min-width: 18.75%;
+}
+
 /* ----------
    app
    ---------- */
