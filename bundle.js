@@ -2,6 +2,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
 var SemanticDropdown = require('./SemanticDropdown');
@@ -12,6 +13,13 @@ module.exports = React.createClass({
 
     getInitialState: function getInitialState() {
         return { selectedMovie: {}, shouldUpdateList: false };
+    },
+
+    componentDidMount: function componentDidMount() {
+        $(ReactDOM.findDOMNode(this.refs.movieFormSidebar)).sidebar({
+            context: $('.movieFormSidebarContainer'),
+            transition: 'overlay'
+        }).sidebar('attach events', '.toggleMovieFormSidebar');
     },
 
     handleMovieClick: function handleMovieClick(movie) {
@@ -49,6 +57,11 @@ module.exports = React.createClass({
                         React.createElement('img', { className: 'logo', src: 'public/images/logo.png' }),
                         'Movies'
                     ),
+                    React.createElement(
+                        'a',
+                        { className: 'item toggleMovieFormSidebar' },
+                        'Add a movie'
+                    ),
                     React.createElement(AuthenticationForm, null)
                 )
             ),
@@ -57,22 +70,35 @@ module.exports = React.createClass({
                 { className: 'main container' },
                 React.createElement(
                     'div',
-                    { className: 'ui stackable two column grid', style: { flex: 1, margin: 0 } },
+                    { className: 'ui stackable two column padded grid', style: { flex: 1 } },
                     React.createElement(
                         'div',
-                        { className: 'six wide column', style: { backgroundColor: 'darkgrey' } },
-                        React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect }),
-                        React.createElement('div', { className: 'ui divider' }),
-                        React.createElement(MovieForm, { movie: this.state.selectedMovie,
-                            onMovieSubmit: this.handleMovieSubmit,
-                            onMovieAdd: this.handleMovieAdd })
+                        { className: 'two wide column', style: { backgroundColor: 'darkgrey' } },
+                        'Test'
                     ),
                     React.createElement(
                         'div',
-                        { className: 'ten wide column' },
-                        React.createElement(MovieList, { url: 'http://localhost:3000/api/movies',
-                            shouldUpdateList: this.state.shouldUpdateList,
-                            onMovieClick: this.handleMovieClick })
+                        { className: 'fourteen wide column movieFormSidebarContainer' },
+                        React.createElement(
+                            'div',
+                            { className: 'ui top sidebar segment', ref: 'movieFormSidebar' },
+                            React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect }),
+                            React.createElement('div', { className: 'ui divider' }),
+                            React.createElement(MovieForm, { movie: this.state.selectedMovie,
+                                onMovieSubmit: this.handleMovieSubmit,
+                                onMovieAdd: this.handleMovieAdd })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'pusher' },
+                            React.createElement(
+                                'div',
+                                { className: 'ui container' },
+                                React.createElement(MovieList, { url: 'http://localhost:3000/api/movies',
+                                    shouldUpdateList: this.state.shouldUpdateList,
+                                    onMovieClick: this.handleMovieClick })
+                            )
+                        )
                     )
                 )
             )
@@ -80,7 +106,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./AuthenticationForm":2,"./MovieForm":5,"./MovieList":6,"./SemanticDropdown":8,"react":349}],2:[function(require,module,exports){
+},{"./AuthenticationForm":2,"./MovieForm":5,"./MovieList":6,"./SemanticDropdown":8,"react":349,"react-dom":206}],2:[function(require,module,exports){
 'use strict';
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }

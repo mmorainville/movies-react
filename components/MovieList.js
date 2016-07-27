@@ -90,7 +90,6 @@ module.exports = React.createClass({
         console.log("Fetch movie list");
         this.getMovieList();
 
-
         var self = this;
 
         $(ReactDOM.findDOMNode(this.refs.uiInfiniteScroll))

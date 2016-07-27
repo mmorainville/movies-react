@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
 var SemanticDropdown = require('./SemanticDropdown');
@@ -8,6 +9,17 @@ module.exports = React.createClass({
     getInitialState: function () {
         return {selectedMovie: {}, shouldUpdateList: false};
     },
+
+    componentDidMount: function () {
+        $(ReactDOM.findDOMNode(this.refs.movieFormSidebar))
+            .sidebar({
+                context: $('.movieFormSidebarContainer'),
+                transition: 'overlay'
+            })
+            .sidebar('attach events', '.toggleMovieFormSidebar')
+        ;
+    }
+    ,
 
     handleMovieClick: function (movie) {
         this.replaceState({selectedMovie: movie, shouldUpdateList: false});
@@ -38,30 +50,44 @@ module.exports = React.createClass({
                             Movies
                         </a>
 
+                        <a className="item toggleMovieFormSidebar">
+                            Add a movie
+                        </a>
+
                         <AuthenticationForm/>
                     </div>
                 </div>
 
+
                 <div className="main container">
-                    <div className="ui stackable two column grid" style={{flex: 1, margin: 0}}>
-                        <div className="six wide column" style={{backgroundColor:'darkgrey'}}>
 
-                            <SemanticDropdown onResultSelect={this.handleResultSelect}/>
-
-                            <div className="ui divider"></div>
-
-                            <MovieForm movie={this.state.selectedMovie}
-                                       onMovieSubmit={this.handleMovieSubmit}
-                                       onMovieAdd={this.handleMovieAdd}/>
-
+                    <div className="ui stackable two column padded grid" style={{flex: 1}}>
+                        <div className="two wide column" style={{backgroundColor:'darkgrey'}}>
+                            Test
                         </div>
 
-                        <div className="ten wide column">
+                        <div className="fourteen wide column movieFormSidebarContainer">
 
-                            <MovieList url="http://localhost:3000/api/movies"
-                                       shouldUpdateList={this.state.shouldUpdateList}
-                                       onMovieClick={this.handleMovieClick}/>
+                            <div className="ui top sidebar segment" ref="movieFormSidebar">
 
+                                <SemanticDropdown onResultSelect={this.handleResultSelect}/>
+
+                                <div className="ui divider"></div>
+
+                                <MovieForm movie={this.state.selectedMovie}
+                                           onMovieSubmit={this.handleMovieSubmit}
+                                           onMovieAdd={this.handleMovieAdd}/>
+
+                            </div>
+
+                            <div className="pusher">
+                                <div className="ui container">
+                                    <MovieList url="http://localhost:3000/api/movies"
+                                               shouldUpdateList={this.state.shouldUpdateList}
+                                               onMovieClick={this.handleMovieClick}/>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
