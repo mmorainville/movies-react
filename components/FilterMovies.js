@@ -36,35 +36,31 @@ module.exports = React.createClass({
             <div className="filterMovies">
                 <h3>Filter bar</h3>
                 <form className="ui form" onSubmit={this.handleSubmit}>
-                    <div className="inline fields">
-                        <div className="field">
-                            <label>Title</label>
-                            <input type="text" onChange={this.handleChange.bind(this, "title")}/>
-                        </div>
-
-                        <div className="field">
-                            <label>Year</label>
-                            <input type="number" onChange={this.handleChange.bind(this, "year")}/>
-                        </div>
-
-                        <div className="field">
-                            <label>Seen with</label>
-                            <input type="text" onChange={this.handleChange.bind(this, "viewings.spectators")}/>
-                        </div>
-
-                        <button className="ui button" type="submit">Submit</button>
+                    <div className="field">
+                        <label>Title</label>
+                        <input type="text" onChange={this.handleChange.bind(this, "title")}/>
                     </div>
 
-                    <div className="inline fields">
-                        <div className="field">
-                            <label>Sort order</label>
-                            <select className="ui fluid dropdown" onChange={this.handleSortOrderChange}>
-                                <option value="title">Title (default)</option>
-                                <option value="year">Release date ASC</option>
-                                <option value="viewings.dates DESC">First viewing's dates DESC</option>
-                            </select>
-                        </div>
+                    <div className="field">
+                        <label>Year</label>
+                        <input type="number" onChange={this.handleChange.bind(this, "year")}/>
                     </div>
+
+                    <div className="field">
+                        <label>Seen with</label>
+                        <input type="text" onChange={this.handleChange.bind(this, "viewings.spectators")}/>
+                    </div>
+
+                    <div className="field">
+                        <label>Sort order</label>
+                        <select className="ui fluid dropdown" onChange={this.handleSortOrderChange}>
+                            <option value="title">Title (default)</option>
+                            <option value="year">Release date ASC</option>
+                            <option value="viewings.dates DESC">First viewing's dates DESC</option>
+                        </select>
+                    </div>
+
+                    <button className="ui button" type="submit">Submit</button>
                 </form>
             </div>
         );

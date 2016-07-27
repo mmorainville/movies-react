@@ -206,16 +206,24 @@ module.exports = React.createClass({
         });
 
         return (
-            <div>
-                <FilterMovies onFilterChange={this.handleFilterChange} onSortOrderChange={this.handleSortOrderChange}/>
-
-                <div className="movieList row centered">
-                    <div className="ui stackable centered five doubling cards" ref="uiInfiniteScroll">
-                        {movieNodes}
-                    </div>
+            <div className="ui stackable two column padded grid" style={{flex: 1}}>
+                <div className="three wide column" style={{backgroundColor: 'darkgrey'}}>
+                    <FilterMovies onFilterChange={this.handleFilterChange}
+                                  onSortOrderChange={this.handleSortOrderChange}/>
                 </div>
 
-                <div className="ui active centered inline loader"></div>
+                <div className="thirteen wide column">
+                    <div className="ui container">
+                        <h3>Movie list</h3>
+                        <div className="movieList row centered">
+                            <div className="ui stackable centered five doubling cards" ref="uiInfiniteScroll">
+                                {movieNodes}
+                            </div>
+                        </div>
+
+                        <div className="ui active centered inline loader"></div>
+                    </div>
+                </div>
             </div>
         );
     }
