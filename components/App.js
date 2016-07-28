@@ -10,6 +10,16 @@ module.exports = React.createClass({
         return {selectedMovie: {}, shouldUpdateList: false};
     },
 
+    componentDidMount: function () {
+        $(ReactDOM.findDOMNode(this.refs.movieFormSidebar))
+            .sidebar({
+                context: $('.main.container'),
+                transition: 'overlay',
+                dimPage: false
+            })
+        ;
+    },
+
     handleMovieClick: function (movie) {
         this.replaceState({selectedMovie: movie, shouldUpdateList: false});
     },
@@ -29,9 +39,9 @@ module.exports = React.createClass({
         this.setState({shouldUpdateList: true})
     },
 
-    openMovieFormModal: function () {
-        $(ReactDOM.findDOMNode(this.refs.movieFormModal))
-            .modal('show')
+    openMovieFormSidebar: function () {
+        $(ReactDOM.findDOMNode(this.refs.movieFormSidebar))
+            .sidebar('toggle')
         ;
     },
 
@@ -45,7 +55,7 @@ module.exports = React.createClass({
                             Movies
                         </a>
 
-                        <a className="item" onClick={this.openMovieFormModal}>
+                        <a className="item" onClick={this.openMovieFormSidebar}>
                             Add a movie
                         </a>
 
@@ -53,26 +63,28 @@ module.exports = React.createClass({
                     </div>
                 </div>
 
-                <div className="ui fullscreen long modal segment" ref="movieFormModal">
-                    <div className="ui two column very relaxed grid">
-                        <div className="four wide column">
-                            <SemanticDropdown onResultSelect={this.handleResultSelect}/>
-                        </div>
+                <div className="main container">
+                    <div className="ui left very wide sidebar segment" ref="movieFormSidebar" style={{width: 80 + '%'}}>
+                        <div className="ui two column padded stackable grid">
+                            <div className="four wide column">
+                                <SemanticDropdown onResultSelect={this.handleResultSelect}/>
+                            </div>
 
-                        <div className="ui vertical divider"></div>
+                            <div className="ui vertical divider"></div>
 
-                        <div className="twelve wide column">
-                        <MovieForm movie={this.state.selectedMovie}
-                                   onMovieSubmit={this.handleMovieSubmit}
-                                   onMovieAdd={this.handleMovieAdd}/>
+                            <div className="twelve wide column">
+                                <MovieForm movie={this.state.selectedMovie}
+                                           onMovieSubmit={this.handleMovieSubmit}
+                                           onMovieAdd={this.handleMovieAdd}/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="main container">
-                    <MovieList url="http://localhost:3000/api/movies"
-                               shouldUpdateList={this.state.shouldUpdateList}
-                               onMovieClick={this.handleMovieClick}/>
+                    <div className="pusher" style={{flex: 1}}>
+                        <MovieList url="http://localhost:3000/api/movies"
+                                   shouldUpdateList={this.state.shouldUpdateList}
+                                   onMovieClick={this.handleMovieClick}/>
+                    </div>
                 </div>
             </div>
         );

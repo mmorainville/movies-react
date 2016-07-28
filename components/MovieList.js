@@ -206,7 +206,7 @@ module.exports = React.createClass({
         });
 
         return (
-            <div className="ui stackable two column padded grid" style={{flex: 1}}>
+            <div className="ui stackable two column padded grid" style={{flex: 1, height: 100 + '%'}}>
                 <div className="three wide column" style={{backgroundColor: 'darkgrey'}}>
                     <FilterMovies onFilterChange={this.handleFilterChange}
                                   onSortOrderChange={this.handleSortOrderChange}/>

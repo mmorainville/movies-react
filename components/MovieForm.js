@@ -100,7 +100,7 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div className="ui two column very relaxed grid">
+            <div className="ui two column padded stackable grid">
                 <div className="ten wide column">
                     <form className="movieForm ui form" onSubmit={this.handleSubmit}>
 

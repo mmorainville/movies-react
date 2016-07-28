@@ -15,6 +15,14 @@ module.exports = React.createClass({
         return { selectedMovie: {}, shouldUpdateList: false };
     },
 
+    componentDidMount: function componentDidMount() {
+        $(ReactDOM.findDOMNode(this.refs.movieFormSidebar)).sidebar({
+            context: $('.main.container'),
+            transition: 'overlay',
+            dimPage: false
+        });
+    },
+
     handleMovieClick: function handleMovieClick(movie) {
         this.replaceState({ selectedMovie: movie, shouldUpdateList: false });
     },
@@ -34,8 +42,8 @@ module.exports = React.createClass({
         this.setState({ shouldUpdateList: true });
     },
 
-    openMovieFormModal: function openMovieFormModal() {
-        $(ReactDOM.findDOMNode(this.refs.movieFormModal)).modal('show');
+    openMovieFormSidebar: function openMovieFormSidebar() {
+        $(ReactDOM.findDOMNode(this.refs.movieFormSidebar)).sidebar('toggle');
     },
 
     render: function render() {
@@ -56,7 +64,7 @@ module.exports = React.createClass({
                     ),
                     React.createElement(
                         'a',
-                        { className: 'item', onClick: this.openMovieFormModal },
+                        { className: 'item', onClick: this.openMovieFormSidebar },
                         'Add a movie'
                     ),
                     React.createElement(AuthenticationForm, null)
@@ -64,31 +72,35 @@ module.exports = React.createClass({
             ),
             React.createElement(
                 'div',
-                { className: 'ui fullscreen long modal segment', ref: 'movieFormModal' },
+                { className: 'main container' },
                 React.createElement(
                     'div',
-                    { className: 'ui two column very relaxed grid' },
+                    { className: 'ui left very wide sidebar segment', ref: 'movieFormSidebar', style: { width: 80 + '%' } },
                     React.createElement(
                         'div',
-                        { className: 'four wide column' },
-                        React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect })
-                    ),
-                    React.createElement('div', { className: 'ui vertical divider' }),
-                    React.createElement(
-                        'div',
-                        { className: 'twelve wide column' },
-                        React.createElement(MovieForm, { movie: this.state.selectedMovie,
-                            onMovieSubmit: this.handleMovieSubmit,
-                            onMovieAdd: this.handleMovieAdd })
+                        { className: 'ui two column padded stackable grid' },
+                        React.createElement(
+                            'div',
+                            { className: 'four wide column' },
+                            React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect })
+                        ),
+                        React.createElement('div', { className: 'ui vertical divider' }),
+                        React.createElement(
+                            'div',
+                            { className: 'twelve wide column' },
+                            React.createElement(MovieForm, { movie: this.state.selectedMovie,
+                                onMovieSubmit: this.handleMovieSubmit,
+                                onMovieAdd: this.handleMovieAdd })
+                        )
                     )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'pusher', style: { flex: 1 } },
+                    React.createElement(MovieList, { url: 'http://localhost:3000/api/movies',
+                        shouldUpdateList: this.state.shouldUpdateList,
+                        onMovieClick: this.handleMovieClick })
                 )
-            ),
-            React.createElement(
-                'div',
-                { className: 'main container' },
-                React.createElement(MovieList, { url: 'http://localhost:3000/api/movies',
-                    shouldUpdateList: this.state.shouldUpdateList,
-                    onMovieClick: this.handleMovieClick })
             )
         );
     }
@@ -482,7 +494,7 @@ module.exports = React.createClass({
     render: function render() {
         return React.createElement(
             'div',
-            { className: 'ui two column very relaxed grid' },
+            { className: 'ui two column padded stackable grid' },
             React.createElement(
                 'div',
                 { className: 'ten wide column' },
@@ -793,7 +805,7 @@ module.exports = React.createClass({
 
         return React.createElement(
             'div',
-            { className: 'ui stackable two column padded grid', style: { flex: 1 } },
+            { className: 'ui stackable two column padded grid', style: { flex: 1, height: 100 + '%' } },
             React.createElement(
                 'div',
                 { className: 'three wide column', style: { backgroundColor: 'darkgrey' } },
