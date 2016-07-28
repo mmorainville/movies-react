@@ -77,11 +77,17 @@ module.exports = React.createClass({
 
                         <br/>
 
-                        <input type="text" key={'cinema-' + i} value={this.state.viewings[i].cinema}
-                               onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)} placeholder="Cinema..."/>
-                        <input type="text" key={'filename-' + i} value={this.state.viewings[i].filename}
-                               onChange={this.handleSimpleFieldChange.bind(null, "filename", i)}
-                               placeholder="Filename..."/>
+                        <div className="field">
+                            <input type="text" key={'cinema-' + i} value={this.state.viewings[i].cinema}
+                                   onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)}
+                                   placeholder="Cinema..."/>
+                        </div>
+
+                        <div className="field">
+                            <input type="text" key={'filename-' + i} value={this.state.viewings[i].filename}
+                                   onChange={this.handleSimpleFieldChange.bind(null, "filename", i)}
+                                   placeholder="Filename..."/>
+                        </div>
 
                         <br/>
 
@@ -94,20 +100,24 @@ module.exports = React.createClass({
                         <MultipleInputs inputs={this.state.viewings[i].spectators} inputsGroup="spectators"
                                         onMultipleInputChange={this.handleMultipleInputChange.bind(null, "spectators", i)}/>
 
-                        <div className="field">
-                            <div className="ui checkbox">
-                                <input type="checkbox" key={'firstTime-' + i} value={this.state.viewings[i].firstTime}
-                                       onClick={this.handleSimpleFieldChange.bind(null, "firstTime", i)}/>
-                                <label>First time</label>
+                        <div className="inline fields">
+                            <label>Options</label>
+                            <div className="field">
+                                <div className="ui checkbox">
+                                    <input type="checkbox" key={'firstTime-' + i}
+                                           value={this.state.viewings[i].firstTime}
+                                           onClick={this.handleSimpleFieldChange.bind(null, "firstTime", i)}/>
+                                    <label>First time</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="field">
-                            <div className="ui checkbox">
-                                <input type="checkbox" key={'dateValidity-' + i}
-                                       value={this.state.viewings[i].dateValidity}
-                                       onClick={this.handleSimpleFieldChange.bind(null, "dateValidity", i)}/>
-                                <label>Correct date</label>
+                            <div className="field">
+                                <div className="ui checkbox">
+                                    <input type="checkbox" key={'dateValidity-' + i}
+                                           value={this.state.viewings[i].dateValidity}
+                                           onClick={this.handleSimpleFieldChange.bind(null, "dateValidity", i)}/>
+                                    <label>Correct date</label>
+                                </div>
                             </div>
                         </div>
                     </div>

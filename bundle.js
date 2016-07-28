@@ -882,7 +882,6 @@ module.exports = React.createClass({
         var forms;
         if (this.state[this.props.inputsGroup] != undefined) {
             forms = this.state[this.props.inputsGroup].map(function (input, i) {
-                // console.log(viewing);
                 return React.createElement(
                     'div',
                     { key: i, className: 'field' },
@@ -1137,11 +1136,20 @@ module.exports = React.createClass({
                         'Remove viewing'
                     ),
                     React.createElement('br', null),
-                    React.createElement('input', { type: 'text', key: 'cinema-' + i, value: this.state.viewings[i].cinema,
-                        onChange: this.handleSimpleFieldChange.bind(null, "cinema", i), placeholder: 'Cinema...' }),
-                    React.createElement('input', { type: 'text', key: 'filename-' + i, value: this.state.viewings[i].filename,
-                        onChange: this.handleSimpleFieldChange.bind(null, "filename", i),
-                        placeholder: 'Filename...' }),
+                    React.createElement(
+                        'div',
+                        { className: 'field' },
+                        React.createElement('input', { type: 'text', key: 'cinema-' + i, value: this.state.viewings[i].cinema,
+                            onChange: this.handleSimpleFieldChange.bind(null, "cinema", i),
+                            placeholder: 'Cinema...' })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'field' },
+                        React.createElement('input', { type: 'text', key: 'filename-' + i, value: this.state.viewings[i].filename,
+                            onChange: this.handleSimpleFieldChange.bind(null, "filename", i),
+                            placeholder: 'Filename...' })
+                    ),
                     React.createElement('br', null),
                     React.createElement(MultipleInputs, { inputs: this.state.viewings[i].cities, inputsGroup: 'cities',
                         onMultipleInputChange: this.handleMultipleInputChange.bind(null, "cities", i) }),
@@ -1151,32 +1159,42 @@ module.exports = React.createClass({
                         onMultipleInputChange: this.handleMultipleInputChange.bind(null, "spectators", i) }),
                     React.createElement(
                         'div',
-                        { className: 'field' },
+                        { className: 'inline fields' },
+                        React.createElement(
+                            'label',
+                            null,
+                            'Options'
+                        ),
                         React.createElement(
                             'div',
-                            { className: 'ui checkbox' },
-                            React.createElement('input', { type: 'checkbox', key: 'firstTime-' + i, value: this.state.viewings[i].firstTime,
-                                onClick: this.handleSimpleFieldChange.bind(null, "firstTime", i) }),
+                            { className: 'field' },
                             React.createElement(
-                                'label',
-                                null,
-                                'First time'
+                                'div',
+                                { className: 'ui checkbox' },
+                                React.createElement('input', { type: 'checkbox', key: 'firstTime-' + i,
+                                    value: this.state.viewings[i].firstTime,
+                                    onClick: this.handleSimpleFieldChange.bind(null, "firstTime", i) }),
+                                React.createElement(
+                                    'label',
+                                    null,
+                                    'First time'
+                                )
                             )
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'field' },
+                        ),
                         React.createElement(
                             'div',
-                            { className: 'ui checkbox' },
-                            React.createElement('input', { type: 'checkbox', key: 'dateValidity-' + i,
-                                value: this.state.viewings[i].dateValidity,
-                                onClick: this.handleSimpleFieldChange.bind(null, "dateValidity", i) }),
+                            { className: 'field' },
                             React.createElement(
-                                'label',
-                                null,
-                                'Correct date'
+                                'div',
+                                { className: 'ui checkbox' },
+                                React.createElement('input', { type: 'checkbox', key: 'dateValidity-' + i,
+                                    value: this.state.viewings[i].dateValidity,
+                                    onClick: this.handleSimpleFieldChange.bind(null, "dateValidity", i) }),
+                                React.createElement(
+                                    'label',
+                                    null,
+                                    'Correct date'
+                                )
                             )
                         )
                     )

@@ -46,7 +46,6 @@ module.exports = React.createClass({
         var forms;
         if (this.state[this.props.inputsGroup] != undefined) {
             forms = this.state[this.props.inputsGroup].map(function (input, i) {
-                // console.log(viewing);
                 return (
                     <div key={i} className="field">
                         <div className="ui icon input">
