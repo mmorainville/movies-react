@@ -104,12 +104,7 @@ module.exports = React.createClass({
                 <div className="ten wide column">
                     <form className="movieForm ui form" onSubmit={this.handleSubmit}>
 
-                        <div className="inline fields">
-                            <div className="field">
-                                <label>ID</label>
-                                <input type="text" value={this.state.id} onChange={this.handleChange.bind(this, "id")}/>
-                            </div>
-
+                        <div className="equal width fields">
                             <div className="field">
                                 <label>Title</label>
                                 <input type="text" value={this.state.title}
@@ -123,7 +118,11 @@ module.exports = React.createClass({
                             </div>
                         </div>
 
-                        <div className="inline fields">
+                        <div className="equal width fields">
+                            <div className="field">
+                                <label>ID</label>
+                                <input type="text" value={this.state.id} onChange={this.handleChange.bind(this, "id")}/>
+                            </div>
                             <div className="field">
                                 <label>Poster</label>
                                 <input type="text" value={this.state.poster}
@@ -131,15 +130,14 @@ module.exports = React.createClass({
                             </div>
                         </div>
 
-                        <br/><br/>
                         <MultipleInputs inputs={this.state.directors} inputsGroup="directors"
                                         onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>
 
-                        <br/><br/>
                         <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>
 
-                        <br/>
-                        <input className="ui button" type="submit" value="Post"/>
+                        <div className="ui divider"></div>
+
+                        <input className="ui positive button" type="submit" value="Post"/>
                     </form>
                 </div>
 

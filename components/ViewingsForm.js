@@ -69,13 +69,14 @@ module.exports = React.createClass({
             forms = this.state.viewings.map(function (viewing, i) {
                 // console.log(viewing);
                 return (
-                    <div key={i}>
-                        <h2>Viewing #{i}</h2>
-                        <button type="button" className="ui button" onClick={this.removeViewing.bind(null, i)}>Remove
-                            viewing
-                        </button>
-
-                        <br/>
+                    <div key={i} className="ui segment">
+                        <h2>
+                            Viewing #{i}
+                            <button type="button" className="circular red basic ui right floated icon button"
+                                    onClick={this.removeViewing.bind(null, i)}>
+                                <i className="icon remove"></i>
+                            </button>
+                        </h2>
 
                         <div className="field">
                             <input type="text" key={'cinema-' + i} value={this.state.viewings[i].cinema}

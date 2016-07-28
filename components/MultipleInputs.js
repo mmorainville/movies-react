@@ -58,20 +58,24 @@ module.exports = React.createClass({
                 );
             }, this);
         } else {
-            forms = <div>No {this.props.inputsGroup}</div>
+            forms = <div className="field">No {this.props.inputsGroup}</div>
         }
 
         return (
             <div className="multipleInputs">
                 <div className="field">
                     <label>{this.props.inputsGroup}</label>
-                    <div className="ui stackable padded grid">
+                    <div className="ui stackable vertically padded grid">
                         {forms}
                     </div>
+                    <button type="button" className="circular ui icon button" onClick={this.addField.bind(this, this.props.inputsGroup)}>
+                        <i className="icon add"></i>
+                    </button>
                 </div>
-                <button type="button" className="ui button" onClick={this.addField.bind(this, this.props.inputsGroup)}>
+
+                {/*<button type="button" className="ui button" onClick={this.addField.bind(this, this.props.inputsGroup)}>
                     Add
-                </button>
+                </button>*/}
             </div>
         );
     }
