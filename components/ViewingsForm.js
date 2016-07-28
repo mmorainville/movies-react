@@ -71,26 +71,26 @@ module.exports = React.createClass({
                 return (
                     <div key={i}>
                         <h2>Viewing #{i}</h2>
-                        <button type="button" className="ui button" onClick={this.removeViewing.bind(null, i)}>Remove viewing</button>
+                        <button type="button" className="ui button" onClick={this.removeViewing.bind(null, i)}>Remove
+                            viewing
+                        </button>
 
                         <br/>
 
                         <input type="text" key={'cinema-' + i} value={this.state.viewings[i].cinema}
-                               onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)}/>
+                               onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)} placeholder="Cinema..."/>
                         <input type="text" key={'filename-' + i} value={this.state.viewings[i].filename}
-                               onChange={this.handleSimpleFieldChange.bind(null, "filename", i)}/>
+                               onChange={this.handleSimpleFieldChange.bind(null, "filename", i)}
+                               placeholder="Filename..."/>
 
                         <br/>
 
-                        <strong>Cities</strong>
                         <MultipleInputs inputs={this.state.viewings[i].cities} inputsGroup="cities"
                                         onMultipleInputChange={this.handleMultipleInputChange.bind(null, "cities", i)}/>
 
-                        <strong>Dates</strong>
                         <MultipleInputs inputs={this.state.viewings[i].dates} inputsGroup="dates"
                                         onMultipleInputChange={this.handleMultipleInputChange.bind(null, "dates", i)}/>
 
-                        <strong>Spectators</strong>
                         <MultipleInputs inputs={this.state.viewings[i].spectators} inputsGroup="spectators"
                                         onMultipleInputChange={this.handleMultipleInputChange.bind(null, "spectators", i)}/>
 

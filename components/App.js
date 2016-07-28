@@ -53,7 +53,7 @@ module.exports = React.createClass({
                     </div>
                 </div>
 
-                <div className="ui fullscreen modal segment" ref="movieFormModal">
+                <div className="ui fullscreen long modal segment" ref="movieFormModal">
                     <div className="ui two column very relaxed grid">
                         <div className="four wide column">
                             <SemanticDropdown onResultSelect={this.handleResultSelect}/>
