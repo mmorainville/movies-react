@@ -4,6 +4,7 @@ var MovieForm = require('./MovieForm');
 var MovieList = require('./MovieList');
 var SemanticDropdown = require('./SemanticDropdown');
 var AuthenticationForm = require('./AuthenticationForm');
+var Highlight = require('./Highlight');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -65,17 +66,23 @@ module.exports = React.createClass({
 
                 <div className="main container">
                     <div className="ui left very wide sidebar segment" ref="movieFormSidebar" style={{width: 80 + '%'}}>
-                        <div className="ui two column padded stackable grid">
+                        <div className="ui three column padded stackable grid">
                             <div className="four wide column">
                                 <SemanticDropdown onResultSelect={this.handleResultSelect}/>
                             </div>
 
                             <div className="ui vertical divider"></div>
 
-                            <div className="twelve wide column">
+                            <div className="eight wide column">
                                 <MovieForm movie={this.state.selectedMovie}
                                            onMovieSubmit={this.handleMovieSubmit}
                                            onMovieAdd={this.handleMovieAdd}/>
+                            </div>
+
+                            <div className="ui vertical divider"></div>
+
+                            <div className="four wide column">
+                                <Highlight json={this.state.selectedMovie}/>
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,6 @@ var React = require('react');
 var update = require('react-addons-update');
 var ViewingsForm = require('./ViewingsForm');
 var MultipleInputs = require('./MultipleInputs');
-var Highlight = require('./Highlight');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -100,54 +99,43 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div className="ui two column padded stackable grid">
-                <div className="ten wide column">
-                    <form className="movieForm ui form" onSubmit={this.handleSubmit}>
+            <form className="movieForm ui form" onSubmit={this.handleSubmit}>
 
-                        <div className="equal width fields">
-                            <div className="field">
-                                <label>Title</label>
-                                <input type="text" value={this.state.title}
-                                       onChange={this.handleChange.bind(this, "title")}/>
-                            </div>
+                <div className="equal width fields">
+                    <div className="field">
+                        <label>Title</label>
+                        <input type="text" value={this.state.title}
+                               onChange={this.handleChange.bind(this, "title")}/>
+                    </div>
 
-                            <div className="field">
-                                <label>Year</label>
-                                <input type="number" value={this.state.year}
-                                       onChange={this.handleChange.bind(this, "year")}/>
-                            </div>
-                        </div>
-
-                        <div className="equal width fields">
-                            <div className="field">
-                                <label>ID</label>
-                                <input type="text" value={this.state.id} onChange={this.handleChange.bind(this, "id")}/>
-                            </div>
-                            <div className="field">
-                                <label>Poster</label>
-                                <input type="text" value={this.state.poster}
-                                       onChange={this.handleChange.bind(this, "poster")}/>
-                            </div>
-                        </div>
-
-                        <MultipleInputs inputs={this.state.directors} inputsGroup="directors"
-                                        onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>
-
-                        <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>
-
-                        <div className="ui divider"></div>
-
-                        <input className="ui positive button" type="submit" value="Post"/>
-                    </form>
+                    <div className="field">
+                        <label>Year</label>
+                        <input type="number" value={this.state.year}
+                               onChange={this.handleChange.bind(this, "year")}/>
+                    </div>
                 </div>
 
-                <div className="ui vertical divider"></div>
-
-                <div className="six wide column">
-                    <Highlight json={this.props.movie}/>
+                <div className="equal width fields">
+                    <div className="field">
+                        <label>ID</label>
+                        <input type="text" value={this.state.id} onChange={this.handleChange.bind(this, "id")}/>
+                    </div>
+                    <div className="field">
+                        <label>Poster</label>
+                        <input type="text" value={this.state.poster}
+                               onChange={this.handleChange.bind(this, "poster")}/>
+                    </div>
                 </div>
-                {/*<pre>{JSON.stringify(this.props, null, 2)}</pre>*/}
-            </div>
+
+                <MultipleInputs inputs={this.state.directors} inputsGroup="directors"
+                                onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>
+
+                <ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>
+
+                <div className="ui divider"></div>
+
+                <input className="ui positive button" type="submit" value="Post"/>
+            </form>
         );
     }
 });

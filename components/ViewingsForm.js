@@ -123,7 +123,7 @@ module.exports = React.createClass({
                 );
             }, this);
         } else {
-            forms = <div>No viewings</div>
+            forms = "";
         }
 
         return (

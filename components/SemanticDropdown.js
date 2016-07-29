@@ -93,15 +93,18 @@ module.exports = React.createClass({
         var poster = this.state.poster ? <img src={posterUrl}/> : "No image";
 
         return (
-            <div>
+            <div className="ui form">
                 <div className="ui search" ref="uiSearch">
-                    <input className="prompt" placeholder="Common passwords..." type="text"/>
+                    <div className="ui icon input">
+                        <input className="prompt" type="text" placeholder="Search movies..."/>
+                            <i className="search icon"></i>
+                    </div>
                     <div className="results"></div>
                 </div>
                 <div>
                     <Highlight json={this.state}/>
                 </div>
-                <div className="ui tiny image">
+                <div className="ui image">
                     {poster}
                 </div>
             </div>
