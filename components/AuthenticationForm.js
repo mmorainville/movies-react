@@ -8,19 +8,40 @@ module.exports = React.createClass({
     },
 
     componentDidMount() {
-        $(ReactDOM.findDOMNode(this.refs.dropdown))
-            .dropdown()
+        this.initSemanticComponents();
+    },
+
+    componentDidUpdate() {
+        this.initSemanticComponents();
+    },
+
+    initSemanticComponents: function () {
+        $(ReactDOM.findDOMNode(this.refs.loginModal))
+            .popup({
+                position: 'bottom right',
+                on: 'click',
+            })
+        ;
+
+        $(ReactDOM.findDOMNode(this.refs.loginForm))
+            .form({
+                fields: {
+                    email: 'empty',
+                    password: 'empty'
+                },
+                onSuccess: false
+            })
         ;
     },
 
     handleChange: function (field, e) {
         var newState = update(this.state, {authenticationForm: {[field]: {$set: e.target.value}}, error: {$set: ""}});
-        console.log(newState);
         this.setState(newState);
     },
 
     handleSubmit: function (e) {
         e.preventDefault();
+        e.stopPropagation();
         console.log(this.state);
         // console.log("SUBMIT FILTER");
         // this.props.onFilterChange(this.state);
@@ -47,54 +68,62 @@ module.exports = React.createClass({
         });
     },
 
+    removeToken: function () {
+        localStorage.removeItem('access_token');
+        this.setState(this.getInitialState());
+    },
 
     render: function () {
         return (
             <div className="authenticationForm right menu">
-                <div className="ui right dropdown item" ref="dropdown">
-                    Login
-                    <i className="dropdown icon"></i>
+                {localStorage.getItem('access_token') == undefined ?
+                    <div className="ui right dropdown item" ref="loginModal">
+                        Login
+                        <i className="dropdown icon"></i>
+                    </div>
+                    :
+                    <div className="ui right dropdown item" onClick={this.removeToken}>
+                        Logout {localStorage.getItem('access_token').substring(0, 7)}
+                    </div>
+                }
 
-                    {localStorage.getItem('access_token') == undefined ?
-                        <div className="menu">
-                            <div className="item"></div>
-                            <form className="ui large form" style={{width: 500 + 'px'}}>
-                                <div className="field">
-                                    <div className="ui left icon input">
-                                        <i className="user icon"></i>
-                                        <input type="text" name="email" placeholder="E-mail address"
-                                               onChange={this.handleChange.bind(this, "email")}/>
-                                    </div>
+                {localStorage.getItem('access_token') == undefined ?
+                    <div className="ui flowing basic popup">
+                        <form className="ui large form" ref="loginForm" onSubmit={this.handleSubmit}>
+                            <div className="field">
+                                <div className="ui left icon input">
+                                    <i className="user icon"></i>
+                                    <input type="text" name="email" placeholder="E-mail address"
+                                           onChange={this.handleChange.bind(this, "email")}/>
                                 </div>
-                                <div className="field">
-                                    <div className="ui left icon input">
-                                        <i className="lock icon"></i>
-                                        <input type="password" name="password" placeholder="Password"
-                                               onChange={this.handleChange.bind(this, "password")}/>
-                                    </div>
+                            </div>
+                            <div className="field">
+                                <div className="ui left icon input">
+                                    <i className="lock icon"></i>
+                                    <input type="password" name="password" placeholder="Password"
+                                           onChange={this.handleChange.bind(this, "password")}/>
                                 </div>
+                            </div>
 
+                            <div className="ui error message">
+                                <p>{this.state.error}</p>
+                            </div>
+
+                            {this.state.error ?
                                 <div className="ui negative message">
                                     <p>{this.state.error}</p>
                                 </div>
+                                :
+                                ""
+                            }
 
-                                <div className="ui fluid large teal submit button" onClick={this.handleSubmit}>
-                                    Login
-                                </div>
-                            </form>
-                        </div>
-                        :
-                        <div className="menu">
-                            <div className="item">
-                                <p>Logged in! {localStorage.getItem('access_token')}</p>
-                                <div className="ui fluid large teal submit button"
-                                     onClick={localStorage.removeItem('access_token')}>
-                                    Logout
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
+                            <button type="submit" className="ui fluid large teal submit button">
+                                Login
+                            </button>
+                        </form>
+                    </div>
+                    : ""
+                }
             </div>
         );
     }

@@ -130,18 +130,36 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function componentDidMount() {
-        $(ReactDOM.findDOMNode(this.refs.dropdown)).dropdown();
+        this.initSemanticComponents();
+    },
+    componentDidUpdate: function componentDidUpdate() {
+        this.initSemanticComponents();
     },
 
 
+    initSemanticComponents: function initSemanticComponents() {
+        $(ReactDOM.findDOMNode(this.refs.loginModal)).popup({
+            position: 'bottom right',
+            on: 'click'
+        });
+
+        $(ReactDOM.findDOMNode(this.refs.loginForm)).form({
+            fields: {
+                email: 'empty',
+                password: 'empty'
+            },
+            onSuccess: false
+        });
+    },
+
     handleChange: function handleChange(field, e) {
         var newState = update(this.state, { authenticationForm: _defineProperty({}, field, { $set: e.target.value }), error: { $set: "" } });
-        console.log(newState);
         this.setState(newState);
     },
 
     handleSubmit: function handleSubmit(e) {
         e.preventDefault();
+        e.stopPropagation();
         console.log(this.state);
         // console.log("SUBMIT FILTER");
         // this.props.onFilterChange(this.state);
@@ -168,80 +186,79 @@ module.exports = React.createClass({
         });
     },
 
+    removeToken: function removeToken() {
+        localStorage.removeItem('access_token');
+        this.setState(this.getInitialState());
+    },
+
     render: function render() {
         return React.createElement(
             'div',
             { className: 'authenticationForm right menu' },
-            React.createElement(
+            localStorage.getItem('access_token') == undefined ? React.createElement(
                 'div',
-                { className: 'ui right dropdown item', ref: 'dropdown' },
+                { className: 'ui right dropdown item', ref: 'loginModal' },
                 'Login',
-                React.createElement('i', { className: 'dropdown icon' }),
-                localStorage.getItem('access_token') == undefined ? React.createElement(
-                    'div',
-                    { className: 'menu' },
-                    React.createElement('div', { className: 'item' }),
-                    React.createElement(
-                        'form',
-                        { className: 'ui large form', style: { width: 500 + 'px' } },
-                        React.createElement(
-                            'div',
-                            { className: 'field' },
-                            React.createElement(
-                                'div',
-                                { className: 'ui left icon input' },
-                                React.createElement('i', { className: 'user icon' }),
-                                React.createElement('input', { type: 'text', name: 'email', placeholder: 'E-mail address',
-                                    onChange: this.handleChange.bind(this, "email") })
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'field' },
-                            React.createElement(
-                                'div',
-                                { className: 'ui left icon input' },
-                                React.createElement('i', { className: 'lock icon' }),
-                                React.createElement('input', { type: 'password', name: 'password', placeholder: 'Password',
-                                    onChange: this.handleChange.bind(this, "password") })
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'ui negative message' },
-                            React.createElement(
-                                'p',
-                                null,
-                                this.state.error
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'ui fluid large teal submit button', onClick: this.handleSubmit },
-                            'Login'
-                        )
-                    )
-                ) : React.createElement(
-                    'div',
-                    { className: 'menu' },
+                React.createElement('i', { className: 'dropdown icon' })
+            ) : React.createElement(
+                'div',
+                { className: 'ui right dropdown item', onClick: this.removeToken },
+                'Logout ',
+                localStorage.getItem('access_token').substring(0, 7)
+            ),
+            localStorage.getItem('access_token') == undefined ? React.createElement(
+                'div',
+                { className: 'ui flowing basic popup' },
+                React.createElement(
+                    'form',
+                    { className: 'ui large form', ref: 'loginForm', onSubmit: this.handleSubmit },
                     React.createElement(
                         'div',
-                        { className: 'item' },
+                        { className: 'field' },
+                        React.createElement(
+                            'div',
+                            { className: 'ui left icon input' },
+                            React.createElement('i', { className: 'user icon' }),
+                            React.createElement('input', { type: 'text', name: 'email', placeholder: 'E-mail address',
+                                onChange: this.handleChange.bind(this, "email") })
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'field' },
+                        React.createElement(
+                            'div',
+                            { className: 'ui left icon input' },
+                            React.createElement('i', { className: 'lock icon' }),
+                            React.createElement('input', { type: 'password', name: 'password', placeholder: 'Password',
+                                onChange: this.handleChange.bind(this, "password") })
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'ui error message' },
                         React.createElement(
                             'p',
                             null,
-                            'Logged in! ',
-                            localStorage.getItem('access_token')
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'ui fluid large teal submit button',
-                                onClick: localStorage.removeItem('access_token') },
-                            'Logout'
+                            this.state.error
                         )
+                    ),
+                    this.state.error ? React.createElement(
+                        'div',
+                        { className: 'ui negative message' },
+                        React.createElement(
+                            'p',
+                            null,
+                            this.state.error
+                        )
+                    ) : "",
+                    React.createElement(
+                        'button',
+                        { type: 'submit', className: 'ui fluid large teal submit button' },
+                        'Login'
                     )
                 )
-            )
+            ) : ""
         );
     }
 });
