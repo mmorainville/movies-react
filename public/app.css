@@ -32,17 +32,9 @@
 }
 
 /* ----------
-   movie-list
+   multiple-inputs
    ---------- */
 
-.el-filter {
-    padding-top: 2rem !important;
-}
-
-/* ----------
-   login
-   ---------- */
-
-.el-login.column {
-    max-width: 450px;
+.ui.form .multipleInputs .field {
+    margin-bottom: 1em;
 }

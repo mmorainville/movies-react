@@ -90,8 +90,6 @@ module.exports = React.createClass({
                                    placeholder="Filename..."/>
                         </div>
 
-                        <br/>
-
                         <MultipleInputs inputs={this.state.viewings[i].cities} inputsGroup="cities"
                                         onMultipleInputChange={this.handleMultipleInputChange.bind(null, "cities", i)}/>
 
