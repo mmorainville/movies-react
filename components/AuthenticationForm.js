@@ -93,7 +93,7 @@ module.exports = React.createClass({
                             <div className="field">
                                 <div className="ui left icon input">
                                     <i className="user icon"></i>
-                                    <input type="text" name="email" placeholder="E-mail address"
+                                    <input type="text" name="email" placeholder="Email address"
                                            onChange={this.handleChange.bind(this, "email")}/>
                                 </div>
                             </div>

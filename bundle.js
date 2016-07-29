@@ -219,7 +219,7 @@ module.exports = React.createClass({
                             'div',
                             { className: 'ui left icon input' },
                             React.createElement('i', { className: 'user icon' }),
-                            React.createElement('input', { type: 'text', name: 'email', placeholder: 'E-mail address',
+                            React.createElement('input', { type: 'text', name: 'email', placeholder: 'Email address',
                                 onChange: this.handleChange.bind(this, "email") })
                         )
                     ),
