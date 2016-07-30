@@ -39,7 +39,7 @@ module.exports = React.createClass({
         }
 
         $.ajax({
-            url: 'http://localhost:3000/api/movies' + access_token,
+            url: Config.serverUrl + '/movies' + access_token,
             dataType: 'json',
             cache: false,
             type: 'put',

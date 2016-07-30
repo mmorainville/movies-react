@@ -21,7 +21,7 @@ var Movie = React.createClass({
         }
 
         $.ajax({
-            url: 'http://localhost:3000/api/movies/' + movieToDeleteId + access_token,
+            url: Config.serverUrl + '/movies/' + movieToDeleteId + access_token,
             dataType: 'json',
             cache: false,
             type: 'delete',

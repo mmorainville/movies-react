@@ -88,7 +88,7 @@ module.exports = React.createClass({
                     </div>
 
                     <div className="pusher" style={{flex: 1}}>
-                        <MovieList url="http://localhost:3000/api/movies"
+                        <MovieList url={Config.serverUrl + "/movies"}
                                    shouldUpdateList={this.state.shouldUpdateList}
                                    onMovieClick={this.handleMovieClick}/>
                     </div>

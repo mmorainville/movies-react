@@ -46,7 +46,7 @@ module.exports = React.createClass({
         // console.log("SUBMIT FILTER");
         // this.props.onFilterChange(this.state);
         $.ajax({
-            url: 'http://localhost:3000/api/Users/login',
+            url: Config.serverUrl + '/Users/login',
             dataType: 'json',
             cache: false,
             type: 'post',
