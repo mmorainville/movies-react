@@ -34,7 +34,7 @@
   background: transparent;
   padding: 0em;
   border: none;
-  border-radius: 4px;
+  border-radius: 0em;
   box-shadow: none;
   -webkit-transition: box-shadow 0.1s ease, -webkit-transform 0.1s ease;
   transition: box-shadow 0.1s ease, -webkit-transform 0.1s ease;
@@ -64,7 +64,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: -0.75em -0.5em;
+  margin: 0em;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
@@ -98,16 +98,16 @@
 
 .ui.cards > .card > :first-child,
 .ui.card > :first-child {
-  border-radius: 4px 4px 0em 0em !important;
+  border-radius: 0em 0em 0em 0em !important;
   border-top: none !important;
 }
 .ui.cards > .card > :last-child,
 .ui.card > :last-child {
-  border-radius: 0em 0em 4px 4px !important;
+  border-radius: 0em 0em 0em 0em !important;
 }
 .ui.cards > .card > :only-child,
 .ui.card > :only-child {
-  border-radius: 4px !important;
+  border-radius: 0em !important;
 }
 
 /*--------------
@@ -133,7 +133,7 @@
 }
 .ui.cards > .card > .image:not(.ui) > img,
 .ui.card > .image:not(.ui) > img {
-  border: 1px solid rgba(34, 36, 38, 0.15);
+  border: none;
 }
 
 /*--------------
@@ -149,7 +149,7 @@
   border-top: 1px solid rgba(34, 36, 38, 0.1);
   background: none;
   margin: 0em;
-  padding: 1em 0em;
+  padding: 2em 0em;
   box-shadow: none;
   font-size: 1em;
   border-radius: 0em;
@@ -501,12 +501,12 @@ a.ui.card:hover,
 .ui.red.cards > .card,
 .ui.cards > .red.card,
 .ui.red.card {
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 2px 0px 0px #F44336, 0px 1px 3px 0px #D4D4D5;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 2px 0px 0px #F83745, 0px 1px 3px 0px #D4D4D5;
 }
 .ui.red.cards > .card:hover,
 .ui.cards > .red.card:hover,
 .ui.red.card:hover {
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 2px 0px 0px #fd2313, 0px 1px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 2px 0px 0px #ff1727, 0px 1px 3px 0px #BCBDBD;
 }
 
 /* Orange */

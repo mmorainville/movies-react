@@ -487,9 +487,9 @@
 .ui.form .field.error input[type="url"]:focus {
   background: #FFF6F6;
   border-color: #E0B4B4;
-  color: #ff291c;
+  color: #ff1727;
   -webkit-appearance: none;
-  box-shadow: 0px 0em 0em 0em #ff291c inset;
+  box-shadow: 0px 0em 0em 0em #ff1727 inset;
 }
 
 /* Preserve Native Select Stylings */
@@ -663,7 +663,7 @@
 .ui.form .required.field > .checkbox:after {
   margin: -0.2em 0em 0em 0.2em;
   content: '*';
-  color: #FF4136;
+  color: #F83745;
 }
 .ui.form .required.fields:not(.grouped) > .field > label:after,
 .ui.form .required.fields.grouped > label:after,

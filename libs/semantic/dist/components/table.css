@@ -617,10 +617,10 @@
 
 /* Red */
 .ui.red.table {
-  border-top: 0.2em solid #DB2828;
+  border-top: 0.2em solid #F83745;
 }
 .ui.inverted.red.table {
-  background-color: #DB2828 !important;
+  background-color: #F83745 !important;
   color: #FFFFFF !important;
 }
 
