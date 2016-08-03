@@ -214,7 +214,7 @@ module.exports = React.createClass({
 
                 <div className="thirteen wide column">
                     <div className="ui container">
-                        <h3>Movie list</h3>
+                        <h1>Movie list</h1>
                         <div className="movieList row centered">
                             <div className="ui stackable centered five doubling cards" ref="uiInfiniteScroll">
                                 {movieNodes}

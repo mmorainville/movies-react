@@ -34,7 +34,7 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div className="filterMovies">
-                <h3>Filter bar</h3>
+                <h4>Filter bar</h4>
                 <form className="ui form" onSubmit={this.handleSubmit}>
                     <div className="field">
                         <label>Title</label>

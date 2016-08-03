@@ -53,7 +53,7 @@ module.exports = React.createClass({
             { className: 'el-flex-main-parent' },
             React.createElement(
                 'div',
-                { className: 'ui inverted main menu' },
+                { className: 'ui inverted borderless main menu fixed', style: { height: 60 + 'px' } },
                 React.createElement(
                     'div',
                     { className: 'ui fluid container' },
@@ -73,7 +73,7 @@ module.exports = React.createClass({
             ),
             React.createElement(
                 'div',
-                { className: 'main container' },
+                { className: 'main container', style: { marginTop: 60 + 'px' } },
                 React.createElement(
                     'div',
                     { className: 'ui left very wide sidebar segment', ref: 'movieFormSidebar', style: { width: 80 + '%' } },
@@ -103,7 +103,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                     'div',
-                    { className: 'pusher', style: { flex: 1 } },
+                    { className: 'pusher', style: { flex: 1, display: 'flex', flexDirection: 'column' } },
                     React.createElement(MovieList, { url: Config.serverUrl + "/movies",
                         shouldUpdateList: this.state.shouldUpdateList,
                         onMovieClick: this.handleMovieClick })
@@ -305,7 +305,7 @@ module.exports = React.createClass({
             "div",
             { className: "filterMovies" },
             React.createElement(
-                "h3",
+                "h4",
                 null,
                 "Filter bar"
             ),
@@ -824,7 +824,7 @@ module.exports = React.createClass({
                     'div',
                     { className: 'ui container' },
                     React.createElement(
-                        'h3',
+                        'h1',
                         null,
                         'Movie list'
                     ),
@@ -1237,7 +1237,7 @@ module.exports = React.createClass({
 
 },{"./MultipleInputs":7,"react":348,"react-addons-update":206}],10:[function(require,module,exports){
 module.exports={
-  "serverUrl": "https://shielded-savannah-32628.herokuapp.com/api"
+  "serverUrl": "http://localhost:3000/api"
 }
 },{}],11:[function(require,module,exports){
 'use strict';
@@ -1253,12 +1253,12 @@ window.jQuery = $;
 require('./libs/semantic/dist/semantic');
 
 // Configuration
-var Config = require('./components/_config/config.prod.json');
+var Config = require('./components/_config/config.dev.json');
 window.Config = Config;
 
 ReactDOM.render(React.createElement(App, null), document.getElementById('container'));
 
-},{"./components/App":1,"./components/_config/config.prod.json":10,"./libs/semantic/dist/semantic":12,"jquery":203,"react":348,"react-dom":207}],12:[function(require,module,exports){
+},{"./components/App":1,"./components/_config/config.dev.json":10,"./libs/semantic/dist/semantic":12,"jquery":203,"react":348,"react-dom":207}],12:[function(require,module,exports){
 'use strict';var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol?"symbol":typeof obj;};/*
  * # Semantic UI - 2.2.2
  * https://github.com/Semantic-Org/Semantic-UI
