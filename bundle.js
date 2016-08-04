@@ -586,6 +586,7 @@ var update = require('react-addons-update');
 var ReactDOM = require('react-dom');
 
 var FilterMovies = require('./FilterMovies');
+var Highlight = require('./Highlight');
 
 var Movie = React.createClass({
     displayName: 'Movie',
@@ -599,7 +600,12 @@ var Movie = React.createClass({
             on: 'hover'
         });
 
-        $(ReactDOM.findDOMNode(this.refs.viewMovieDetails)).popup();
+        $(ReactDOM.findDOMNode(this.refs.movieCard)).popup({
+            hoverable: true,
+            inline: false,
+            position: 'right center',
+            popup: $(ReactDOM.findDOMNode(this.refs.movieDetails))
+        });
     },
 
     handleRemoveMovie: function handleRemoveMovie(movieToDeleteId) {
@@ -649,7 +655,7 @@ var Movie = React.createClass({
 
         return React.createElement(
             'div',
-            { className: 'movie ui card' },
+            { className: 'movie ui card', ref: 'movieCard' },
             React.createElement(
                 'div',
                 { className: 'image' },
@@ -679,17 +685,8 @@ var Movie = React.createClass({
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'ui special popup' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'header' },
-                                    'Custom Header'
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'ui button' },
-                                    'Click Me'
-                                )
+                                { className: 'ui popup', ref: 'movieDetails' },
+                                React.createElement(Highlight, { json: this.props.movie })
                             )
                         )
                     )
@@ -917,7 +914,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./FilterMovies":3,"react":348,"react-addons-update":206,"react-dom":207}],7:[function(require,module,exports){
+},{"./FilterMovies":3,"./Highlight":4,"react":348,"react-addons-update":206,"react-dom":207}],7:[function(require,module,exports){
 'use strict';
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }

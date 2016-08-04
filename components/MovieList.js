@@ -3,6 +3,7 @@ var update = require('react-addons-update');
 var ReactDOM = require('react-dom');
 
 var FilterMovies = require('./FilterMovies');
+var Highlight = require('./Highlight');
 
 var Movie = React.createClass({
     handleMovieClick: function (e) {
@@ -16,8 +17,13 @@ var Movie = React.createClass({
             })
         ;
 
-        $(ReactDOM.findDOMNode(this.refs.viewMovieDetails))
-            .popup()
+        $(ReactDOM.findDOMNode(this.refs.movieCard))
+            .popup({
+                hoverable: true,
+                inline: false,
+                position: 'right center',
+                popup: $(ReactDOM.findDOMNode(this.refs.movieDetails))
+            })
         ;
     },
 
@@ -65,7 +71,7 @@ var Movie = React.createClass({
             <img src="public/images/image.png"/>;
 
         return (
-            <div className="movie ui card">
+            <div className="movie ui card" ref="movieCard">
                 <div className="image">
                     <div className="ui dimmer">
                         <div className="content">
@@ -73,9 +79,8 @@ var Movie = React.createClass({
                                 <h2 className="ui inverted header">{this.props.movie.title}</h2>
                                 <div className="ui positive button">Add</div>
                                 <div className="ui button" ref="viewMovieDetails">View</div>
-                                <div className="ui special popup">
-                                    <div className="header">Custom Header</div>
-                                    <div className="ui button">Click Me</div>
+                                <div className="ui popup" ref="movieDetails">
+                                    <Highlight json={this.props.movie}/>
                                 </div>
                             </div>
                         </div>
