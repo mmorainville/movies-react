@@ -594,6 +594,14 @@ var Movie = React.createClass({
         this.props.onMovieClick(this.props.movie);
     },
 
+    componentDidMount: function componentDidMount() {
+        $('.movie .image').dimmer({
+            on: 'hover'
+        });
+
+        $(ReactDOM.findDOMNode(this.refs.viewMovieDetails)).popup();
+    },
+
     handleRemoveMovie: function handleRemoveMovie(movieToDeleteId) {
         console.log("DELETE " + movieToDeleteId);
 
@@ -645,6 +653,47 @@ var Movie = React.createClass({
             React.createElement(
                 'div',
                 { className: 'image' },
+                React.createElement(
+                    'div',
+                    { className: 'ui dimmer' },
+                    React.createElement(
+                        'div',
+                        { className: 'content' },
+                        React.createElement(
+                            'div',
+                            { className: 'center' },
+                            React.createElement(
+                                'h2',
+                                { className: 'ui inverted header' },
+                                this.props.movie.title
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'ui positive button' },
+                                'Add'
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'ui button', ref: 'viewMovieDetails' },
+                                'View'
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'ui special popup' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'header' },
+                                    'Custom Header'
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'ui button' },
+                                    'Click Me'
+                                )
+                            )
+                        )
+                    )
+                ),
                 poster
             ),
             React.createElement(

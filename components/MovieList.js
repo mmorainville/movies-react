@@ -9,6 +9,18 @@ var Movie = React.createClass({
         this.props.onMovieClick(this.props.movie);
     },
 
+    componentDidMount: function () {
+        $('.movie .image')
+            .dimmer({
+                on: 'hover'
+            })
+        ;
+
+        $(ReactDOM.findDOMNode(this.refs.viewMovieDetails))
+            .popup()
+        ;
+    },
+
     handleRemoveMovie: function (movieToDeleteId) {
         console.log("DELETE " + movieToDeleteId);
 
@@ -55,6 +67,19 @@ var Movie = React.createClass({
         return (
             <div className="movie ui card">
                 <div className="image">
+                    <div className="ui dimmer">
+                        <div className="content">
+                            <div className="center">
+                                <h2 className="ui inverted header">{this.props.movie.title}</h2>
+                                <div className="ui positive button">Add</div>
+                                <div className="ui button" ref="viewMovieDetails">View</div>
+                                <div className="ui special popup">
+                                    <div className="header">Custom Header</div>
+                                    <div className="ui button">Click Me</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {poster}
                 </div>
 
