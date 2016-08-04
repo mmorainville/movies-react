@@ -211,11 +211,11 @@ module.exports = React.createClass({
         // Extract where filter to get the movies count
         var whereFilter = "";
         if (JSON.stringify(this.state.filters.where)) {
-            whereFilter = "&where=" + JSON.stringify(this.state.filters.where);
+            whereFilter = "?where=" + JSON.stringify(this.state.filters.where);
         }
 
         $.ajax({
-            url: this.props.url + "/count" + access_token + whereFilter,
+            url: this.props.url + "/count" + whereFilter,
             dataType: 'json',
             cache: false,
             success: function (data) {
@@ -265,18 +265,7 @@ module.exports = React.createClass({
 
                     <div className="ui container">
                         <h1>
-                            {this.state.dataCount ?
-                                <div className="ui horizontal statistic">
-                                    <div className="value">
-                                        {this.state.dataCount}
-                                    </div>
-                                    <div className="label">
-                                        Movies
-                                    </div>
-                                </div>
-                                :
-                                "Movie list"
-                            }
+                            {this.state.dataCount ? this.state.dataCount + " movie" + (this.state.dataCount != 1 ? 's' : '') : "Movies"}
                         </h1>
 
                         <div className="movieList row centered">
