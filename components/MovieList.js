@@ -177,6 +177,30 @@ module.exports = React.createClass({
         //     var newState = update(this.state, {filters: {skip: {$set: 0}}});
         // }
 
+        // Set token if user is logged in
+        var access_token = "";
+        if (localStorage.getItem('access_token')) {
+            access_token = "?access_token=" + localStorage.getItem('access_token');
+        }
+
+        // Extract where filter to get the movies count
+        var whereFilter = "";
+        if (JSON.stringify(this.state.filters.where)) {
+            whereFilter = "&where=" + JSON.stringify(this.state.filters.where);
+        }
+
+        $.ajax({
+            url: this.props.url + "/count" + access_token + whereFilter,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({dataCount: data.count});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+
         $.ajax({
             url: this.props.url + "?filter=" + JSON.stringify(this.state.filters),
             dataType: 'json',
@@ -213,8 +237,23 @@ module.exports = React.createClass({
                 </div>
 
                 <div className="thirteen wide column">
+
                     <div className="ui container">
-                        <h1>Movie list</h1>
+                        <h1>
+                            {this.state.dataCount ?
+                                <div className="ui horizontal statistic">
+                                    <div className="value">
+                                        {this.state.dataCount}
+                                    </div>
+                                    <div className="label">
+                                        Movies
+                                    </div>
+                                </div>
+                                :
+                                "Movie list"
+                            }
+                        </h1>
+
                         <div className="movieList row centered">
                             <div className="ui stackable centered five doubling cards" ref="uiInfiniteScroll">
                                 {movieNodes}
