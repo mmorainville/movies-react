@@ -85,7 +85,6 @@ module.exports = React.createClass({
                             { className: 'four wide column' },
                             React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect })
                         ),
-                        React.createElement('div', { className: 'ui vertical divider' }),
                         React.createElement(
                             'div',
                             { className: 'eight wide column' },
@@ -93,7 +92,6 @@ module.exports = React.createClass({
                                 onMovieSubmit: this.handleMovieSubmit,
                                 onMovieAdd: this.handleMovieAdd })
                         ),
-                        React.createElement('div', { className: 'ui vertical divider' }),
                         React.createElement(
                             'div',
                             { className: 'four wide column' },

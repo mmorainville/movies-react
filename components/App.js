@@ -71,15 +71,11 @@ module.exports = React.createClass({
                                 <SemanticDropdown onResultSelect={this.handleResultSelect}/>
                             </div>
 
-                            <div className="ui vertical divider"></div>
-
                             <div className="eight wide column">
                                 <MovieForm movie={this.state.selectedMovie}
                                            onMovieSubmit={this.handleMovieSubmit}
                                            onMovieAdd={this.handleMovieAdd}/>
                             </div>
-
-                            <div className="ui vertical divider"></div>
 
                             <div className="four wide column">
                                 <Highlight json={this.state.selectedMovie}/>
