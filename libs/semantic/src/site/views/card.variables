@@ -1,3 +1,24 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+/*-------------------
+         View
+--------------------*/
+
+/* Card */
+@borderRadius: 0em;
+
+/* Card Group */
+@groupMargin: 0em;
+
+/*-------------------
+       Content
+--------------------*/
+
+
+/* Image */
+@imageBorder: none;
+
+/* Content */
+@contentPadding: 2em 0em;

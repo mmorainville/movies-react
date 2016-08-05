@@ -53,7 +53,7 @@ module.exports = React.createClass({
             { className: 'el-flex-main-parent' },
             React.createElement(
                 'div',
-                { className: 'ui inverted main menu' },
+                { className: 'ui inverted borderless main menu fixed', style: { height: 60 + 'px' } },
                 React.createElement(
                     'div',
                     { className: 'ui fluid container' },
@@ -73,7 +73,7 @@ module.exports = React.createClass({
             ),
             React.createElement(
                 'div',
-                { className: 'main container' },
+                { className: 'main container', style: { marginTop: 60 + 'px' } },
                 React.createElement(
                     'div',
                     { className: 'ui left very wide sidebar segment', ref: 'movieFormSidebar', style: { width: 80 + '%' } },
@@ -103,7 +103,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                     'div',
-                    { className: 'pusher', style: { flex: 1 } },
+                    { className: 'pusher', style: { flex: 1, display: 'flex', flexDirection: 'column' } },
                     React.createElement(MovieList, { url: Config.serverUrl + "/movies",
                         shouldUpdateList: this.state.shouldUpdateList,
                         onMovieClick: this.handleMovieClick })
@@ -305,7 +305,7 @@ module.exports = React.createClass({
             "div",
             { className: "filterMovies" },
             React.createElement(
-                "h3",
+                "h4",
                 null,
                 "Filter bar"
             ),
@@ -586,12 +586,37 @@ var update = require('react-addons-update');
 var ReactDOM = require('react-dom');
 
 var FilterMovies = require('./FilterMovies');
+var Highlight = require('./Highlight');
 
 var Movie = React.createClass({
     displayName: 'Movie',
 
     handleMovieClick: function handleMovieClick(e) {
         this.props.onMovieClick(this.props.movie);
+    },
+
+    componentDidMount: function componentDidMount() {
+        $('.movie .image').dimmer({
+            on: 'hover'
+        });
+
+        $(ReactDOM.findDOMNode(this.refs.movieImage)).popup({
+            hoverable: true,
+            inline: false,
+            position: 'right center',
+            popup: $(ReactDOM.findDOMNode(this.refs.movieDetails)),
+            lastResort: 'bottom center',
+            boundary: '.pusher'
+        });
+    },
+
+    confirmRemoveMovie: function confirmRemoveMovie(movieToDeleteId) {
+        var self = this;
+        $(ReactDOM.findDOMNode(this.refs.confirmRemoveMovieModal)).modal({
+            onApprove: function onApprove() {
+                self.handleRemoveMovie(movieToDeleteId);
+            }
+        }).modal('show');
     },
 
     handleRemoveMovie: function handleRemoveMovie(movieToDeleteId) {
@@ -641,10 +666,43 @@ var Movie = React.createClass({
 
         return React.createElement(
             'div',
-            { className: 'movie ui card' },
+            { className: 'movie ui card', ref: 'movieCard' },
             React.createElement(
                 'div',
-                { className: 'image' },
+                { className: 'image', ref: 'movieImage' },
+                React.createElement(
+                    'div',
+                    { className: 'ui dimmer' },
+                    React.createElement(
+                        'div',
+                        { className: 'content' },
+                        React.createElement(
+                            'div',
+                            { className: 'center' },
+                            React.createElement(
+                                'h2',
+                                { className: 'ui inverted header' },
+                                this.props.movie.title
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'ui red inverted button', onClick: this.confirmRemoveMovie.bind(null, this.props.movie.id) },
+                                'Remove'
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'ui green inverted button', ref: 'viewMovieDetails' },
+                                'View'
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'ui flowing popup', ref: 'movieDetails',
+                                    style: { border: 'none', padding: 0 } },
+                                React.createElement(Highlight, { json: this.props.movie })
+                            )
+                        )
+                    )
+                ),
                 poster
             ),
             React.createElement(
@@ -670,15 +728,42 @@ var Movie = React.createClass({
             ),
             React.createElement(
                 'div',
-                { className: 'extra content' },
+                { className: 'ui basic modal', ref: 'confirmRemoveMovieModal' },
+                React.createElement('i', { className: 'close icon' }),
                 React.createElement(
                     'div',
-                    { className: 'ui two buttons' },
+                    { className: 'header' },
+                    'Delete a movie'
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'content' },
                     React.createElement(
                         'div',
-                        { className: 'ui basic red button',
-                            onClick: this.handleRemoveMovie.bind(null, this.props.movie.id) },
-                        'Remove'
+                        { className: 'description' },
+                        React.createElement(
+                            'p',
+                            null,
+                            'Are you sure you want to delete movie ',
+                            this.props.movie.id,
+                            '?'
+                        )
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'actions' },
+                    React.createElement(
+                        'div',
+                        { className: 'ui cancel red inverted button' },
+                        React.createElement('i', { className: 'remove icon' }),
+                        'No'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'ui ok green inverted button' },
+                        React.createElement('i', { className: 'checkmark icon' }),
+                        'Yes'
                     )
                 )
             )
@@ -782,6 +867,30 @@ module.exports = React.createClass({
         //     var newState = update(this.state, {filters: {skip: {$set: 0}}});
         // }
 
+        // Set token if user is logged in
+        var access_token = "";
+        if (localStorage.getItem('access_token')) {
+            access_token = "?access_token=" + localStorage.getItem('access_token');
+        }
+
+        // Extract where filter to get the movies count
+        var whereFilter = "";
+        if (JSON.stringify(this.state.filters.where)) {
+            whereFilter = "?where=" + JSON.stringify(this.state.filters.where);
+        }
+
+        $.ajax({
+            url: this.props.url + "/count" + whereFilter,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({ dataCount: data.count });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+
         $.ajax({
             url: this.props.url + "?filter=" + JSON.stringify(this.state.filters),
             dataType: 'json',
@@ -824,9 +933,9 @@ module.exports = React.createClass({
                     'div',
                     { className: 'ui container' },
                     React.createElement(
-                        'h3',
+                        'h1',
                         null,
-                        'Movie list'
+                        this.state.dataCount ? this.state.dataCount + " movie" + (this.state.dataCount != 1 ? 's' : '') : "Movies"
                     ),
                     React.createElement(
                         'div',
@@ -844,7 +953,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./FilterMovies":3,"react":350,"react-addons-update":206,"react-dom":207}],7:[function(require,module,exports){
+},{"./FilterMovies":3,"./Highlight":4,"react":350,"react-addons-update":206,"react-dom":207}],7:[function(require,module,exports){
 'use strict';
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }

@@ -3,10 +3,42 @@ var update = require('react-addons-update');
 var ReactDOM = require('react-dom');
 
 var FilterMovies = require('./FilterMovies');
+var Highlight = require('./Highlight');
 
 var Movie = React.createClass({
     handleMovieClick: function (e) {
         this.props.onMovieClick(this.props.movie);
+    },
+
+    componentDidMount: function () {
+        $('.movie .image')
+            .dimmer({
+                on: 'hover'
+            })
+        ;
+
+        $(ReactDOM.findDOMNode(this.refs.movieImage))
+            .popup({
+                hoverable: true,
+                inline: false,
+                position: 'right center',
+                popup: $(ReactDOM.findDOMNode(this.refs.movieDetails)),
+                lastResort: 'bottom center',
+                boundary: '.pusher'
+            })
+        ;
+    },
+
+    confirmRemoveMovie: function (movieToDeleteId) {
+        var self = this;
+        $(ReactDOM.findDOMNode(this.refs.confirmRemoveMovieModal))
+            .modal({
+                onApprove: function () {
+                    self.handleRemoveMovie(movieToDeleteId);
+                }
+            })
+            .modal('show')
+        ;
     },
 
     handleRemoveMovie: function (movieToDeleteId) {
@@ -53,8 +85,21 @@ var Movie = React.createClass({
             <img src="public/images/image.png"/>;
 
         return (
-            <div className="movie ui card">
-                <div className="image">
+            <div className="movie ui card" ref="movieCard">
+                <div className="image" ref="movieImage">
+                    <div className="ui dimmer">
+                        <div className="content">
+                            <div className="center">
+                                <h2 className="ui inverted header">{this.props.movie.title}</h2>
+                                <div className="ui red inverted button" onClick={this.confirmRemoveMovie.bind(null, this.props.movie.id)}>Remove</div>
+                                <div className="ui green inverted button" ref="viewMovieDetails">View</div>
+                                <div className="ui flowing popup" ref="movieDetails"
+                                     style={{border: 'none', padding: 0}}>
+                                    <Highlight json={this.props.movie}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {poster}
                 </div>
 
@@ -69,10 +114,24 @@ var Movie = React.createClass({
                     </div>
                 </div>
 
-                <div className="extra content">
-                    <div className="ui two buttons">
-                        <div className="ui basic red button"
-                             onClick={this.handleRemoveMovie.bind(null, this.props.movie.id)}>Remove
+                <div className="ui basic modal" ref="confirmRemoveMovieModal">
+                    <i className="close icon"></i>
+                    <div className="header">
+                        Delete a movie
+                    </div>
+                    <div className="content">
+                        <div className="description">
+                            <p>Are you sure you want to delete movie {this.props.movie.id}?</p>
+                        </div>
+                    </div>
+                    <div className="actions">
+                        <div className="ui cancel red inverted button">
+                            <i className="remove icon"></i>
+                            No
+                        </div>
+                        <div className="ui ok green inverted button">
+                            <i className="checkmark icon"></i>
+                            Yes
                         </div>
                     </div>
                 </div>
@@ -177,6 +236,30 @@ module.exports = React.createClass({
         //     var newState = update(this.state, {filters: {skip: {$set: 0}}});
         // }
 
+        // Set token if user is logged in
+        var access_token = "";
+        if (localStorage.getItem('access_token')) {
+            access_token = "?access_token=" + localStorage.getItem('access_token');
+        }
+
+        // Extract where filter to get the movies count
+        var whereFilter = "";
+        if (JSON.stringify(this.state.filters.where)) {
+            whereFilter = "?where=" + JSON.stringify(this.state.filters.where);
+        }
+
+        $.ajax({
+            url: this.props.url + "/count" + whereFilter,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({dataCount: data.count});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+
         $.ajax({
             url: this.props.url + "?filter=" + JSON.stringify(this.state.filters),
             dataType: 'json',
@@ -213,8 +296,12 @@ module.exports = React.createClass({
                 </div>
 
                 <div className="thirteen wide column">
+
                     <div className="ui container">
-                        <h3>Movie list</h3>
+                        <h1>
+                            {this.state.dataCount ? this.state.dataCount + " movie" + (this.state.dataCount != 1 ? 's' : '') : "Movies"}
+                        </h1>
+
                         <div className="movieList row centered">
                             <div className="ui stackable centered five doubling cards" ref="uiInfiniteScroll">
                                 {movieNodes}

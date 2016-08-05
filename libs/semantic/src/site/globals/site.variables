@@ -1,3 +1,33 @@
 /*******************************
      User Global Variables
 *******************************/
+
+/*-------------------
+    Brand Colors
+--------------------*/
+
+@primaryColor        : @red;
+@secondaryColor      : @black;
+
+@lightPrimaryColor   : @lightRed;
+@lightSecondaryColor : @lightBlack;
+
+/*-------------------
+    Derived Values
+--------------------*/
+
+/* Header Spacing */
+@headerTopMargin    : ~"calc(3rem - "@headerLineHeightOffset~")";
+@headerBottomMargin : 2rem;
+
+/*-------------------
+      Site Colors
+--------------------*/
+
+/*---  Colors  ---*/
+@red              : #F83745;
+@black            : #1B1C1D;
+
+/*---  Light Colors  ---*/
+@lightRed         : #FF424F;
+@lightBlack       : #222B31;

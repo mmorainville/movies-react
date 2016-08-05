@@ -49,7 +49,7 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div className="el-flex-main-parent">
-                <div className="ui inverted main menu">
+                <div className="ui inverted borderless main menu fixed" style={{height: 60 + 'px'}}>
                     <div className="ui fluid container">
                         <a href="#" className="header item">
                             <img className="logo" src="public/images/logo.png"/>
@@ -64,7 +64,7 @@ module.exports = React.createClass({
                     </div>
                 </div>
 
-                <div className="main container">
+                <div className="main container" style={{marginTop: 60 + 'px'}}>
                     <div className="ui left very wide sidebar segment" ref="movieFormSidebar" style={{width: 80 + '%'}}>
                         <div className="ui three column padded stackable grid">
                             <div className="four wide column">
@@ -87,7 +87,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
 
-                    <div className="pusher" style={{flex: 1}}>
+                    <div className="pusher" style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
                         <MovieList url={Config.serverUrl + "/movies"}
                                    shouldUpdateList={this.state.shouldUpdateList}
                                    onMovieClick={this.handleMovieClick}/>
