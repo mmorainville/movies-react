@@ -23,7 +23,8 @@ var Movie = React.createClass({
                 inline: false,
                 position: 'right center',
                 popup: $(ReactDOM.findDOMNode(this.refs.movieDetails)),
-                lastResort: 'bottom center'
+                lastResort: 'bottom center',
+                boundary: '.pusher'
             })
         ;
     },
@@ -80,7 +81,7 @@ var Movie = React.createClass({
                                 <h2 className="ui inverted header">{this.props.movie.title}</h2>
                                 <div className="ui positive button">Add</div>
                                 <div className="ui button" ref="viewMovieDetails">View</div>
-                                <div className="ui flowing popup" ref="movieDetails">
+                                <div className="ui flowing popup" ref="movieDetails" style={{border: 'none', padding: 0}}>
                                     <Highlight json={this.props.movie}/>
                                 </div>
                             </div>
