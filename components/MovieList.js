@@ -29,6 +29,18 @@ var Movie = React.createClass({
         ;
     },
 
+    confirmRemoveMovie: function (movieToDeleteId) {
+        var self = this;
+        $(ReactDOM.findDOMNode(this.refs.confirmRemoveMovieModal))
+            .modal({
+                onApprove: function () {
+                    self.handleRemoveMovie(movieToDeleteId);
+                }
+            })
+            .modal('show')
+        ;
+    },
+
     handleRemoveMovie: function (movieToDeleteId) {
         console.log("DELETE " + movieToDeleteId);
 
@@ -79,9 +91,10 @@ var Movie = React.createClass({
                         <div className="content">
                             <div className="center">
                                 <h2 className="ui inverted header">{this.props.movie.title}</h2>
-                                <div className="ui positive button">Add</div>
-                                <div className="ui button" ref="viewMovieDetails">View</div>
-                                <div className="ui flowing popup" ref="movieDetails" style={{border: 'none', padding: 0}}>
+                                <div className="ui red inverted button" onClick={this.confirmRemoveMovie.bind(null, this.props.movie.id)}>Remove</div>
+                                <div className="ui green inverted button" ref="viewMovieDetails">View</div>
+                                <div className="ui flowing popup" ref="movieDetails"
+                                     style={{border: 'none', padding: 0}}>
                                     <Highlight json={this.props.movie}/>
                                 </div>
                             </div>
@@ -101,10 +114,24 @@ var Movie = React.createClass({
                     </div>
                 </div>
 
-                <div className="extra content">
-                    <div className="ui two buttons">
-                        <div className="ui basic red button"
-                             onClick={this.handleRemoveMovie.bind(null, this.props.movie.id)}>Remove
+                <div className="ui basic modal" ref="confirmRemoveMovieModal">
+                    <i className="close icon"></i>
+                    <div className="header">
+                        Delete a movie
+                    </div>
+                    <div className="content">
+                        <div className="description">
+                            <p>Are you sure you want to delete movie {this.props.movie.id}?</p>
+                        </div>
+                    </div>
+                    <div className="actions">
+                        <div className="ui cancel red inverted button">
+                            <i className="remove icon"></i>
+                            No
+                        </div>
+                        <div className="ui ok green inverted button">
+                            <i className="checkmark icon"></i>
+                            Yes
                         </div>
                     </div>
                 </div>

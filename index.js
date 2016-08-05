@@ -11,7 +11,7 @@ window.jQuery = $;
 require('./libs/semantic/dist/semantic');
 
 // Configuration
-var Config = require('./components/_config/config.dev.json');
+var Config = require('./components/_config/config.prod.json');
 window.Config = Config;
 
 ReactDOM.render(

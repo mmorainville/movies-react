@@ -610,6 +610,15 @@ var Movie = React.createClass({
         });
     },
 
+    confirmRemoveMovie: function confirmRemoveMovie(movieToDeleteId) {
+        var self = this;
+        $(ReactDOM.findDOMNode(this.refs.confirmRemoveMovieModal)).modal({
+            onApprove: function onApprove() {
+                self.handleRemoveMovie(movieToDeleteId);
+            }
+        }).modal('show');
+    },
+
     handleRemoveMovie: function handleRemoveMovie(movieToDeleteId) {
         console.log("DELETE " + movieToDeleteId);
 
@@ -677,17 +686,18 @@ var Movie = React.createClass({
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'ui positive button' },
-                                'Add'
+                                { className: 'ui red inverted button', onClick: this.confirmRemoveMovie.bind(null, this.props.movie.id) },
+                                'Remove'
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'ui button', ref: 'viewMovieDetails' },
+                                { className: 'ui green inverted button', ref: 'viewMovieDetails' },
                                 'View'
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'ui flowing popup', ref: 'movieDetails', style: { border: 'none', padding: 0 } },
+                                { className: 'ui flowing popup', ref: 'movieDetails',
+                                    style: { border: 'none', padding: 0 } },
                                 React.createElement(Highlight, { json: this.props.movie })
                             )
                         )
@@ -718,15 +728,42 @@ var Movie = React.createClass({
             ),
             React.createElement(
                 'div',
-                { className: 'extra content' },
+                { className: 'ui basic modal', ref: 'confirmRemoveMovieModal' },
+                React.createElement('i', { className: 'close icon' }),
                 React.createElement(
                     'div',
-                    { className: 'ui two buttons' },
+                    { className: 'header' },
+                    'Delete a movie'
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'content' },
                     React.createElement(
                         'div',
-                        { className: 'ui basic red button',
-                            onClick: this.handleRemoveMovie.bind(null, this.props.movie.id) },
-                        'Remove'
+                        { className: 'description' },
+                        React.createElement(
+                            'p',
+                            null,
+                            'Are you sure you want to delete movie ',
+                            this.props.movie.id,
+                            '?'
+                        )
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'actions' },
+                    React.createElement(
+                        'div',
+                        { className: 'ui cancel red inverted button' },
+                        React.createElement('i', { className: 'remove icon' }),
+                        'No'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'ui ok green inverted button' },
+                        React.createElement('i', { className: 'checkmark icon' }),
+                        'Yes'
                     )
                 )
             )
@@ -1309,7 +1346,7 @@ module.exports = React.createClass({
 
 },{"./MultipleInputs":7,"react":350,"react-addons-update":206}],10:[function(require,module,exports){
 module.exports={
-  "serverUrl": "http://localhost:3000/api"
+  "serverUrl": "https://shielded-savannah-32628.herokuapp.com/api"
 }
 },{}],11:[function(require,module,exports){
 'use strict';
@@ -1325,12 +1362,12 @@ window.jQuery = $;
 require('./libs/semantic/dist/semantic');
 
 // Configuration
-var Config = require('./components/_config/config.dev.json');
+var Config = require('./components/_config/config.prod.json');
 window.Config = Config;
 
 ReactDOM.render(React.createElement(App, null), document.getElementById('container'));
 
-},{"./components/App":1,"./components/_config/config.dev.json":10,"./libs/semantic/dist/semantic":12,"jquery":203,"react":350,"react-dom":207}],12:[function(require,module,exports){
+},{"./components/App":1,"./components/_config/config.prod.json":10,"./libs/semantic/dist/semantic":12,"jquery":203,"react":350,"react-dom":207}],12:[function(require,module,exports){
 'use strict';var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol?"symbol":typeof obj;};/*
  * # Semantic UI - 2.2.2
  * https://github.com/Semantic-Org/Semantic-UI
