@@ -17,12 +17,13 @@ var Movie = React.createClass({
             })
         ;
 
-        $(ReactDOM.findDOMNode(this.refs.movieCard))
+        $(ReactDOM.findDOMNode(this.refs.movieImage))
             .popup({
                 hoverable: true,
                 inline: false,
                 position: 'right center',
-                popup: $(ReactDOM.findDOMNode(this.refs.movieDetails))
+                popup: $(ReactDOM.findDOMNode(this.refs.movieDetails)),
+                lastResort: 'bottom center'
             })
         ;
     },
@@ -72,14 +73,14 @@ var Movie = React.createClass({
 
         return (
             <div className="movie ui card" ref="movieCard">
-                <div className="image">
+                <div className="image" ref="movieImage">
                     <div className="ui dimmer">
                         <div className="content">
                             <div className="center">
                                 <h2 className="ui inverted header">{this.props.movie.title}</h2>
                                 <div className="ui positive button">Add</div>
                                 <div className="ui button" ref="viewMovieDetails">View</div>
-                                <div className="ui popup" ref="movieDetails">
+                                <div className="ui flowing popup" ref="movieDetails">
                                     <Highlight json={this.props.movie}/>
                                 </div>
                             </div>

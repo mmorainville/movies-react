@@ -600,11 +600,12 @@ var Movie = React.createClass({
             on: 'hover'
         });
 
-        $(ReactDOM.findDOMNode(this.refs.movieCard)).popup({
+        $(ReactDOM.findDOMNode(this.refs.movieImage)).popup({
             hoverable: true,
             inline: false,
             position: 'right center',
-            popup: $(ReactDOM.findDOMNode(this.refs.movieDetails))
+            popup: $(ReactDOM.findDOMNode(this.refs.movieDetails)),
+            lastResort: 'bottom center'
         });
     },
 
@@ -658,7 +659,7 @@ var Movie = React.createClass({
             { className: 'movie ui card', ref: 'movieCard' },
             React.createElement(
                 'div',
-                { className: 'image' },
+                { className: 'image', ref: 'movieImage' },
                 React.createElement(
                     'div',
                     { className: 'ui dimmer' },
@@ -685,7 +686,7 @@ var Movie = React.createClass({
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'ui popup', ref: 'movieDetails' },
+                                { className: 'ui flowing popup', ref: 'movieDetails' },
                                 React.createElement(Highlight, { json: this.props.movie })
                             )
                         )
