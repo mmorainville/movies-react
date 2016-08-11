@@ -91,7 +91,9 @@ var Movie = React.createClass({
                         <div className="content">
                             <div className="center">
                                 <h2 className="ui inverted header">{this.props.movie.title}</h2>
-                                <div className="ui red inverted button" onClick={this.confirmRemoveMovie.bind(null, this.props.movie.id)}>Remove</div>
+                                <div className="ui red inverted button"
+                                     onClick={this.confirmRemoveMovie.bind(null, this.props.movie.id)}>Remove
+                                </div>
                                 <div className="ui green inverted button" ref="viewMovieDetails">View</div>
                                 <div className="ui flowing popup" ref="movieDetails"
                                      style={{border: 'none', padding: 0}}>
@@ -228,6 +230,7 @@ module.exports = React.createClass({
 
     getMovieList: function (infiniteScroll) {
         console.log(this.state.filters);
+        this.setState({isLoading: true});
 
         // if (infiniteScroll) {
         //     // Do nothing
@@ -257,6 +260,9 @@ module.exports = React.createClass({
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
+            }.bind(this),
+            complete: function () {
+                this.setState({isLoading: false});
             }.bind(this)
         });
 
@@ -274,6 +280,9 @@ module.exports = React.createClass({
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
+            }.bind(this),
+            complete: function () {
+                this.setState({isLoading: false});
             }.bind(this)
         });
     },
@@ -308,7 +317,10 @@ module.exports = React.createClass({
                             </div>
                         </div>
 
-                        <div className="ui active centered inline loader"></div>
+                        {this.state.isLoading ?
+                            <div className="ui active centered inline loader"></div> :
+                            <div className="ui active centered inline loader" style={{visibility: 'hidden'}}></div>
+                        }
                     </div>
                 </div>
             </div>
