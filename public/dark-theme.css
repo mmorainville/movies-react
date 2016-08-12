@@ -1,5 +1,6 @@
 .el-flex-main-parent .pusher {
-    background-color: #222b31;
+    /*background-color: #222b31;*/
+    background-color: #455864;
 }
 
 .el-flex-main-parent .pusher h1 {
@@ -45,9 +46,9 @@
    ---------- */
 
 .el-flex-main-parent .main.menu {
-    background-color: #325a75;
+    background-color: #263238;
 }
 
 .el-flex-main-parent .main.menu .header.item {
-    background-color: #2b4e65;
+    background-color: #263238;
 }
