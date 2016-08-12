@@ -76,25 +76,38 @@ module.exports = React.createClass({
                 { className: 'main container', style: { marginTop: 60 + 'px' } },
                 React.createElement(
                     'div',
-                    { className: 'ui left very wide sidebar segment', ref: 'movieFormSidebar', style: { width: 80 + '%' } },
+                    { className: 'ui left very wide sidebar segment', ref: 'movieFormSidebar',
+                        style: { width: 90 + '%', border: 'none', backgroundColor: '#f9f9f9', padding: 0 } },
                     React.createElement(
                         'div',
-                        { className: 'ui three column padded stackable grid' },
+                        { className: 'ui three column padded stackable grid', style: { height: 100 + '%' } },
                         React.createElement(
                             'div',
-                            { className: 'four wide column' },
+                            { className: 'four wide column ui secondary segment',
+                                style: {
+                                    borderRadius: 0,
+                                    margin: 0,
+                                    padding: 0,
+                                    borderLeft: 'none'
+                                } },
                             React.createElement(SemanticDropdown, { onResultSelect: this.handleResultSelect })
                         ),
                         React.createElement(
                             'div',
-                            { className: 'eight wide column' },
+                            { className: 'seven wide column ui container' },
+                            React.createElement(
+                                'h1',
+                                null,
+                                'Movie form'
+                            ),
                             React.createElement(MovieForm, { movie: this.state.selectedMovie,
                                 onMovieSubmit: this.handleMovieSubmit,
                                 onMovieAdd: this.handleMovieAdd })
                         ),
                         React.createElement(
                             'div',
-                            { className: 'four wide column' },
+                            { className: 'four wide column ui tertiary segment',
+                                style: { borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#23241f' } },
                             React.createElement(Highlight, { json: this.state.selectedMovie })
                         )
                     )
@@ -928,7 +941,8 @@ module.exports = React.createClass({
             { className: 'ui stackable two column padded grid', style: { flex: 1, height: 100 + '%' } },
             React.createElement(
                 'div',
-                { className: 'three wide column', style: { backgroundColor: 'darkgrey' } },
+                { className: 'three wide column ui secondary segment',
+                    style: { borderRadius: 0, margin: 0, paddingTop: 1 + 'em' } },
                 React.createElement(FilterMovies, { onFilterChange: this.handleFilterChange,
                     onSortOrderChange: this.handleSortOrderChange })
             ),
@@ -1028,12 +1042,7 @@ module.exports = React.createClass({
                 );
             }, this);
         } else {
-            forms = React.createElement(
-                'div',
-                { className: 'field' },
-                'No ',
-                this.props.inputsGroup
-            );
+            forms = '';
         }
 
         return React.createElement(
@@ -1046,7 +1055,7 @@ module.exports = React.createClass({
             ),
             React.createElement(
                 'div',
-                { className: 'ui stackable vertically padded grid' },
+                { className: 'ui stackable vertically padded grid two fields' },
                 forms
             ),
             React.createElement(
@@ -1151,21 +1160,30 @@ module.exports = React.createClass({
 
     render: function render() {
         var posterUrl = "https://image.tmdb.org/t/p/w500" + this.state.poster;
-        var poster = this.state.poster ? React.createElement('img', { src: posterUrl }) : "No image";
+        var poster = this.state.poster ? React.createElement('img', { src: posterUrl }) : '';
 
         return React.createElement(
             'div',
-            { className: 'ui form' },
+            { className: 'semanticDropdown' },
             React.createElement(
                 'div',
-                { className: 'ui search', ref: 'uiSearch' },
+                { className: 'ui form', style: { padding: 1 + 'em' } },
+                React.createElement(
+                    'h4',
+                    null,
+                    'Search movies'
+                ),
                 React.createElement(
                     'div',
-                    { className: 'ui icon input' },
-                    React.createElement('input', { className: 'prompt', type: 'text', placeholder: 'Search movies...' }),
-                    React.createElement('i', { className: 'search icon' })
-                ),
-                React.createElement('div', { className: 'results' })
+                    { className: 'ui search', ref: 'uiSearch' },
+                    React.createElement(
+                        'div',
+                        { className: 'ui icon fluid input' },
+                        React.createElement('input', { className: 'prompt', type: 'text', placeholder: 'Search movies...' }),
+                        React.createElement('i', { className: 'search icon' })
+                    ),
+                    React.createElement('div', { className: 'results' })
+                )
             ),
             React.createElement(
                 'div',
@@ -1260,12 +1278,16 @@ module.exports = React.createClass({
                     { key: i, className: 'ui segment' },
                     React.createElement(
                         'h2',
-                        null,
-                        'Viewing #',
-                        i,
+                        { style: { marginTop: 0 } },
+                        'Viewing ',
+                        React.createElement(
+                            'strong',
+                            null,
+                            i + 1
+                        ),
                         React.createElement(
                             'button',
-                            { type: 'button', className: 'circular red basic ui right floated icon button',
+                            { type: 'button', className: 'circular red inverted ui right floated icon button',
                                 onClick: this.removeViewing.bind(null, i) },
                             React.createElement('i', { className: 'icon remove' })
                         )
@@ -1273,6 +1295,11 @@ module.exports = React.createClass({
                     React.createElement(
                         'div',
                         { className: 'field' },
+                        React.createElement(
+                            'label',
+                            null,
+                            'Cinema'
+                        ),
                         React.createElement('input', { type: 'text', key: 'cinema-' + i, value: this.state.viewings[i].cinema,
                             onChange: this.handleSimpleFieldChange.bind(null, "cinema", i),
                             placeholder: 'Cinema...' })
@@ -1280,6 +1307,11 @@ module.exports = React.createClass({
                     React.createElement(
                         'div',
                         { className: 'field' },
+                        React.createElement(
+                            'label',
+                            null,
+                            'Filename'
+                        ),
                         React.createElement('input', { type: 'text', key: 'filename-' + i, value: this.state.viewings[i].filename,
                             onChange: this.handleSimpleFieldChange.bind(null, "filename", i),
                             placeholder: 'Filename...' })
@@ -1292,7 +1324,7 @@ module.exports = React.createClass({
                         onMultipleInputChange: this.handleMultipleInputChange.bind(null, "spectators", i) }),
                     React.createElement(
                         'div',
-                        { className: 'inline fields' },
+                        { className: 'inline fields', style: { margin: 0 } },
                         React.createElement(
                             'label',
                             null,

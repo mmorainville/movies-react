@@ -39,6 +39,10 @@ pre {
     margin: 0;
 }
 
+.hljs {
+    padding: 1em;
+}
+
 /* ----------
    movie
    ---------- */

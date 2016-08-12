@@ -65,19 +65,28 @@ module.exports = React.createClass({
                 </div>
 
                 <div className="main container" style={{marginTop: 60 + 'px'}}>
-                    <div className="ui left very wide sidebar segment" ref="movieFormSidebar" style={{width: 80 + '%'}}>
-                        <div className="ui three column padded stackable grid">
-                            <div className="four wide column">
+                    <div className="ui left very wide sidebar segment" ref="movieFormSidebar"
+                         style={{width: 90 + '%', border: 'none', backgroundColor: '#f9f9f9', padding: 0}}>
+                        <div className="ui three column padded stackable grid" style={{height: 100 + '%'}}>
+                            <div className="four wide column ui secondary segment"
+                                 style={{
+                                     borderRadius: 0,
+                                     margin: 0,
+                                     padding: 0,
+                                     borderLeft: 'none'
+                                 }}>
                                 <SemanticDropdown onResultSelect={this.handleResultSelect}/>
                             </div>
 
-                            <div className="eight wide column">
+                            <div className="seven wide column ui container">
+                                <h1>Movie form</h1>
                                 <MovieForm movie={this.state.selectedMovie}
                                            onMovieSubmit={this.handleMovieSubmit}
                                            onMovieAdd={this.handleMovieAdd}/>
                             </div>
 
-                            <div className="four wide column">
+                            <div className="four wide column ui tertiary segment"
+                                 style={{borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#23241f'}}>
                                 <Highlight json={this.state.selectedMovie}/>
                             </div>
                         </div>

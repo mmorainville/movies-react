@@ -58,13 +58,13 @@ module.exports = React.createClass({
                 );
             }, this);
         } else {
-            forms = <div className="field">No {this.props.inputsGroup}</div>
+            forms = ''
         }
 
         return (
             <div className="multipleInputs field">
                 <label>{this.props.inputsGroup}</label>
-                <div className="ui stackable vertically padded grid">
+                <div className="ui stackable vertically padded grid two fields">
                     {forms}
                 </div>
                 <button type="button" className="circular ui icon button"

@@ -90,16 +90,19 @@ module.exports = React.createClass({
 
     render: function () {
         var posterUrl = "https://image.tmdb.org/t/p/w500" + this.state.poster;
-        var poster = this.state.poster ? <img src={posterUrl}/> : "No image";
+        var poster = this.state.poster ? <img src={posterUrl}/> : '';
 
         return (
-            <div className="ui form">
-                <div className="ui search" ref="uiSearch">
-                    <div className="ui icon input">
-                        <input className="prompt" type="text" placeholder="Search movies..."/>
+            <div className="semanticDropdown">
+                <div className="ui form" style={{padding: 1 + 'em'}}>
+                    <h4>Search movies</h4>
+                    <div className="ui search" ref="uiSearch">
+                        <div className="ui icon fluid input">
+                            <input className="prompt" type="text" placeholder="Search movies..."/>
                             <i className="search icon"></i>
+                        </div>
+                        <div className="results"></div>
                     </div>
-                    <div className="results"></div>
                 </div>
                 <div>
                     <Highlight json={this.state}/>

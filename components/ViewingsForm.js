@@ -70,21 +70,23 @@ module.exports = React.createClass({
                 // console.log(viewing);
                 return (
                     <div key={i} className="ui segment">
-                        <h2>
-                            Viewing #{i}
-                            <button type="button" className="circular red basic ui right floated icon button"
+                        <h2 style={{marginTop: 0}}>
+                            Viewing <strong>{i + 1}</strong>
+                            <button type="button" className="circular red inverted ui right floated icon button"
                                     onClick={this.removeViewing.bind(null, i)}>
                                 <i className="icon remove"></i>
                             </button>
                         </h2>
 
                         <div className="field">
+                            <label>Cinema</label>
                             <input type="text" key={'cinema-' + i} value={this.state.viewings[i].cinema}
                                    onChange={this.handleSimpleFieldChange.bind(null, "cinema", i)}
                                    placeholder="Cinema..."/>
                         </div>
 
                         <div className="field">
+                            <label>Filename</label>
                             <input type="text" key={'filename-' + i} value={this.state.viewings[i].filename}
                                    onChange={this.handleSimpleFieldChange.bind(null, "filename", i)}
                                    placeholder="Filename..."/>
@@ -99,7 +101,7 @@ module.exports = React.createClass({
                         <MultipleInputs inputs={this.state.viewings[i].spectators} inputsGroup="spectators"
                                         onMultipleInputChange={this.handleMultipleInputChange.bind(null, "spectators", i)}/>
 
-                        <div className="inline fields">
+                        <div className="inline fields" style={{margin: 0}}>
                             <label>Options</label>
                             <div className="field">
                                 <div className="ui checkbox">

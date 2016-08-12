@@ -299,7 +299,8 @@ module.exports = React.createClass({
 
         return (
             <div className="ui stackable two column padded grid" style={{flex: 1, height: 100 + '%'}}>
-                <div className="three wide column" style={{backgroundColor: 'darkgrey'}}>
+                <div className="three wide column ui secondary segment"
+                     style={{borderRadius: 0, margin: 0, paddingTop: 1 + 'em'}}>
                     <FilterMovies onFilterChange={this.handleFilterChange}
                                   onSortOrderChange={this.handleSortOrderChange}/>
                 </div>
