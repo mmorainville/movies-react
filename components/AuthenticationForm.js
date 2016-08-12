@@ -20,6 +20,7 @@ module.exports = React.createClass({
             .popup({
                 position: 'bottom right',
                 on: 'click',
+                lastResort: 'bottom right'
             })
         ;
 

@@ -151,7 +151,8 @@ module.exports = React.createClass({
     initSemanticComponents: function initSemanticComponents() {
         $(ReactDOM.findDOMNode(this.refs.loginModal)).popup({
             position: 'bottom right',
-            on: 'click'
+            on: 'click',
+            lastResort: 'bottom right'
         });
 
         $(ReactDOM.findDOMNode(this.refs.loginForm)).form({
