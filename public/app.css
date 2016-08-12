@@ -68,6 +68,14 @@ pre {
     box-shadow: -1px 1px 0 0 #191c1f;
 }
 
+.movie.card .ui.card > .content, .ui.cards > .card > .content {
+    border: none;
+}
+
+.movie.card .ui.card > .image, .ui.cards > .card > .image {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 /* ----------
    multiple-inputs
    ---------- */

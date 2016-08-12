@@ -14,7 +14,7 @@
     color: #fff;
 }
 
-.el-flex-main-parent .pusher .ui.card .meta, .ui.cards>.card .meta {
+.el-flex-main-parent .pusher .ui.card .meta, .ui.cards > .card .meta {
     color: #a1cae5;
 }
 
@@ -27,7 +27,7 @@
     color: #d8e7f1;
 }
 
-.el-flex-main-parent .pusher .ui.form .field>label {
+.el-flex-main-parent .pusher .ui.form .field > label {
     color: #d8e7f1;
 }
 
