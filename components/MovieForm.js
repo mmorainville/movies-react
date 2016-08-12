@@ -5,7 +5,7 @@ var MultipleInputs = require('./MultipleInputs');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {title: "Init", year: 2015};
+        return {title: "Title...", year: new Date().getFullYear()};
     },
     handleChange: function (field, e) {
         var newState = this.state;
@@ -26,12 +26,6 @@ module.exports = React.createClass({
             return;
         }
 
-        // this.props.onMovieSubmit(this.state);
-
-        // delete this.state.id;
-
-        console.log("POST");
-
         // Set token if user is logged in
         var access_token = "";
         if (localStorage.getItem('access_token')) {
@@ -47,12 +41,11 @@ module.exports = React.createClass({
             success: function (data) {
                 console.log("success");
                 // In case of success, we reset the form
-                this.props.onMovieSubmit({title: "Init2", year: 2015});
+                this.props.onMovieSubmit(this.getInitialState());
                 this.props.onMovieAdd();
-                // this.setState({data: data});
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
+                alert(xhr.status + ': ' + err.toString());
             }.bind(this),
             data: JSON.stringify(this.state)
         });
@@ -81,8 +74,6 @@ module.exports = React.createClass({
 
     handleViewingChange: function (viewings) {
         if (viewings == undefined) {
-            // var newState = this.state;
-            // delete newState.viewings;
             var newState = update(this.state, {
                 viewings: {$set: undefined}
             });

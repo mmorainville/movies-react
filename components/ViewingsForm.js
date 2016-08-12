@@ -8,11 +8,13 @@ module.exports = React.createClass({
     },
     handleSimpleFieldChange: function (field, i, e) {
         var newViewing = this.state.viewings;
+
         if (e.target.value == "") {
             delete newViewing[i][field];
         } else {
             newViewing[i][field] = e.target.type == "checkbox" ? e.target.checked : e.target.value;
         }
+
         this.setState({viewings: newViewing}, function () {
             this.props.onViewingChange(newViewing);
         });
@@ -52,6 +54,7 @@ module.exports = React.createClass({
         var newViewings = update(this.state.viewings, {
             $splice: [[index, 1]]
         });
+
         if (newViewings.length == 0) {
             this.setState({viewings: undefined}, function () {
                 this.props.onViewingChange(undefined);
@@ -67,7 +70,6 @@ module.exports = React.createClass({
         var forms;
         if (this.state.viewings != undefined) {
             forms = this.state.viewings.map(function (viewing, i) {
-                // console.log(viewing);
                 return (
                     <div key={i} className="ui segment">
                         <h2 style={{marginTop: 0}}>

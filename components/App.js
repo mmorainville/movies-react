@@ -36,7 +36,6 @@ module.exports = React.createClass({
     },
 
     handleMovieAdd: function () {
-        // console.log("App: handleMovieAdd");
         this.setState({shouldUpdateList: true})
     },
 

@@ -14,19 +14,15 @@ module.exports = React.createClass({
             newState[field] = e.target.type == "number" ? parseInt(e.target.value) : e.target.value;
         }
 
-        this.setState(newState, function () {
-            // this.props.onFilterChange(this.state);
-        });
+        this.setState(newState);
     },
 
     handleSubmit: function (e) {
         e.preventDefault();
-        // console.log("SUBMIT FILTER");
         this.props.onFilterChange(this.state);
     },
 
     handleSortOrderChange: function (e) {
-        // console.log(e.target.value);
         this.props.onSortOrderChange(e.target.value);
     },
 

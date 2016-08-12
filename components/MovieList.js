@@ -4,143 +4,7 @@ var ReactDOM = require('react-dom');
 
 var FilterMovies = require('./FilterMovies');
 var Highlight = require('./Highlight');
-
-var Movie = React.createClass({
-    handleMovieClick: function (e) {
-        this.props.onMovieClick(this.props.movie);
-    },
-
-    componentDidMount: function () {
-        $('.movie .image')
-            .dimmer({
-                on: 'hover'
-            })
-        ;
-
-        $(ReactDOM.findDOMNode(this.refs.movieImage))
-            .popup({
-                hoverable: true,
-                inline: false,
-                position: 'right center',
-                popup: $(ReactDOM.findDOMNode(this.refs.movieDetails)),
-                lastResort: 'bottom center',
-                boundary: '.pusher'
-            })
-        ;
-    },
-
-    confirmRemoveMovie: function (movieToDeleteId) {
-        var self = this;
-        $(ReactDOM.findDOMNode(this.refs.confirmRemoveMovieModal))
-            .modal({
-                onApprove: function () {
-                    self.handleRemoveMovie(movieToDeleteId);
-                }
-            })
-            .modal('show')
-        ;
-    },
-
-    handleRemoveMovie: function (movieToDeleteId) {
-        console.log("DELETE " + movieToDeleteId);
-
-        // this.props.onRemoveMovie();
-
-        // Set token if user is logged in
-        var access_token = "";
-        if (localStorage.getItem('access_token')) {
-            access_token = "?access_token=" + localStorage.getItem('access_token');
-        }
-
-        $.ajax({
-            url: Config.serverUrl + '/movies/' + movieToDeleteId + access_token,
-            dataType: 'json',
-            cache: false,
-            type: 'delete',
-            success: function (data) {
-                console.log("success DELETE");
-                this.props.onRemoveMovie();
-                // this.setState({data: data});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-    },
-
-    render: function () {
-        var directorsList = [];
-
-        if (this.props.movie.directors != undefined) {
-            directorsList = this.props.movie.directors.map(function (director) {
-                return director;
-            }).join(", ");
-        }
-
-        var directors = <span>{directorsList}</span>;
-
-        var posterUrl = "https://image.tmdb.org/t/p/w500" + this.props.movie.poster;
-        var poster = this.props.movie.poster ?
-            <img src={posterUrl}/> :
-            <img src="public/images/image.png"/>;
-
-        return (
-            <div className="movie ui card" ref="movieCard">
-                <div className="image" ref="movieImage">
-                    <div className="ui dimmer">
-                        <div className="content">
-                            <div className="center">
-                                <h2 className="ui inverted header">{this.props.movie.title}</h2>
-                                <div className="ui red inverted button"
-                                     onClick={this.confirmRemoveMovie.bind(null, this.props.movie.id)}>Remove
-                                </div>
-                                <div className="ui green inverted button" ref="viewMovieDetails">View</div>
-                                <div className="ui flowing popup" ref="movieDetails"
-                                     style={{border: 'none', padding: 0}}>
-                                    <Highlight json={this.props.movie}/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {poster}
-                </div>
-
-                <div className="content">
-                    <div className="header">
-                        <a href="javascript:undefined" onClick={this.handleMovieClick}>
-                            {this.props.movie.title} ({this.props.movie.year})
-                        </a>
-                    </div>
-                    <div className="meta">
-                        {directors}
-                    </div>
-                </div>
-
-                <div className="ui basic modal" ref="confirmRemoveMovieModal">
-                    <i className="close icon"></i>
-                    <div className="header">
-                        Delete a movie
-                    </div>
-                    <div className="content">
-                        <div className="description">
-                            <p>Are you sure you want to delete movie {this.props.movie.id}?</p>
-                        </div>
-                    </div>
-                    <div className="actions">
-                        <div className="ui cancel red inverted button">
-                            <i className="remove icon"></i>
-                            No
-                        </div>
-                        <div className="ui ok green inverted button">
-                            <i className="checkmark icon"></i>
-                            Yes
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-});
+var Movie = require('./Movie');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -186,7 +50,6 @@ module.exports = React.createClass({
     },
 
     componentWillReceiveProps: function (nextProps) {
-        // console.log(nextProps);
         if (nextProps.shouldUpdateList) {
             console.log("UPDATE MovieList after add");
             var newState = update(this.state, {filters: {skip: {$set: 0}}});
@@ -197,9 +60,6 @@ module.exports = React.createClass({
     },
 
     handleSortOrderChange: function (order) {
-        console.log("ORDER!");
-        console.log(order);
-
         var newState = update(this.state, {filters: {skip: {$set: 0}, order: {$set: order}}});
         this.setState(newState, function () {
             this.getMovieList();
@@ -207,12 +67,8 @@ module.exports = React.createClass({
     },
 
     handleFilterChange: function (filters) {
-        console.log("FILTER!");
-        console.log(filters);
-
         var preparedFilters = {"where": {}};
         for (var filter in filters) {
-            // console.log(filter + '_like=' + filters[filter]);
             if (filter == "title" || filter == "viewings.spectators") {
                 preparedFilters.where[filter] = {"like": filters[filter], "options": "i"};
             } else {
@@ -224,20 +80,11 @@ module.exports = React.createClass({
         this.setState(newState, function () {
             this.getMovieList();
         });
-
-        // console.log(preparedFilters);
     },
 
     getMovieList: function (infiniteScroll) {
         console.log(this.state.filters);
         this.setState({isLoading: true});
-
-        // if (infiniteScroll) {
-        //     // Do nothing
-        // } else {
-        //     // Reset the skip filter
-        //     var newState = update(this.state, {filters: {skip: {$set: 0}}});
-        // }
 
         // Set token if user is logged in
         var access_token = "";

@@ -2,7 +2,6 @@ var React = require('react');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        // return {[this.props.inputsGroup]: this.props.inputs || ['']};
         return {[this.props.inputsGroup]: this.props.inputs};
     },
     handleSimpleFieldChange: function (field, i, e) {
@@ -12,18 +11,18 @@ module.exports = React.createClass({
         this.props.onMultipleInputChange(newValues);
     },
     componentWillReceiveProps: function (nextProps) {
-        // this.state[nextProps.inputsGroup] = nextProps.inputs;
         this.setState({[nextProps.inputsGroup]: nextProps.inputs});
-        // this.setState({viewings: nextProps.viewings});
     },
 
     addField: function (field) {
+        var newValue = field == 'dates' ? new Date().toISOString().substring(0, 10) : '';
+
         if (this.state[field] == undefined) {
-            this.setState({[field]: ['']});
-            this.props.onMultipleInputChange(['']);
+            this.setState({[field]: [newValue]});
+            this.props.onMultipleInputChange([newValue]);
         } else {
             var nextState = this.state;
-            nextState[field].push('');
+            nextState[field].push(newValue);
             this.setState(nextState);
         }
     },

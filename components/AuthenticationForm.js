@@ -43,9 +43,7 @@ module.exports = React.createClass({
     handleSubmit: function (e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log(this.state);
-        // console.log("SUBMIT FILTER");
-        // this.props.onFilterChange(this.state);
+
         $.ajax({
             url: Config.serverUrl + '/Users/login',
             dataType: 'json',
@@ -53,16 +51,13 @@ module.exports = React.createClass({
             type: 'post',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                console.log("LOGIN success");
-                console.log(data);
                 localStorage.setItem('access_token', data.id);
                 // In case of success, we reset the form
                 this.setState(this.getInitialState());
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error("login", status, err.toString());
                 this.setState({
-                    error: err.toString()
+                    error: xhr.status + ': ' + err.toString()
                 })
             }.bind(this),
             data: JSON.stringify(this.state.authenticationForm)

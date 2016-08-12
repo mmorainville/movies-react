@@ -14,13 +14,11 @@ module.exports = React.createClass({
                 dataType: 'jsonp',
                 apiSettings: {
                     onResponse: function (res) {
-                        // console.log(res);
                         var response = {
                             results: []
                         };
                         // translate github api response to work with dropdown
                         $.each(res.results, function (index, item) {
-                            // console.log(item);
                             response.results.push({
                                 title: item.title,
                                 description: item.release_date.split('-')[0],
@@ -33,7 +31,6 @@ module.exports = React.createClass({
                     url: 'https://api.themoviedb.org/3/search/movie?query={query}&api_key=abe00801c2dc570aee01aeaf512a2e77&language=fr'
                 },
                 onSelect: (result, response) => {
-                    // console.log(result);
                     var selectedMovie = {
                         title: result.title,
                         year: parseInt(result.description),
@@ -44,8 +41,6 @@ module.exports = React.createClass({
 
                     this.setState(selectedMovie);
                     this.props.onResultSelect(selectedMovie);
-                    // console.log("---");
-                    // console.log(this.state);
                 }
             })
         ;
@@ -62,13 +57,11 @@ module.exports = React.createClass({
             cache: false,
             type: 'get',
             success: function (data) {
-                console.log("success");
                 // In case of success, we reset the form
                 this.getDirectorsFromCrew(data.crew);
-                // this.setState({data: data});
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
+                alert(xhr.status + ': ' + err.toString());
             }.bind(this)
         });
     },
