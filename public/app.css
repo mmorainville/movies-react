@@ -31,6 +31,13 @@
     flex: 0;
 }
 
+.el-movie-form-sidebar.sidebar {
+    width: 90% !important;
+    border: none;
+    background-color: #f9f9f9;
+    padding: 0
+}
+
 /* ----------
    highlight
    ---------- */
@@ -62,4 +69,15 @@ pre {
 
 .ui.form .multipleInputs .field {
     margin-bottom: 1em;
+}
+
+/* ----------
+   mobile
+   ---------- */
+
+@media only screen and (max-width: 767px) {
+    .el-movie-form-sidebar.sidebar {
+        height: auto !important;
+        width: 100% !important;
+    }
 }

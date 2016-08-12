@@ -41,6 +41,8 @@ module.exports = React.createClass({
     },
 
     openMovieFormSidebar: function () {
+        window.scrollTo(0, 0);
+
         $(ReactDOM.findDOMNode(this.refs.movieFormSidebar))
             .sidebar('toggle')
         ;
@@ -65,15 +67,13 @@ module.exports = React.createClass({
                 </div>
 
                 <div className="main container" style={{marginTop: 60 + 'px'}}>
-                    <div className="ui left very wide sidebar segment" ref="movieFormSidebar"
-                         style={{width: 90 + '%', border: 'none', backgroundColor: '#f9f9f9', padding: 0}}>
+                    <div className="el-movie-form-sidebar ui left very wide sidebar segment" ref="movieFormSidebar">
                         <div className="ui three column padded stackable grid" style={{height: 100 + '%'}}>
                             <div className="four wide column ui secondary segment"
                                  style={{
                                      borderRadius: 0,
                                      margin: 0,
-                                     padding: 0,
-                                     borderLeft: 'none'
+                                     padding: 1 + 'em'
                                  }}>
                                 <SemanticDropdown onResultSelect={this.handleResultSelect}/>
                             </div>

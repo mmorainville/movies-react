@@ -94,7 +94,7 @@ module.exports = React.createClass({
 
         return (
             <div className="semanticDropdown">
-                <div className="ui form" style={{padding: 1 + 'em'}}>
+                <div className="ui form">
                     <h4>Search movies</h4>
                     <div className="ui search" ref="uiSearch">
                         <div className="ui icon fluid input">
@@ -104,7 +104,7 @@ module.exports = React.createClass({
                         <div className="results"></div>
                     </div>
                 </div>
-                <div>
+                <div style={{paddingTop: 1 + 'em', paddingBottom: 1 + 'em'}}>
                     <Highlight json={this.state}/>
                 </div>
                 <div className="ui image">
