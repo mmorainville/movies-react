@@ -61,7 +61,7 @@ module.exports = React.createClass({
                     React.createElement(
                         'a',
                         { href: '#', className: 'header item' },
-                        React.createElement('img', { className: 'logo', src: 'public/images/logo.png' }),
+                        React.createElement('img', { className: 'logo', src: 'public/images/logo.svg' }),
                         'Movies'
                     ),
                     React.createElement(
@@ -106,7 +106,7 @@ module.exports = React.createClass({
                         React.createElement(
                             'div',
                             { className: 'four wide column ui tertiary segment',
-                                style: { borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#23241f' } },
+                                style: { borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#191c1f' } },
                             React.createElement(Highlight, { json: this.state.selectedMovie })
                         )
                     )
@@ -260,7 +260,7 @@ module.exports = React.createClass({
                     ) : "",
                     React.createElement(
                         'button',
-                        { type: 'submit', className: 'ui fluid large teal submit button' },
+                        { type: 'submit', className: 'ui fluid large positive submit button' },
                         'Login'
                     )
                 )
@@ -492,7 +492,7 @@ module.exports = React.createClass({
         );
 
         var posterUrl = "https://image.tmdb.org/t/p/w500" + this.props.movie.poster;
-        var poster = this.props.movie.poster ? React.createElement('img', { src: posterUrl }) : React.createElement('img', { src: 'public/images/image.png' });
+        var poster = this.props.movie.poster ? React.createElement('img', { src: posterUrl }) : React.createElement('img', { src: 'public/images/image-25-opacity.png' });
 
         return React.createElement(
             'div',
@@ -521,8 +521,10 @@ module.exports = React.createClass({
                                 'Remove'
                             ),
                             React.createElement(
-                                'div',
-                                { className: 'ui green inverted button', ref: 'viewMovieDetails' },
+                                'a',
+                                { className: 'ui green inverted button', ref: 'viewMovieDetails',
+                                    href: "http://www.allocine.fr/recherche/?q=" + this.props.movie.title,
+                                    target: '_blank' },
                                 'View'
                             ),
                             React.createElement(

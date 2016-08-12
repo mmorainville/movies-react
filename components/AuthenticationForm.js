@@ -113,7 +113,7 @@ module.exports = React.createClass({
                                 ""
                             }
 
-                            <button type="submit" className="ui fluid large teal submit button">
+                            <button type="submit" className="ui fluid large positive submit button">
                                 Login
                             </button>
                         </form>

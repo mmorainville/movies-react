@@ -53,7 +53,7 @@ module.exports = React.createClass({
                 <div className="ui inverted borderless main menu fixed" style={{height: 60 + 'px'}}>
                     <div className="ui fluid container">
                         <a href="#" className="header item">
-                            <img className="logo" src="public/images/logo.png"/>
+                            <img className="logo" src="public/images/logo.svg"/>
                             Movies
                         </a>
 
@@ -85,7 +85,7 @@ module.exports = React.createClass({
                             </div>
 
                             <div className="four wide column ui tertiary segment"
-                                 style={{borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#23241f'}}>
+                                 style={{borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#191c1f'}}>
                                 <Highlight json={this.state.selectedMovie}/>
                             </div>
                         </div>

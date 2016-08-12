@@ -47,6 +47,7 @@ pre {
 }
 
 .hljs {
+    background-color: #191c1f;
     padding: 1em;
 }
 
@@ -60,7 +61,11 @@ pre {
 }
 
 .movie.card .ui.popup:before {
-    background-color: #23241f;
+    background-color: #191c1f;
+}
+
+.movie.card .ui.right.center.popup:before {
+    box-shadow: -1px 1px 0 0 #191c1f;
 }
 
 /* ----------

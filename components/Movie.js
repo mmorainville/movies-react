@@ -77,7 +77,7 @@ module.exports = React.createClass({
         var posterUrl = "https://image.tmdb.org/t/p/w500" + this.props.movie.poster;
         var poster = this.props.movie.poster ?
             <img src={posterUrl}/> :
-            <img src="public/images/image.png"/>;
+            <img src="public/images/image-25-opacity.png"/>;
 
         return (
             <div className="movie ui card" ref="movieCard">
@@ -89,7 +89,9 @@ module.exports = React.createClass({
                                 <div className="ui red inverted button"
                                      onClick={this.confirmRemoveMovie.bind(null, this.props.movie.id)}>Remove
                                 </div>
-                                <div className="ui green inverted button" ref="viewMovieDetails">View</div>
+                                <a className="ui green inverted button" ref="viewMovieDetails"
+                                   href={"http://www.allocine.fr/recherche/?q=" + this.props.movie.title}
+                                   target="_blank">View</a>
                                 <div className="ui flowing popup" ref="movieDetails"
                                      style={{border: 'none', padding: 0}}>
                                     <Highlight json={this.props.movie}/>

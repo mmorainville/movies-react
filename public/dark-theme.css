@@ -1,0 +1,53 @@
+.el-flex-main-parent .pusher {
+    background-color: #222b31;
+}
+
+.el-flex-main-parent .pusher h1 {
+    color: #fff;
+}
+
+.el-flex-main-parent .pusher a:hover {
+    color: #d8e7f1;
+}
+
+.el-flex-main-parent .pusher a {
+    color: #fff;
+}
+
+.el-flex-main-parent .pusher .ui.card .meta, .ui.cards>.card .meta {
+    color: #a1cae5;
+}
+
+/* ----------
+   filter-movies
+   ---------- */
+
+.el-flex-main-parent .pusher .ui.secondary.segment {
+    background-color: #191c1f;
+    color: #d8e7f1;
+}
+
+.el-flex-main-parent .pusher .ui.form .field>label {
+    color: #d8e7f1;
+}
+
+.el-flex-main-parent .pusher .ui.form input {
+    border-bottom: 1px solid #222b31;
+}
+
+.el-flex-main-parent .pusher .ui.dropdown {
+    background-color: #222b31;
+    color: #d8e7f1;
+}
+
+/* ----------
+   app
+   ---------- */
+
+.el-flex-main-parent .main.menu {
+    background-color: #325a75;
+}
+
+.el-flex-main-parent .main.menu .header.item {
+    background-color: #2b4e65;
+}
