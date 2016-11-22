@@ -1,5 +1,89 @@
-body {
+.main.menu {
+    border-radius: 0;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2) !important;
     margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+}
+
+.main.menu .item img.logo {
+    margin-right: 1.5em;
+}
+
+.main.menu .header.item {
+    min-width: 18.75%;
+}
+
+/* ----------
+   app
+   ---------- */
+
+.el-flex-main-parent {
+    height: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.el-flex-main-parent > div {
+    flex: 1;
+    display: flex;
+}
+
+.el-flex-main-parent > .menu {
+    flex: 0;
+}
+
+.el-movie-form-sidebar.sidebar {
+    width: 90% !important;
+    border: none;
+    background-color: #f9f9f9;
+    padding: 0
+}
+
+/* ----------
+   highlight
+   ---------- */
+
+pre {
+    margin: 0;
+}
+
+.hljs {
+    background-color: #191c1f;
+    padding: 1em;
+}
+
+/* ----------
+   movie
+   ---------- */
+
+.movie.card .image {
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.movie.card .ui.popup:before {
+    background-color: #191c1f;
+    box-shadow: none;
+}
+
+.movie.card .ui.card > .content, .ui.cards > .card > .content {
+    border: none;
+}
+
+/* ----------
+   multiple-inputs
+   ---------- */
+
+.ui.form .multipleInputs .field {
+    margin-bottom: 1em;
+}
+
+/* ----------
+   mobile
+   ---------- */
+
+@media only screen and (max-width: 767px) {
+    .el-movie-form-sidebar.sidebar {
+        height: auto !important;
+        width: 100% !important;
+    }
 }

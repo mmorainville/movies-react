@@ -17,8 +17,8 @@ class App extends Component {
                             Movies
                         </Link>
 
+                        <NavLink to="/movie-form" className="item">Add a movie</NavLink>
                         <NavLink to="/about" className="item">About</NavLink>
-                        {/*<NavLink to="/movie-form" className="item">Movie form</NavLink>*/}
 
                         {/*<AuthenticationForm/>*/}
                     </div>

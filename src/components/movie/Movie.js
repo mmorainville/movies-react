@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import defaultImage from './images/image-25-opacity.png';
 
 class Movie extends Component {
@@ -26,9 +27,9 @@ class Movie extends Component {
 
                 <div className="content">
                     <div className="header">
-                        <a>
+                        <Link to={'/movie-form/' + this.props.movie.id}>
                             {this.props.movie.title} ({this.props.movie.year})
-                        </a>
+                        </Link>
                     </div>
                     <div className="meta">
                         {directors}

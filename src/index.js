@@ -5,6 +5,7 @@ import {hashHistory, IndexRoute, Router, Route} from 'react-router';
 import App from './components/app/App';
 import About from './components/about/About';
 import MovieListContainer from "./components/movie-list/MovieListContainer";
+import MovieFormContainer from "./components/movie-form/MovieFormContainer";
 
 // jQuery
 import $ from 'jquery';
@@ -24,7 +25,7 @@ ReactDOM.render(
             <IndexRoute component={MovieListContainer}/>
 
             <Route path="/about" component={About}/>
-            {/*<Route path="/movie-form" component={MovieFormContainer}/>*/}
+            <Route path="/movie-form(/:movieId)" component={MovieFormContainer}/>
 
             {/*<Route path="*" component={NotFound}/>*/}
         </Route>
