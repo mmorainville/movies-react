@@ -17,11 +17,11 @@ class MovieList extends Component {
         });
 
         return (
-            <div className="ui stackable two column padded grid" style={{flex: 1, height: 100 + '%'}}>
+            <div className="ui stackable two column padded grid" style={{minHeight: 100 + '%'}}>
                 <div className="three wide column ui secondary segment"
                      style={{borderRadius: 0, margin: 0, paddingTop: 1 + 'em'}}>
                     {/*<FilterMovies onFilterChange={this.handleFilterChange}*/}
-                                  {/*onSortOrderChange={this.handleSortOrderChange}/>*/}
+                    {/*onSortOrderChange={this.handleSortOrderChange}/>*/}
                 </div>
 
                 <div className="thirteen wide column">
@@ -39,8 +39,8 @@ class MovieList extends Component {
                         </div>
 
                         {/*{this.state.isLoading ?*/}
-                            {/*<div className="ui active centered inline loader"></div> :*/}
-                            {/*<div className="ui active centered inline loader" style={{visibility: 'hidden'}}></div>*/}
+                        {/*<div className="ui active centered inline loader"></div> :*/}
+                        {/*<div className="ui active centered inline loader" style={{visibility: 'hidden'}}></div>*/}
                         {/*}*/}
                     </div>
                 </div>

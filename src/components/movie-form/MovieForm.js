@@ -27,7 +27,7 @@ class MovieForm extends Component {
 
     render() {
         return (
-            <div className="ui three column padded stackable grid" style={{flex: 1}}>
+            <div className="ui three column padded stackable grid" style={{minHeight: 100 + '%'}}>
                 <div className="three wide column ui secondary segment"
                      style={{borderRadius: 0, margin: 0, padding: 1 + 'em'}}>
                     {/*<SemanticDropdown onResultSelect={this.handleResultSelect}/>*/}

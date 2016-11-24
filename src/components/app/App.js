@@ -9,7 +9,7 @@ import './App.css';
 class App extends Component {
     render() {
         return (
-            <div className="el-flex-main-parent">
+            <div className="App" style={{height: 100 + '%'}}>
                 <div className="ui inverted borderless main menu fixed" style={{height: 60 + 'px'}}>
                     <div className="ui fluid container">
                         <Link to="/" className="header item">
@@ -24,7 +24,7 @@ class App extends Component {
                     </div>
                 </div>
 
-                <div className="main container" style={{marginTop: 60 + 'px'}}>
+                <div className="main container" style={{paddingTop: 60 + 'px', height: 100 + '%'}}>
                     {this.props.children}
                 </div>
             </div>

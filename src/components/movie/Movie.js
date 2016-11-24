@@ -33,6 +33,7 @@ class Movie extends Component {
                     </div>
                     <div className="meta">
                         {directors}
+                        {JSON.stringify(this.props.movie.viewings)}
                     </div>
                 </div>
 
