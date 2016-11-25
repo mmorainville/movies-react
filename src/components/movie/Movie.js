@@ -14,7 +14,7 @@ class Movie extends Component {
     }
 
     componentDidMount() {
-        $('.movie .image').dimmer({on: 'hover'});
+        $(this.movieImage).dimmer({on: 'hover'});
 
         $(this.movieImage)
             .popup({
