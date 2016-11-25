@@ -20,7 +20,11 @@ class App extends Component {
                         <NavLink to="/movie-form" className="item">Add a movie</NavLink>
                         <NavLink to="/about" className="item">About</NavLink>
 
-                        {/*<AuthenticationForm/>*/}
+                        <div className="right menu">
+                            <a className="item">Import</a>
+                            <a className="item">Export</a>
+                            <a className="item">Clear</a>
+                        </div>
                     </div>
                 </div>
 

@@ -6,16 +6,13 @@ class MovieListContainer extends Component {
     constructor(props) {
         super(props);
 
-        console.log('MovieListContainer');
-        console.log(props);
-
         this.state = {movies: []};
     }
 
     componentDidMount() {
         const db = low('db.json');
 
-        db.defaults({ movies: [] }).value();
+        db.defaults({movies: []}).value();
 
         // db.get('movies').push({ id: 1, title: 'lowdb is awesome'}).value();
 
@@ -26,21 +23,33 @@ class MovieListContainer extends Component {
         //         console.log(json);
         //         db.set('movies', json).value();
         //         // this.setState({movies: json});
-        //     })
-        this.setState({movies: db.get('movies').sortBy(function(o) {
-            let viewingDates = [];
-            let defaultDate = '0000-00-00';
+        //     });
 
-            if (o.viewings) {
-                for (let value of o.viewings) {
-                    value.dates ? viewingDates.push(...value.dates) : viewingDates.push(defaultDate);
-                }
-            } else {
-                viewingDates.push(defaultDate);
-            }
+        this.setState({
+            movies: db.get('movies').sortBy(function (movie) {
+                let viewingDates = [];
+                let defaultDate = '0000-00-00';
 
-            return viewingDates[viewingDates.length - 1];
-        }).reverse().value()});
+                movie.viewings ? movie.viewings.map(function (viewing) {
+                    return viewing.dates ? viewingDates.push(...viewing.dates) : viewingDates.push(defaultDate);
+                }) : viewingDates.push(defaultDate);
+
+                return viewingDates[viewingDates.length - 1];
+
+                // let viewingDates = [];
+                // let defaultDate = '0000-00-00';
+                //
+                // if (movie.viewings) {
+                //     for (let value of movie.viewings) {
+                //         value.dates ? viewingDates.push(...value.dates) : viewingDates.push(defaultDate);
+                //     }
+                // } else {
+                //     viewingDates.push(defaultDate);
+                // }
+                //
+                // return viewingDates[viewingDates.length - 1];
+            }).reverse().value()
+        });
     }
 
     render() {
