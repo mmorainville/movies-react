@@ -22,7 +22,6 @@ class MovieList extends Component {
                 </div>
 
                 <div className="thirteen wide column">
-
                     <div className="ui container">
                         <h1>
                             {this.props.movies ? this.props.movies.length + " movie" + (this.props.movies.length !== 1 ? 's' : '') : "Movies"}
