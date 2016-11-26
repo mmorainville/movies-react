@@ -28,7 +28,16 @@ class MovieFormContainer extends Component {
     }
 
     handleResultSelect(selectedMovie) {
-        this.setState({movie: selectedMovie})
+        this.setState({
+            movie: {
+                ...this.state.movie, ...{
+                    title: selectedMovie.title,
+                    year: selectedMovie.year,
+                    poster: selectedMovie.poster,
+                    directors: selectedMovie.directors
+                }
+            }
+        });
     }
 
     componentDidMount() {

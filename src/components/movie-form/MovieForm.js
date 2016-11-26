@@ -54,26 +54,26 @@ class MovieForm extends Component {
                         <div className="equal width fields">
                             <div className="field">
                                 <label>Title</label>
-                                <input type="text" value={this.state.movie.title}
+                                <input type="text" value={this.props.movie.title || ''}
                                        onChange={(e) => this.handleChange(e, 'title')}/>
                             </div>
 
                             <div className="field">
                                 <label>Year</label>
-                                <input type="number" value={this.state.movie.year}
-                                       onChange={(e) => this.handleChange(e, 'year')}/>
+                                <input type="number" value={this.state.movie.year || ''}
+                                       onChange={(e) => this.handleChange(e, 'year')} min="1"/>
                             </div>
                         </div>
 
                         <div className="equal width fields">
                             <div className="field">
                                 <label>ID</label>
-                                <input type="text" value={this.state.movie.id}
+                                <input type="text" value={this.state.movie.id || ''}
                                        onChange={(e) => this.handleChange(e, 'id')}/>
                             </div>
                             <div className="field">
                                 <label>Poster</label>
-                                <input type="text" value={this.state.movie.poster}
+                                <input type="text" value={this.state.movie.poster || ''}
                                        onChange={(e) => this.handleChange(e, 'poster')}/>
                             </div>
                         </div>
