@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import MovieRemoteSearch from '../movie-remote-search/MovieRemoteSearch';
 import MultipleInput from '../multiple-input/MultipleInput';
+import ViewingForm from '../viewing-form/ViewingForm';
 import Highlight from '../highlight/Highlight';
 
 class MovieForm extends Component {
@@ -13,6 +14,7 @@ class MovieForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleResultSelect = this.handleResultSelect.bind(this);
         this.handleMultipleInputChange = this.handleMultipleInputChange.bind(this);
+        this.handleViewingChange = this.handleViewingChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -44,6 +46,18 @@ class MovieForm extends Component {
         this.setState({movie: newState});
     }
 
+    handleViewingChange(viewings) {
+        var newState = this.state.movie;
+
+        if (viewings === undefined) {
+            delete newState.viewings;
+            this.setState({movie: newState});
+        } else {
+            newState.viewings = viewings;
+            this.setState({movie: newState});
+        }
+    }
+
     handleResultSelect(selectedMovie) {
         this.props.onResultSelect(selectedMovie);
     }
@@ -61,7 +75,7 @@ class MovieForm extends Component {
                     <MovieRemoteSearch onResultSelect={this.handleResultSelect}/>
                 </div>
 
-                <div className="height wide column ui container">
+                <div className="height wide column ui container" style={{backgroundColor: '#f9f9f9'}}>
                     <h1>Movie form</h1>
 
 
@@ -69,7 +83,7 @@ class MovieForm extends Component {
                         <div className="equal width fields">
                             <div className="field">
                                 <label>Title</label>
-                                <input type="text" value={this.props.movie.title || ''}
+                                <input type="text" value={this.state.movie.title || ''}
                                        onChange={(e) => this.handleChange(e, 'title')}/>
                             </div>
 
@@ -96,7 +110,7 @@ class MovieForm extends Component {
                         <MultipleInput inputField={this.state.movie.directors} inputFieldName="directors"
                                        onMultipleInputChange={(e) => this.handleMultipleInputChange(e, "directors")}/>
 
-                        {/*<ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>*/}
+                        <ViewingForm viewings={this.state.movie.viewings} onViewingChange={this.handleViewingChange}/>
 
                         <div className="ui divider"></div>
 
@@ -112,6 +126,7 @@ class MovieForm extends Component {
                 <div className="five wide column ui tertiary segment"
                      style={{borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#191c1f'}}>
                     <Highlight json={this.props.movie}/>
+                    <Highlight json={this.state.movie}/>
                 </div>
             </div>
         );
