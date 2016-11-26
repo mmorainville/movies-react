@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import MovieRemoteSearch from '../movie-remote-search/MovieRemoteSearch';
+import MultipleInput from '../multiple-input/MultipleInput';
 import Highlight from '../highlight/Highlight';
 
 class MovieForm extends Component {
@@ -11,6 +12,7 @@ class MovieForm extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleResultSelect = this.handleResultSelect.bind(this);
+        this.handleMultipleInputChange = this.handleMultipleInputChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -19,14 +21,27 @@ class MovieForm extends Component {
 
     handleChange(e, field) {
         var newState = this.state.movie;
+
         if (e.target.value === "") {
             delete newState[field];
         } else {
             newState[field] = e.target.type === "number" ? parseInt(e.target.value, 10) : e.target.value;
         }
-        this.setState({
-            movie: newState
-        });
+
+        this.setState({movie: newState});
+    }
+
+    handleMultipleInputChange(e, field) {
+        var newState = this.state.movie;
+
+        // If the value is undefined, we delete the field
+        if (e === undefined) {
+            delete newState[field];
+        } else {
+            newState[field] = e;
+        }
+
+        this.setState({movie: newState});
     }
 
     handleResultSelect(selectedMovie) {
@@ -78,8 +93,8 @@ class MovieForm extends Component {
                             </div>
                         </div>
 
-                        {/*<MultipleInputs inputs={this.state.directors} inputsGroup="directors"*/}
-                        {/*onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>*/}
+                        <MultipleInput inputField={this.state.movie.directors} inputFieldName="directors"
+                                       onMultipleInputChange={(e) => this.handleMultipleInputChange(e, "directors")}/>
 
                         {/*<ViewingsForm viewings={this.state.viewings} onViewingChange={this.handleViewingChange}/>*/}
 

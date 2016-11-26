@@ -79,7 +79,7 @@ class MovieRemoteSearch extends Component {
 
         if (movieDirectors.length > 0) {
             this.setState({directors: movieDirectors}, function () {
-                this.props.onResultSelect({...this.state});
+                this.props.onResultSelect($.extend(true, {}, this.state));
             });
         }
     }
