@@ -1,23 +1,36 @@
 import React, {Component} from 'react';
 
+import MovieRemoteSearch from '../movie-remote-search/MovieRemoteSearch';
+import Highlight from '../highlight/Highlight';
+
 class MovieForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            title: '',
-            year: 2014
-        };
+        this.state = props;
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleResultSelect = this.handleResultSelect.bind(this);
     }
 
-    handleChange(field, e) {
-        var newState = this.state;
+    componentWillReceiveProps(nextProps) {
+        this.setState({movie: nextProps.movie});
+    }
+
+    handleChange(e, field) {
+        var newState = this.state.movie;
         if (e.target.value === "") {
             delete newState[field];
         } else {
             newState[field] = e.target.type === "number" ? parseInt(e.target.value, 10) : e.target.value;
         }
-        this.setState(newState);
+        this.setState({
+            movie: newState
+        });
+    }
+
+    handleResultSelect(selectedMovie) {
+        this.props.onResultSelect(selectedMovie);
     }
 
     handleSubmit(e) {
@@ -30,7 +43,7 @@ class MovieForm extends Component {
             <div className="ui three column padded stackable grid" style={{minHeight: 100 + '%'}}>
                 <div className="three wide column ui secondary segment"
                      style={{borderRadius: 0, margin: 0, padding: 1 + 'em'}}>
-                    {/*<SemanticDropdown onResultSelect={this.handleResultSelect}/>*/}
+                    <MovieRemoteSearch onResultSelect={this.handleResultSelect}/>
                 </div>
 
                 <div className="height wide column ui container">
@@ -41,28 +54,29 @@ class MovieForm extends Component {
                         <div className="equal width fields">
                             <div className="field">
                                 <label>Title</label>
-                                <input type="text" value={this.state.title}
-                                       onChange={this.handleChange.bind(this, 'title')}/>
+                                <input type="text" value={this.state.movie.title}
+                                       onChange={(e) => this.handleChange(e, 'title')}/>
                             </div>
 
                             <div className="field">
                                 <label>Year</label>
-                                <input type="number" value={this.state.year}
-                                       onChange={this.handleChange.bind(this, 'year')}/>
+                                <input type="number" value={this.state.movie.year}
+                                       onChange={(e) => this.handleChange(e, 'year')}/>
                             </div>
                         </div>
 
-                        {/*<div className="equal width fields">*/}
-                        {/*<div className="field">*/}
-                        {/*<label>ID</label>*/}
-                        {/*<input type="text" value={this.state.id} onChange={this.handleChange.bind(this, "id")}/>*/}
-                        {/*</div>*/}
-                        {/*<div className="field">*/}
-                        {/*<label>Poster</label>*/}
-                        {/*<input type="text" value={this.state.poster}*/}
-                        {/*onChange={this.handleChange.bind(this, "poster")}/>*/}
-                        {/*</div>*/}
-                        {/*</div>*/}
+                        <div className="equal width fields">
+                            <div className="field">
+                                <label>ID</label>
+                                <input type="text" value={this.state.movie.id}
+                                       onChange={(e) => this.handleChange(e, 'id')}/>
+                            </div>
+                            <div className="field">
+                                <label>Poster</label>
+                                <input type="text" value={this.state.movie.poster}
+                                       onChange={(e) => this.handleChange(e, 'poster')}/>
+                            </div>
+                        </div>
 
                         {/*<MultipleInputs inputs={this.state.directors} inputsGroup="directors"*/}
                         {/*onMultipleInputChange={this.handleMultipleInputChange.bind(this, "directors")}/>*/}
@@ -72,6 +86,7 @@ class MovieForm extends Component {
                         <div className="ui divider"></div>
 
                         <input className="ui positive button" type="submit" value="Post"/>
+                        <input className="ui primary button" type="submit" value="Update"/>
                     </form>
 
                     {/*<MovieForm movie={this.state.selectedMovie}*/}
@@ -81,7 +96,7 @@ class MovieForm extends Component {
 
                 <div className="five wide column ui tertiary segment"
                      style={{borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#191c1f'}}>
-                    {/*<Highlight json={this.state.selectedMovie}/>*/}
+                    <Highlight json={this.props.movie}/>
                 </div>
             </div>
         );

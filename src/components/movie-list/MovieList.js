@@ -22,15 +22,13 @@ class MovieList extends Component {
                 </div>
 
                 <div className="thirteen wide column">
-                    <div className="ui container">
-                        <h1>
-                            {this.props.movies ? this.props.movies.length + " movie" + (this.props.movies.length !== 1 ? 's' : '') : "Movies"}
-                        </h1>
+                    <h1>
+                        {this.props.movies ? this.props.movies.length + " movie" + (this.props.movies.length !== 1 ? 's' : '') : "Movies"}
+                    </h1>
 
-                        <div className="movieList row centered">
-                            <div className="ui stackable centered five doubling cards" ref="uiInfiniteScroll">
-                                {movieNodes}
-                            </div>
+                    <div className="movieList row centered">
+                        <div className="ui stackable centered six doubling cards" ref="uiInfiniteScroll">
+                            {movieNodes}
                         </div>
                     </div>
                 </div>

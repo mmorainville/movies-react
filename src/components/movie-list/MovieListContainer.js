@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import low from 'lowdb';
 import MovieList from './MovieList';
 
+import {DB_NAME} from '../_shared/constants';
+
 class MovieListContainer extends Component {
     constructor(props) {
         super(props);
@@ -10,7 +12,7 @@ class MovieListContainer extends Component {
     }
 
     componentDidMount() {
-        const db = low('db.json');
+        const db = low(DB_NAME);
 
         db.defaults({movies: []}).value();
 

@@ -1,18 +1,34 @@
 import React, {Component} from 'react';
+import low from 'lowdb';
 import MovieForm from './MovieForm';
+
+import {DB_NAME} from '../_shared/constants';
 
 class MovieFormContainer extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props.params.movieId);
+        const db = low(DB_NAME);
+        db._.mixin(require('underscore-db'));
 
-        this.state = {
-            movie: {
-                title: '',
-                year: 2014
+        if (this.props.params.movieId) {
+            this.state = {
+                movie: db.get('movies').getById(this.props.params.movieId).value()
             }
-        };
+        } else {
+            this.state = {
+                movie: {
+                    title: '',
+                    year: new Date().getFullYear()
+                }
+            };
+        }
+
+        this.handleResultSelect = this.handleResultSelect.bind(this);
+    }
+
+    handleResultSelect(selectedMovie) {
+        this.setState({movie: selectedMovie})
     }
 
     componentDidMount() {
@@ -27,7 +43,7 @@ class MovieFormContainer extends Component {
 
     render() {
         return (
-            <MovieForm movie={this.state.movie}/>
+            <MovieForm movie={this.state.movie} onResultSelect={this.handleResultSelect}/>
         );
     }
 }
