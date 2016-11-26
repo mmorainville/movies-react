@@ -126,7 +126,7 @@ class MovieForm extends Component {
                 <div className="five wide column ui tertiary segment"
                      style={{borderRadius: 0, margin: 0, padding: 0, backgroundColor: '#191c1f'}}>
                     <Highlight json={this.props.movie}/>
-                    <Highlight json={this.state.movie}/>
+                    {/*<Highlight json={this.state.movie}/>*/}
                 </div>
             </div>
         );
