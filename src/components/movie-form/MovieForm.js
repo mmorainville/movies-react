@@ -89,7 +89,6 @@ class MovieForm extends Component {
                 <div className="height wide column ui container" style={{backgroundColor: '#f9f9f9'}}>
                     <h1>Movie form</h1>
 
-
                     <form className="movieForm ui form" onSubmit={(e) => this.handleSubmit(e)}>
                         <div className="equal width fields">
                             <div className="field">
@@ -131,10 +130,6 @@ class MovieForm extends Component {
                                 <input className="ui positive button" type="submit" value="Post"/>
                         }
                     </form>
-
-                    {/*<MovieForm movie={this.state.selectedMovie}*/}
-                    {/*onMovieSubmit={this.handleMovieSubmit}*/}
-                    {/*onMovieAdd={this.handleMovieAdd}/>*/}
                 </div>
 
                 <div className="five wide column ui tertiary segment"

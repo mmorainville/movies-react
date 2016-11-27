@@ -3,8 +3,8 @@ import MovieFilter from '../movie-filter/MovieFilter';
 import Movie from '../movie/Movie';
 
 class MovieList extends Component {
-    handleFilterChange(e) {
-        console.log(e);
+    handleFilterChange(filter) {
+        this.props.onFilterChange(filter);
     }
 
     render() {
@@ -12,7 +12,7 @@ class MovieList extends Component {
             <div className="ui stackable two column padded grid" style={{minHeight: 100 + '%'}}>
                 <div className="three wide column ui secondary segment"
                      style={{borderRadius: 0, margin: 0, paddingTop: 1 + 'em'}}>
-                    <MovieFilter filter={this.props.filter} onFilterChange={this.handleFilterChange}/>
+                    <MovieFilter filter={this.props.filter} onFilterChange={(filter) => this.handleFilterChange(filter)}/>
                 </div>
 
                 <div className="thirteen wide column">
