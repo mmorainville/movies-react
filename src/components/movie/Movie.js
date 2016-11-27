@@ -84,7 +84,7 @@ class Movie extends Component {
                 <div className="content">
                     <div className="header">
                         <Link to={'/movie-form/' + this.props.movie.id}>
-                            {this.props.movie.title} ({this.props.movie.year})
+                            {this.props.movie.title} {this.props.movie.year && '(' + this.props.movie.year + ')'}
                         </Link>
                     </div>
                     <div className="meta">{directors}</div>

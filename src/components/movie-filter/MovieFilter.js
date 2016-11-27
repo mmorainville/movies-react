@@ -44,12 +44,12 @@ class MovieFilter extends Component {
 
                     <div className="field">
                         <label>Seen with</label>
-                        <input type="text" ref="viewings.spectators" onChange={() => this.handleChange()}/>
+                        <input type="text" ref="viewingsSpectators" onChange={() => this.handleChange()}/>
                     </div>
 
                     <div className="field">
                         <label>Viewing date</label>
-                        <input type="text" ref="viewings.dates" onChange={() => this.handleChange()}/>
+                        <input type="text" ref="viewingsDates" onChange={() => this.handleChange()}/>
                     </div>
 
                     <div className="field">

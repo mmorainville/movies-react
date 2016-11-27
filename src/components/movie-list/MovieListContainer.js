@@ -22,10 +22,34 @@ class MovieListContainer extends Component {
 
         filter.title = filter.title || '';
         filter.year = filter.year || '';
+        filter.viewingsSpectators = filter.viewingsSpectators || '';
+        filter.viewingsDates = filter.viewingsDates || '';
 
         let filterFunction = function (movie) {
-            return movie.title.toLowerCase().indexOf(filter.title.toLowerCase()) > -1 &&
-                movie.year.toString().indexOf(filter.year) > -1;
+            let title = movie.title ? movie.title.toLowerCase().indexOf(filter.title.toLowerCase()) > -1 : true;
+            let year = movie.year ? movie.year.toString().indexOf(filter.year) > -1 : true;
+
+            // viewings.spectators
+            let spectators = [''];
+            movie.viewings ? movie.viewings.map((viewing) => {
+                return viewing.spectators ? spectators.push(...viewing.spectators) : spectators.push('');
+            }) : spectators.push('');
+
+            let viewingsSpectators = spectators.filter((element) => {
+                return element.toLowerCase().indexOf(filter.viewingsSpectators.toLowerCase()) > -1;
+            }).length;
+
+            // viewings.dates
+            let dates = [''];
+            movie.viewings ? movie.viewings.map((viewing) => {
+                return viewing.dates ? dates.push(...viewing.dates) : dates.push('');
+            }) : dates.push('');
+
+            let viewingsDates = dates.filter((element) => {
+                return element.toLowerCase().indexOf(filter.viewingsDates.toLowerCase()) > -1;
+            }).length;
+
+            return title && year && viewingsSpectators && viewingsDates;
         };
 
         let movies = [];
