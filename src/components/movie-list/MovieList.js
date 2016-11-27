@@ -8,12 +8,6 @@ class MovieList extends Component {
     }
 
     render() {
-        var movieNodes = this.props.movies.map(function (movie, i) {
-            return (
-                <Movie movie={movie} key={i}/>
-            );
-        });
-
         return (
             <div className="ui stackable two column padded grid" style={{minHeight: 100 + '%'}}>
                 <div className="three wide column ui secondary segment"
@@ -28,7 +22,13 @@ class MovieList extends Component {
 
                     <div className="movieList row centered">
                         <div className="ui stackable centered six doubling cards" ref="uiInfiniteScroll">
-                            {movieNodes}
+                            {
+                                this.props.movies.map((movie, i) => {
+                                    return (
+                                        <Movie movie={movie} key={i}/>
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                 </div>

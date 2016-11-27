@@ -4,6 +4,8 @@ import defaultImage from './images/image-25-opacity.png';
 
 import Highlight from '../highlight/Highlight';
 
+import {db} from '../_shared/db';
+
 import $ from 'jquery';
 
 class Movie extends Component {
@@ -35,6 +37,7 @@ class Movie extends Component {
 
     handleRemoveMovie(movieToDeleteId) {
         console.log('handleRemoveMovie: ' + movieToDeleteId);
+        db.get('movies').remove({id: movieToDeleteId}).value();
     }
 
     render() {

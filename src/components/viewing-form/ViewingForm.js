@@ -89,19 +89,22 @@ class ViewingForm extends Component {
                                     </button>
                                 </h2>
 
-                                <div className="field">
-                                    <label>Cinema</label>
-                                    <input type="text" key={'cinema-' + i} value={this.state.viewings[i].cinema || ''}
-                                           onChange={(e) => this.handleChange(e, "cinema", i)}
-                                           placeholder="Cinema..."/>
-                                </div>
+                                <div className="equal width fields">
+                                    <div className="field">
+                                        <label>Cinema</label>
+                                        <input type="text" key={'cinema-' + i}
+                                               value={this.state.viewings[i].cinema || ''}
+                                               onChange={(e) => this.handleChange(e, "cinema", i)}
+                                               placeholder="Cinema..."/>
+                                    </div>
 
-                                <div className="field">
-                                    <label>Filename</label>
-                                    <input type="text" key={'filename-' + i}
-                                           value={this.state.viewings[i].filename || ''}
-                                           onChange={(e) => this.handleChange(e, "filename", i)}
-                                           placeholder="Filename..."/>
+                                    <div className="field">
+                                        <label>Filename</label>
+                                        <input type="text" key={'filename-' + i}
+                                               value={this.state.viewings[i].filename || ''}
+                                               onChange={(e) => this.handleChange(e, "filename", i)}
+                                               placeholder="Filename..."/>
+                                    </div>
                                 </div>
 
                                 <MultipleInput inputField={this.state.viewings[i].cities} inputFieldName="cities"

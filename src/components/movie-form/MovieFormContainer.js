@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import low from 'lowdb';
 import MovieForm from './MovieForm';
 
-import {DB_NAME} from '../_shared/constants';
+import {db} from '../_shared/db';
 
 class MovieFormContainer extends Component {
     constructor(props) {
         super(props);
 
-        const db = low(DB_NAME);
         db._.mixin(require('underscore-db'));
 
         if (this.props.params.movieId) {
@@ -38,16 +36,6 @@ class MovieFormContainer extends Component {
                 }
             }
         });
-    }
-
-    componentDidMount() {
-        // console.log('fetchMovies from componentDidMount in MovieList');
-        // fetch('https://shielded-savannah-32628.herokuapp.com/api/movies')
-        //     .then(response => response.json())
-        //     .then(json => {
-        //         console.log(json);
-        //         this.setState({movies: json});
-        //     })
     }
 
     render() {

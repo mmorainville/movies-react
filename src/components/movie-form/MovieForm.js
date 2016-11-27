@@ -5,6 +5,8 @@ import MultipleInput from '../multiple-input/MultipleInput';
 import ViewingForm from '../viewing-form/ViewingForm';
 import Highlight from '../highlight/Highlight';
 
+import {db} from '../_shared/db';
+
 class MovieForm extends Component {
     constructor(props) {
         super(props);
@@ -64,7 +66,16 @@ class MovieForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        // this.props.onSubmitMovieForm(this.state)
+
+        if (this.props.movie.id) {
+            db.get('movies').find({id: this.props.movie.id}).assign(this.props.movie).value();
+        } else {
+            db._.mixin(require('underscore-db'));
+            var addedMovie = db.get('movies').insert(this.props.movie).value();
+            console.log(addedMovie);
+        }
+
+        this.context.router.push('/');
     }
 
     render() {
@@ -114,8 +125,11 @@ class MovieForm extends Component {
 
                         <div className="ui divider"></div>
 
-                        <input className="ui positive button" type="submit" value="Post"/>
-                        <input className="ui primary button" type="submit" value="Update"/>
+                        {
+                            this.props.movie.id ?
+                                <input className="ui primary button" type="submit" value="Update"/> :
+                                <input className="ui positive button" type="submit" value="Post"/>
+                        }
                     </form>
 
                     {/*<MovieForm movie={this.state.selectedMovie}*/}
@@ -132,5 +146,9 @@ class MovieForm extends Component {
         );
     }
 }
+
+MovieForm.contextTypes = {
+    router: React.PropTypes.object
+};
 
 export default MovieForm;
