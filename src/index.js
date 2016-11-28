@@ -17,9 +17,6 @@ window.jQuery = jQuery;
 require('../semantic/dist/semantic');
 import '../semantic/dist/semantic.css';
 
-// Lodash
-import 'lodash';
-
 import './index.css';
 
 ReactDOM.render(

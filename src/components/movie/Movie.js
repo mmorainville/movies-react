@@ -31,7 +31,7 @@ class Movie extends Component {
 
     confirmRemoveMovie(movieToDeleteId) {
         $(this.confirmRemoveMovieModal)
-            .modal({onApprove: () =>this.handleRemoveMovie(movieToDeleteId)})
+            .modal({onApprove: () => this.handleRemoveMovie(movieToDeleteId)})
             .modal('show');
     }
 
@@ -55,23 +55,24 @@ class Movie extends Component {
 
         return (
             <div className="movie ui card" ref="movieCard">
-                <div className="image" ref={(ref) => {
+                <div className="dimmable image" ref={(ref) => {
                     this.movieImage = ref;
                 }}>
                     <div className="ui dimmer">
                         <div className="content">
                             <div className="center">
                                 <h2 className="ui inverted header">{this.props.movie.title}</h2>
+
                                 <a className="ui green inverted button" ref="viewMovieDetails"
                                    href={"http://www.allocine.fr/recherche/?q=" + this.props.movie.title}
                                    target="_blank">View</a>
                                 <div className="ui red inverted button"
                                      onClick={() => this.confirmRemoveMovie(this.props.movie.id)}>Remove
                                 </div>
+
                                 <div className="ui flowing popup" ref={(ref) => {
                                     this.movieDetails = ref;
-                                }}
-                                     style={{border: 'none', padding: 0}}>
+                                }} style={{border: 'none', padding: 0}}>
                                     <Highlight json={this.props.movie}/>
                                 </div>
                             </div>

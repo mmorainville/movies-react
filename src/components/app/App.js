@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 
 import NavLink from '../nav-link/NavLink';
+import ImportExport from '../import-export/ImportExport';
 
 import logo from './images/logo.svg';
 import './App.css';
@@ -20,11 +21,7 @@ class App extends Component {
                         <NavLink to="/movie-form" className="item">Add a movie</NavLink>
                         <NavLink to="/about" className="item">About</NavLink>
 
-                        <div className="right menu">
-                            <a className="item">Import</a>
-                            <a className="item">Export</a>
-                            <a className="item">Clear</a>
-                        </div>
+                        <ImportExport/>
                     </div>
                 </div>
 

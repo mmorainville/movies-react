@@ -1,3 +1,4 @@
+import 'lodash';
 import low from 'lowdb';
 
 import {DB_NAME} from './constants.js';
