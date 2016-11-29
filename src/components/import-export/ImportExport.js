@@ -11,8 +11,11 @@ class ImportExport extends Component {
     constructor(props) {
         super(props);
 
+        db._.mixin(require('underscore-db'));
+
         this.state = {
-            moviesToImport: []
+            moviesToImport: [],
+            existingMovies: []
         }
     }
 
@@ -32,8 +35,7 @@ class ImportExport extends Component {
             .modal({
                 onApprove: () => {
                     console.log('ImportExport: onApprove');
-                    db.set('movies', this.state.moviesToImport).value();
-                    this.setState({moviesToImport: []});
+                    this.importMovies();
                 }
             })
             .modal('show');
@@ -63,6 +65,40 @@ class ImportExport extends Component {
         }
     }
 
+    importMovies() {
+        this.state.moviesToImport.forEach((element) => {
+            if (element.id) {
+                delete element.id;
+            }
+
+            let existingMovies = db.get('movies').find({
+                title: element.title,
+                year: element.year,
+                directors: element.directors
+            }).value();
+
+            if (existingMovies) {
+                // Don't add movies that are already in the database but log them so we can check if the viewings are the same
+                this.setState({existingMovies: this.state.existingMovies.concat([element])});
+            } else {
+                db.get('movies').insert(element).value();
+            }
+        });
+
+        this.setState({moviesToImport: []}, () => {
+            if (this.state.existingMovies.length > 0) {
+                $(this.refs.postImportModal)
+                    .modal({
+                        onHidden: () => {
+                            console.log('ImportExport: onHidden');
+                            this.setState({existingMovies: []});
+                        }
+                    })
+                    .modal('show');
+            }
+        });
+    }
+
     clearDatabase() {
         db.set('movies', []).value();
     }
@@ -83,6 +119,22 @@ class ImportExport extends Component {
                         <input type="file" ref="importField" onChange={() => this.handleImportFieldChange()}/>
                         <div style={{height: 250 + 'px', overflow: 'auto'}}>
                             <Highlight json={this.state.moviesToImport}/>
+                        </div>
+                    </div>
+                    <div className="actions">
+                        <div className="ui cancel button">Cancel</div>
+                        <div className="ui ok button">OK</div>
+                    </div>
+                </div>
+
+                <div className="ui modal" ref="postImportModal">
+                    <i className="close icon"/>
+                    <div className="header">
+                        Conflicts
+                    </div>
+                    <div className="content">
+                        <div style={{height: 250 + 'px', overflow: 'auto'}}>
+                            <Highlight json={this.state.existingMovies}/>
                         </div>
                     </div>
                     <div className="actions">
