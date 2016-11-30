@@ -3,6 +3,8 @@ import MovieList from './MovieList';
 
 import {db} from '../_shared/db';
 
+import {SAMPLE_MOVIES_URL} from '../_shared/constants';
+
 class MovieListContainer extends Component {
     constructor(props) {
         super(props);
@@ -76,9 +78,42 @@ class MovieListContainer extends Component {
         this.fetchMovies(filter);
     }
 
+    /**
+     * Load movies from an external source if there is no movies initially.
+     */
+    handleLoadMovies() {
+        console.log('handleLoadMovies');
+        fetch(SAMPLE_MOVIES_URL)
+            .then(response => response.json())
+            .then(json => {
+                    let movies = json.map((element) => {
+                        return JSON.parse(element);
+                    });
+
+                    console.log(movies);
+
+                    if (movies.length > 0) {
+                        // Delete the viewings when movies are imported from an external source
+                        movies = movies.map((element) => {
+                            if (element.viewings) {
+                                delete element.viewings;
+                            }
+
+                            return element;
+                        });
+
+                        this.setState({movies: movies});
+                        db.set('movies', movies).value();
+                        this.fetchMovies({sortBy: 'viewings.dates DESC'});
+                    }
+                }
+            )
+    }
+
     render() {
         return (
-            <MovieList movies={this.state.movies} onFilterChange={(filter) => this.handleFilterChange(filter)}/>
+            <MovieList movies={this.state.movies} onFilterChange={(filter) => this.handleFilterChange(filter)}
+                       onLoadMovies={() => this.handleLoadMovies()}/>
         );
     }
 }
