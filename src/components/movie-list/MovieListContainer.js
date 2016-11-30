@@ -83,7 +83,8 @@ class MovieListContainer extends Component {
      */
     handleLoadMovies() {
         console.log('handleLoadMovies');
-        fetch(SAMPLE_MOVIES_URL)
+        let sampleMoviesFilename = this.props.params.sampleMovies ? this.props.params.sampleMovies : 'sample-movies';
+        fetch(SAMPLE_MOVIES_URL + '/' + sampleMoviesFilename + '.json')
             .then(response => response.json())
             .then(json => {
                     let movies = json.map((element) => {
@@ -93,15 +94,6 @@ class MovieListContainer extends Component {
                     console.log(movies);
 
                     if (movies.length > 0) {
-                        // Delete the viewings when movies are imported from an external source
-                        movies = movies.map((element) => {
-                            if (element.viewings) {
-                                delete element.viewings;
-                            }
-
-                            return element;
-                        });
-
                         this.setState({movies: movies});
                         db.set('movies', movies).value();
                         this.fetchMovies({sortBy: 'viewings.dates DESC'});
