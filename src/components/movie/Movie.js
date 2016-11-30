@@ -28,13 +28,6 @@ class Movie extends Component {
                 popup: $(this.movieDetails),
                 lastResort: 'bottom center'
             });
-
-        $(this.movieImageTag)
-            .visibility({
-                type: 'image',
-                transition: 'fade in',
-                duration: 500
-            });
     }
 
     confirmRemoveMovie(movieToDeleteId) {
@@ -88,10 +81,7 @@ class Movie extends Component {
                         </div>
                     </div>
 
-                    <img src={defaultImage}
-                         data-src={this.props.movie.poster ? posterUrl : defaultImage} ref={(ref) => {
-                        this.movieImageTag = ref;
-                    }} role="presentation"/>
+                    <img src={this.props.movie.poster ? posterUrl : defaultImage} role="presentation"/>
                 </div>
 
                 <div className="content">
