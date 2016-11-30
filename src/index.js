@@ -21,7 +21,7 @@ import './index.css';
 
 ReactDOM.render(
     <Router history={hashHistory}>
-        <Route path="/(:sampleMovies)" component={App}>
+        <Route path="/" component={App}>
             <IndexRoute component={MovieListContainer}/>
 
             <Route path="/about" component={About}/>

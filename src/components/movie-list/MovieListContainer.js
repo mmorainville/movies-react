@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import MovieList from './MovieList';
 
+import MovieStore from '../../stores/MovieStore';
+
 import {db} from '../_shared/db';
 
 import {SAMPLE_MOVIES_URL} from '../_shared/constants';
@@ -12,6 +14,21 @@ class MovieListContainer extends Component {
         db.defaults({movies: []}).value();
 
         this.state = {movies: []};
+
+        this.onChange = this.onChange.bind(this);
+    }
+
+    componentWillMount() {
+        MovieStore.addChangeListener(this.onChange);
+    }
+
+    componentWillUnmount() {
+        MovieStore.removeChangeListener(this.onChange);
+    }
+
+    onChange() {
+        console.log('onChange from MovieListContainer');
+        this.fetchMovies({sortBy: 'viewings.dates DESC'});
     }
 
     componentDidMount() {
@@ -83,7 +100,7 @@ class MovieListContainer extends Component {
      */
     handleLoadMovies() {
         console.log('handleLoadMovies');
-        let sampleMoviesFilename = this.props.params.sampleMovies ? this.props.params.sampleMovies : 'sample-movies';
+        let sampleMoviesFilename = this.props.location.query.sampleMovies ? this.props.location.query.sampleMovies : 'sample-movies';
         fetch(SAMPLE_MOVIES_URL + '/' + sampleMoviesFilename + '.json')
             .then(response => response.json())
             .then(json => {

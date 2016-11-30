@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import FileSaver from 'file-saver';
 
+import MovieActions from '../../actions/MovieActions';
+
 import Highlight from '../highlight/Highlight';
 
 import {db} from '../_shared/db';
@@ -85,6 +87,8 @@ class ImportExport extends Component {
             }
         });
 
+        MovieActions.updateMovies();
+
         this.setState({moviesToImport: []}, () => {
             if (this.state.existingMovies.length > 0) {
                 $(this.refs.postImportModal)
@@ -101,6 +105,7 @@ class ImportExport extends Component {
 
     clearDatabase() {
         db.set('movies', []).value();
+        MovieActions.updateMovies();
     }
 
     render() {

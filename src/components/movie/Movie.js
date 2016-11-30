@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import defaultImage from './images/image-25-opacity.png';
 
+import MovieActions from '../../actions/MovieActions';
+
 import Highlight from '../highlight/Highlight';
 
 import {db} from '../_shared/db';
@@ -24,8 +26,7 @@ class Movie extends Component {
                 inline: false,
                 position: 'right center',
                 popup: $(this.movieDetails),
-                lastResort: 'bottom center',
-                // boundary: '.ui.stackable.two.column.padded.grid'
+                lastResort: 'bottom center'
             });
     }
 
@@ -38,6 +39,7 @@ class Movie extends Component {
     handleRemoveMovie(movieToDeleteId) {
         console.log('handleRemoveMovie: ' + movieToDeleteId);
         db.get('movies').remove({id: movieToDeleteId}).value();
+        MovieActions.updateMovies();
     }
 
     render() {
