@@ -40,24 +40,20 @@ pre {
    movie
    ---------- */
 
-.movie.card .image {
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-}
-
 .movie.card .ui.popup:before {
     background-color: #191c1f;
     box-shadow: none;
 }
 
-.movie.card .ui.card > .content, .ui.cards > .card > .content {
-    border: none;
+.ui.cards > .movie.card, .ui.cards > .movie.card > :first-child {
+    border-radius: 0 !important;
 }
 
 /* ----------
-   multiple-inputs
+   multiple-input
    ---------- */
 
-.ui.form .multipleInputs .field {
+.ui.form .MultipleInput .field {
     margin-bottom: 1em;
 }
 
