@@ -2,7 +2,7 @@
   "name": "movies-react",
   "version": "0.1.0",
   "main": "main.js",
-  "homepage": "./",
+  "homepage": "/",
   "private": true,
   "devDependencies": {
     "electron": "^1.4.7",

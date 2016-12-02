@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, protocol} = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -7,15 +7,18 @@ const url = require('url');
 let win;
 
 function createWindow() {
+    protocol.registerFileProtocol('atom', (request, callback) => {
+        const url = request.url.substr(7);
+        callback({path: path.normalize(`${__dirname}/${url}`)})
+    }, (error) => {
+        if (error) console.error('Failed to register protocol')
+    });
+
     // Create the browser window.
     win = new BrowserWindow({width: 800, height: 600});
 
     // and load the index.html of the app.
-    win.loadURL(url.format({
-        pathname: path.join(__dirname, 'build/index.html'),
-        protocol: 'file:',
-        slashes: true
-    }));
+    win.loadURL('atom://build/index.html');
 
     // Open the DevTools.
     win.webContents.openDevTools();
@@ -32,6 +35,7 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+protocol.registerStandardSchemes(['atom']);
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.
