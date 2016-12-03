@@ -103,6 +103,12 @@ class ImportExport extends Component {
         });
     }
 
+    confirmClearDatabase() {
+        $(this.refs.confirmClearDatabaseModal)
+            .modal({onApprove: () => this.clearDatabase()})
+            .modal('show');
+    }
+
     clearDatabase() {
         db.set('movies', []).value();
         MovieActions.updateMovies();
@@ -113,7 +119,7 @@ class ImportExport extends Component {
             <div className="right menu">
                 <a className="item" onClick={() => this.openImportModal()}><i className="download icon"/>Import</a>
                 <a className="item" onClick={() => this.exportToFile()}><i className="save icon"/>Export</a>
-                <a className="item" onClick={() => this.clearDatabase()}><i className="erase icon"/>Clear</a>
+                <a className="item" onClick={() => this.confirmClearDatabase()}><i className="erase icon"/>Clear</a>
 
                 <div className="ui modal" ref="importModal">
                     <i className="close icon"/>
@@ -141,6 +147,20 @@ class ImportExport extends Component {
                         <div style={{height: 250 + 'px', overflow: 'auto'}}>
                             <Highlight json={this.state.existingMovies}/>
                         </div>
+                    </div>
+                    <div className="actions">
+                        <div className="ui cancel button">Cancel</div>
+                        <div className="ui ok button">OK</div>
+                    </div>
+                </div>
+
+                <div className="ui modal" ref="confirmClearDatabaseModal">
+                    <i className="close icon"/>
+                    <div className="header">
+                        Clear the database
+                    </div>
+                    <div className="content">
+                        <p>Are you sure you want to proceed and erase all the movies in your current database?</p>
                     </div>
                     <div className="actions">
                         <div className="ui cancel button">Cancel</div>
