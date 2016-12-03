@@ -4,10 +4,16 @@ import {Link} from 'react-router';
 import NavLink from '../nav-link/NavLink';
 import ImportExport from '../import-export/ImportExport';
 
+import {APP_VERSION} from '../_shared/constants';
+
 import logo from './images/logo.svg';
 import './App.css';
 
 class App extends Component {
+    isElectron() {
+        return !!(typeof window !== 'undefined' && window.process && window.process.type === 'renderer') || !!(typeof process !== 'undefined' && process.versions && !!process.versions.electron);
+    }
+
     render() {
         return (
             <div className="App" style={{height: 100 + '%'}}>
@@ -22,6 +28,15 @@ class App extends Component {
                         <NavLink to="/about" className="item"><i className="help icon"/>About</NavLink>
 
                         <ImportExport/>
+
+                        {!this.isElectron() &&
+                        <div className="item">
+                            <a href={'https://dl.dropboxusercontent.com/u/30115317/movies/movies-react-' + APP_VERSION + '-windows.7z'}
+                               className="ui basic green inverted circular icon button"
+                               title="Download Windows App">
+                                <i className="windows icon"/>
+                            </a>
+                        </div>}
                     </div>
                 </div>
 
