@@ -28,7 +28,7 @@ class MovieList extends Component {
                     {this.props.movies && this.props.movies.length === 0 &&
                     <button className="ui button" onClick={() => this.handleLoadMovies()}>Load movies</button>}
 
-                    <div className="movieList row centered">
+                    <div className="MovieList row centered">
                         <div className="ui stackable centered six doubling cards" ref="uiInfiniteScroll">
                             {
                                 this.props.movies.map((movie, i) => {

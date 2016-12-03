@@ -22,11 +22,12 @@ class Movie extends Component {
 
         $(this.movieImage)
             .popup({
-                hoverable: true,
-                inline: false,
-                position: 'right center',
                 popup: $(this.movieDetails),
-                lastResort: 'bottom center'
+                exclusive: true,
+                boundary: '.MovieList',
+                lastResort: true,
+                delay: {show: 500},
+                hoverable: true
             });
     }
 
