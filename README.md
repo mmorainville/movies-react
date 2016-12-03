@@ -1,10 +1,17 @@
+# Movies React
+
+A React app to track movies you've watched.
+
+* [Demo](https://mmorainville.github.io/movies-react/) – An online demo of the app which uses the local storage of your web browser.
+* [Windows App](https://dl.dropboxusercontent.com/u/30115317/movies/movies-react-1.1-windows.7z) – The app packaged as a Windows application using Electron.
+
 This application's purpose is to allow me to have a list of the movies I've watched and more importantly with whom and when I've watched them.
 It's a personal project that I originally didn't intend for it to be used by other people. But as it is totally functional and can work offline as a desktop app, I thought it could be good to share it.
 
 This README focuses primarily on how to build and package the application and is meant to be more like a memo for me than a user guide.
 If you have trouble using the applications or wants new functionalities, you are welcome to help, give your advice or open an issue [here](https://github.com/mmorainville/movies-react/issues).
 
-![Alt text](./screenshot.png "Optional title")
+[![Movies React](./screenshot.png "Optional title")](https://mmorainville.github.io/movies-react/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
@@ -155,4 +162,4 @@ A detailed explanation can be found in this [document][commit-message-format].
 
 ## Something Missing?
 
-If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/mmorainville/movies-react/issues).
+If you have ideas for more “How To” recipes that should be on this page, [let me know](https://github.com/mmorainville/movies-react/issues).
