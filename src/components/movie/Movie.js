@@ -68,9 +68,12 @@ class Movie extends Component {
 
                                 <a className="ui green inverted button" ref="viewMovieDetails"
                                    href={"http://www.allocine.fr/recherche/?q=" + this.props.movie.title}
-                                   target="_blank">View</a>
+                                   target="_blank">
+                                    <i className="unhide icon"/>View
+                                </a>
                                 <div className="ui red inverted button"
-                                     onClick={() => this.confirmRemoveMovie(this.props.movie.id)}>Remove
+                                     onClick={() => this.confirmRemoveMovie(this.props.movie.id)}>
+                                    <i className="trash icon"/>Remove
                                 </div>
 
                                 <div className="ui flowing popup" ref={(ref) => {

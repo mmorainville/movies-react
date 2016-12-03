@@ -18,8 +18,8 @@ class App extends Component {
                             Movies
                         </Link>
 
-                        <NavLink to="/movie-form" className="item">Add a movie</NavLink>
-                        <NavLink to="/about" className="item">About</NavLink>
+                        <NavLink to="/movie-form" className="item"><i className="add circle icon"/>Add a movie</NavLink>
+                        <NavLink to="/about" className="item"><i className="help icon"/>About</NavLink>
 
                         <ImportExport/>
                     </div>

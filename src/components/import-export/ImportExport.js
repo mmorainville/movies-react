@@ -111,9 +111,9 @@ class ImportExport extends Component {
     render() {
         return (
             <div className="right menu">
-                <a className="item" onClick={() => this.openImportModal()}>Import</a>
-                <a className="item" onClick={() => this.exportToFile()}>Export</a>
-                <a className="item" onClick={() => this.clearDatabase()}>Clear</a>
+                <a className="item" onClick={() => this.openImportModal()}><i className="download icon"/>Import</a>
+                <a className="item" onClick={() => this.exportToFile()}><i className="save icon"/>Export</a>
+                <a className="item" onClick={() => this.clearDatabase()}><i className="erase icon"/>Clear</a>
 
                 <div className="ui modal" ref="importModal">
                     <i className="close icon"/>
